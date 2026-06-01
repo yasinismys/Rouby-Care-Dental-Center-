@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Rouby Care — نظام المدفوعات والمواعيد</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --green:#1D9E75;--green-light:#E1F5EE;--green-dark:#0F6E56;
+  --amber:#EF9F27;--amber-light:#FAEEDA;
+  --red:#E24B4A;--red-light:#FCEBEB;
+  --blue:#378ADD;--blue-light:#E6F1FB;
+  --bg:#F7F7F5;--surface:#FFFFFF;
+  --text:#1A1A1A;--text2:#666;--text3:#999;
+  --border:#E5E5E3;--border2:#D0D0CE;
+  --radius:12px;--radius-sm:8px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px}
+.screen{display:none;min-height:100vh;flex-direction:column}
+.screen.active{display:flex}
+
+/* LOGIN */
+.login-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;gap:2rem}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:52px;height:52px;background:var(--green);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px}
+.logo-text{font-size:22px;font-weight:700;color:var(--text)}
+.logo-sub{font-size:13px;color:var(--text2);margin-top:2px}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:360px}
+.role-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.5rem 1rem;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:all 0.15s;-webkit-appearance:none}
+.role-btn:active{transform:scale(0.97);border-color:var(--green);background:var(--green-light)}
+.role-icon{font-size:32px}
+.role-name{font-size:15px;font-weight:600;color:var(--text)}
+.role-desc{font-size:12px;color:var(--text2)}
+
+/* PIN */
+.pin-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;gap:1.5rem}
+.pin-header{text-align:center}
+.pin-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px}
+.pin-subtitle{font-size:13px;color:var(--text2)}
+.pin-dots{display:flex;gap:14px;margin:8px 0}
+.dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--border2);background:transparent;transition:all 0.15s}
+.dot.on{background:var(--green);border-color:var(--green)}
+.pin-error{font-size:13px;color:var(--red);min-height:18px;text-align:center}
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:300px}
+.num{padding:16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-size:20px;font-weight:500;cursor:pointer;text-align:center;-webkit-appearance:none;color:var(--text);transition:all 0.1s}
+.num:active{transform:scale(0.94);background:var(--green-light);border-color:var(--green)}
+.num.sm{font-size:14px}
+.back-link{font-size:14px;color:var(--text2);background:none;border:none;cursor:pointer;padding:8px}
+
+/* TOP NAV */
+.topnav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.nav-logo{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:var(--text)}
+.nav-logo-icon{width:32px;height:32px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.nav-role{font-size:12px;color:var(--text2);background:var(--bg);padding:5px 10px;border-radius:20px;border:1px solid var(--border)}
+.logout{font-size:13px;color:var(--text2);background:none;border:1px solid var(--border);padding:6px 12px;cursor:pointer;border-radius:var(--radius-sm)}
+
+/* BOTTOM NAV */
+.bottomnav{background:var(--surface);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(3,1fr);position:sticky;bottom:0;z-index:10}
+.bnav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 8px;cursor:pointer;border:none;background:none;font-family:inherit;color:var(--text2);font-size:11px;transition:all 0.15s}
+.bnav-item.active{color:var(--green)}
+.bnav-icon{font-size:22px}
+
+/* CONTENT */
+.tab-content{display:none;flex:1;padding:16px;flex-direction:column;gap:14px;max-width:480px;width:100%;margin:0 auto;overflow-y:auto}
+.tab-content.active{display:flex}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.card-head{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:14px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px}
+.card-body{padding:16px;display:flex;flex-direction:column;gap:12px}
+
+/* FORM */
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:0.3px}
+.field input,.field select{padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:15px;background:var(--surface);color:var(--text);width:100%;-webkit-appearance:none;font-family:inherit}
+.field input:focus,.field select:focus{outline:none;border-color:var(--green)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* BREAKDOWN */
+.breakdown{background:var(--green-light);border-radius:var(--radius-sm);padding:14px;display:none;flex-direction:column;gap:6px}
+.bd-row{display:flex;justify-content:space-between;font-size:14px;color:var(--green-dark)}
+.bd-row.total{font-weight:700;font-size:15px;border-top:1px solid #9FE1CB;padding-top:8px;margin-top:2px}
+
+/* BUTTONS */
+.btn{padding:14px 18px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--text);font-weight:500;font-family:inherit;transition:all 0.15s;-webkit-appearance:none}
+.btn:active{transform:scale(0.98)}
+.btn-green{background:var(--green);border-color:var(--green);color:#fff}
+.btn-green:active{background:var(--green-dark)}
+.btn-blue{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn-full{width:100%}
+
+/* ALERT */
+.alert{background:var(--amber-light);border:1px solid #FAC775;border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;color:#854F0B;display:flex;align-items:flex-start;gap:8px}
+
+/* METRICS */
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center}
+.metric-val{font-size:18px;font-weight:700;color:var(--text)}
+.metric-lbl{font-size:11px;color:var(--text2);margin-top:3px}
+
+/* FILTER */
+.filter-bar{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
+.filter-chip{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;cursor:pointer;white-space:nowrap;color:var(--text2);-webkit-appearance:none;font-family:inherit}
+.filter-chip.active{background:var(--green-light);border-color:var(--green);color:var(--green-dark);font-weight:600}
+
+/* TXN LIST */
+.txn-list{display:flex;flex-direction:column}
+.txn-item{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.txn-item:last-child{border-bottom:none}
+.txn-name{font-size:15px;font-weight:600;color:var(--text)}
+.txn-meta{font-size:12px;color:var(--text2);margin-top:3px}
+.txn-time{font-size:11px;color:var(--text3);margin-top:2px}
+.txn-right{text-align:left;direction:ltr;flex-shrink:0}
+.txn-paid{font-size:15px;font-weight:700;color:var(--green)}
+.txn-rem{font-size:12px;color:var(--red);margin-top:2px}
+.empty{padding:2.5rem;text-align:center;color:var(--text2);font-size:14px}
+
+/* BADGE */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
+.b-green{background:var(--green-light);color:var(--green-dark)}
+.b-amber{background:var(--amber-light);color:#854F0B}
+.b-red{background:var(--red-light);color:#A32D2D}
+.b-blue{background:var(--blue-light);color:#185FA5}
+
+/* AGENDA */
+.date-nav{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px}
+.date-label{font-size:15px;font-weight:600;color:var(--text);text-align:center;flex:1}
+.date-arrow{background:none;border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 14px;font-size:16px;cursor:pointer;color:var(--text)}
+.date-arrow:active{background:var(--green-light)}
+.clinic-tabs{display:flex;gap:8px;overflow-x:auto}
+.clinic-tab{padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;cursor:pointer;white-space:nowrap;color:var(--text2);-webkit-appearance:none;font-family:inherit;font-weight:500}
+.clinic-tab.active{background:var(--green);border-color:var(--green);color:#fff}
+.time-slots{display:flex;flex-direction:column;gap:0}
+.slot{display:flex;align-items:stretch;border-bottom:1px solid var(--border);min-height:56px}
+.slot:last-child{border-bottom:none}
+.slot-time{width:64px;padding:8px 10px;font-size:12px;color:var(--text2);border-left:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg)}
+.slot-body{flex:1;padding:8px 12px;display:flex;align-items:center}
+.slot-empty{font-size:13px;color:var(--text3);cursor:pointer}
+.slot-empty:hover{color:var(--green)}
+.appt-card{background:var(--green-light);border-radius:var(--radius-sm);padding:8px 12px;width:100%;cursor:pointer;border:none;text-align:right;font-family:inherit}
+.appt-card:active{opacity:0.85}
+.appt-name{font-size:14px;font-weight:600;color:var(--green-dark)}
+.appt-detail{font-size:12px;color:var(--green-dark);opacity:0.8;margin-top:2px}
+.appt-card.cancelled{background:var(--red-light)}
+.appt-card.cancelled .appt-name,.appt-card.cancelled .appt-detail{color:#A32D2D}
+
+/* MODALS */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;align-items:flex-end;justify-content:center}
+.modal-bg.open{display:flex}
+.modal-sheet{background:var(--surface);border-radius:20px 20px 0 0;padding:1.5rem;width:100%;max-width:480px;max-height:90vh;overflow-y:auto}
+.modal-title{font-size:17px;font-weight:700;color:var(--text);margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between}
+.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text2);padding:4px}
+
+/* RECEIPT */
+.receipt-logo{text-align:center;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1.5px dashed var(--border)}
+.receipt-name{font-size:16px;font-weight:700;color:var(--green)}
+.receipt-addr{font-size:12px;color:var(--text2);margin-top:3px}
+.receipt-date{font-size:11px;color:var(--text3);margin-top:3px}
+.r-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
+.r-row:last-child{border:none;font-weight:700;font-size:15px;padding-top:12px}
+.r-key{color:var(--text2)}
+.receipt-footer{text-align:center;font-size:12px;color:var(--text3);margin-top:1rem;padding-top:1rem;border-top:1px dashed var(--border)}
+.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1rem}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="screen active" id="s-login">
+  <div class="login-wrap">
+    <div class="logo">
+      <div class="logo-icon">🦷</div>
+      <div>
+        <div class="logo-text">Rouby Care</div>
+        <div class="logo-sub">نظام المدفوعات والمواعيد</div>
+      </div>
+    </div>
+    <div class="role-grid">
+      <button class="role-btn" onclick="selectRole('reception')">
+        <div class="role-icon">👩‍💼</div>
+        <div class="role-name">الاستقبال</div>
+        <div class="role-desc">دفعات ومواعيد</div>
+      </button>
+      <button class="role-btn" onclick="selectRole('doctor')">
+        <div class="role-icon">👩‍⚕️</div>
+        <div class="role-name">د. رنا</div>
+        <div class="role-desc">لوحة المتابعة</div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- PIN -->
+<div class="screen" id="s-pin">
+  <div class="pin-wrap">
+    <button class="back-link" onclick="goBack()">← رجوع</button>
+    <div class="pin-header">
+      <div class="pin-title" id="pin-title">أدخل الرقم السري</div>
+      <div class="pin-subtitle" id="pin-sub"></div>
+    </div>
+    <div class="pin-dots">
+      <div class="dot" id="p0"></div><div class="dot" id="p1"></div>
+      <div class="dot" id="p2"></div><div class="dot" id="p3"></div>
+    </div>
+    <div class="pin-error" id="pin-err"></div>
+    <div class="numpad">
+      <button class="num" onclick="np('1')">1</button>
+      <button class="num" onclick="np('2')">2</button>
+      <button class="num" onclick="np('3')">3</button>
+      <button class="num" onclick="np('4')">4</button>
+      <button class="num" onclick="np('5')">5</button>
+      <button class="num" onclick="np('6')">6</button>
+      <button class="num" onclick="np('7')">7</button>
+      <button class="num" onclick="np('8')">8</button>
+      <button class="num" onclick="np('9')">9</button>
+      <button class="num sm" onclick="pinClear()">مسح</button>
+      <button class="num" onclick="np('0')">0</button>
+      <button class="num sm" onclick="pinDel()">⌫</button>
+    </div>
+  </div>
+</div>
+
+<!-- RECEPTION SCREEN -->
+<div class="screen" id="s-reception">
+  <div class="topnav">
+    <div class="nav-logo"><div class="nav-logo-icon">🦷</div> Rouby Care</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="nav-role">الاستقبال</div>
+      <button class="logout" onclick="logout()">خروج</button>
+    </div>
+  </div>
+
+  <!-- TAB: دفعات -->
+  <div class="tab-content active" id="r-tab-pay">
+    <div class="card">
+      <div class="card-head"><div class="card-title">💰 تسجيل دفعة</div></div>
+      <div class="card-body">
+        <div class="row2">
+          <div class="field"><label>اسم المريض</label><input type="text" id="f-name" placeholder="الاسم الكامل" oninput="calcBD()"/></div>
+          <div class="field"><label>الهاتف</label><input type="tel" id="f-phone" placeholder="01X..."/></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>الخدمة</label>
+            <select id="f-service" onchange="calcBD()">
+              <option value="">اختر...</option>
+              <option>تقويم</option><option>زراعة</option><option>تركيبات</option>
+              <option>كشف عادي</option><option>حشو</option><option>تنظيف</option><option>خلع</option>
+            </select>
+          </div>
+          <div class="field"><label>الدكتور</label>
+            <select id="f-doctor">
+              <option>د. رنا</option><option>د. أحمد</option><option>د. سارة</option>
+            </select>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>إجمالي الأتعاب</label><input type="number" id="f-total" placeholder="0 ج" oninput="calcBD()"/></div>
+          <div class="field"><label>المدفوع الآن</label><input type="number" id="f-paid" placeholder="0 ج" oninput="calcBD()"/></div>
+        </div>
+        <div class="field"><label>ملاحظات</label><input type="text" id="f-notes" placeholder="أي ملاحظات..."/></div>
+        <div class="breakdown" id="breakdown">
+          <div class="bd-row"><span>إجمالي الأتعاب</span><span id="bd-total">—</span></div>
+          <div class="bd-row"><span>المدفوع الآن</span><span id="bd-paid">—</span></div>
+          <div class="bd-row total"><span>المتبقي</span><span id="bd-rem">—</span></div>
+        </div>
+        <button class="btn btn-green btn-full" onclick="submitPay()">✓ تسجيل وإصدار الإيصال</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">📋 مدفوعات اليوم</div>
+        <span id="today-count" style="font-size:12px;color:var(--text2)"></span>
+      </div>
+      <div id="today-list" class="txn-list"></div>
+    </div>
+  </div>
+
+  <!-- TAB: أجندة -->
+  <div class="tab-content" id="r-tab-agenda">
+    <div class="date-nav">
+      <button class="date-arrow" onclick="changeDay(-1)">›</button>
+      <div class="date-label" id="r-date-label"></div>
+      <button class="date-arrow" onclick="changeDay(1)">‹</button>
+    </div>
+    <div class="clinic-tabs" id="r-clinic-tabs"></div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title" id="r-clinic-label">📅 المواعيد</div>
+        <button class="btn btn-green" style="padding:8px 14px;font-size:13px" onclick="openBookModal()">+ حجز جديد</button>
+      </div>
+      <div id="r-slots" class="time-slots"></div>
+    </div>
+  </div>
+
+  <div class="bottomnav">
+    <button class="bnav-item active" id="r-bnav-pay" onclick="switchRTab('pay')">
+      <div class="bnav-icon">💰</div><div>الدفعات</div>
+    </button>
+    <button class="bnav-item" id="r-bnav-agenda" onclick="switchRTab('agenda')">
+      <div class="bnav-icon">📅</div><div>الأجندة</div>
+    </button>
+    <button class="bnav-item" id="r-bnav-dummy" style="opacity:0.3;pointer-events:none">
+      <div class="bnav-icon">⚙️</div><div>الإعدادات</div>
+    </button>
+  </div>
+</div>
+
+<!-- DOCTOR SCREEN -->
+<div class="screen" id="s-doctor">
+  <div class="topnav">
+    <div class="nav-logo"><div class="nav-logo-icon">🦷</div> Rouby Care</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="nav-role">د. رنا</div>
+      <button class="logout" onclick="logout()">خروج</button>
+    </div>
+  </div>
+
+  <!-- TAB: متابعة -->
+  <div class="tab-content active" id="d-tab-pay">
+    <div id="doc-alert" style="display:none" class="alert">
+      <div>⚠️</div><div id="doc-alert-msg"></div>
+    </div>
+    <div class="metrics" id="doc-metrics"></div>
+    <div class="filter-bar">
+      <button class="filter-chip active" onclick="setFilter('all',this)">الكل</button>
+      <button class="filter-chip" onclick="setFilter('pending',this)">متبقي</button>
+      <button class="filter-chip" onclick="setFilter('done',this)">مكتمل</button>
+    </div>
+    <div class="card"><div id="doc-list" class="txn-list"></div></div>
+  </div>
+
+  <!-- TAB: أجندتي -->
+  <div class="tab-content" id="d-tab-agenda">
+    <div class="date-nav">
+      <button class="date-arrow" onclick="changeDay(-1)">›</button>
+      <div class="date-label" id="d-date-label"></div>
+      <button class="date-arrow" onclick="changeDay(1)">‹</button>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-title">🏥 عيادة ١ — د. رنا</div></div>
+      <div id="d-slots" class="time-slots"></div>
+    </div>
+  </div>
+
+  <div class="bottomnav">
+    <button class="bnav-item active" id="d-bnav-pay" onclick="switchDTab('pay')">
+      <div class="bnav-icon">📊</div><div>المتابعة</div>
+    </button>
+    <button class="bnav-item" id="d-bnav-agenda" onclick="switchDTab('agenda')">
+      <div class="bnav-icon">📅</div><div>أجندتي</div>
+    </button>
+    <button class="bnav-item" id="d-bnav-dummy" style="opacity:0.3;pointer-events:none">
+      <div class="bnav-icon">⚙️</div><div>الإعدادات</div>
+    </button>
+  </div>
+</div>
+
+<!-- RECEIPT MODAL -->
+<div class="modal-bg" id="modal-receipt">
+  <div class="modal-sheet">
+    <div class="receipt-logo">
+      <div class="receipt-name">🦷 Rouby Care Dental Center</div>
+      <div class="receipt-addr">الفيوم — مركز طب الأسنان</div>
+      <div class="receipt-date" id="r-date"></div>
+    </div>
+    <div id="r-rows"></div>
+    <div class="receipt-footer">شكراً لثقتكم — ابتسامتك أمانة عندنا 🦷</div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('modal-receipt')">🖨️ طباعة</button>
+      <button class="btn btn-green" onclick="closeModal('modal-receipt')">✓ تم التسليم</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="modal-bg" id="modal-book">
+  <div class="modal-sheet">
+    <div class="modal-title">
+      <span id="book-modal-title">حجز موعد جديد</span>
+      <button class="modal-close" onclick="closeModal('modal-book')">✕</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="field"><label>اسم المريض</label><input type="text" id="b-name" placeholder="الاسم الكامل"/></div>
+      <div class="field"><label>رقم الهاتف</label><input type="tel" id="b-phone" placeholder="01X..."/></div>
+      <div class="row2">
+        <div class="field"><label>العيادة</label>
+          <select id="b-clinic">
+            <option value="1">عيادة ١ — د. رنا</option>
+            <option value="2">عيادة ٢</option>
+            <option value="3">عيادة ٣</option>
+          </select>
+        </div>
+        <div class="field"><label>الدكتور</label>
+          <select id="b-doctor">
+            <option>د. رنا</option><option>د. أحمد</option><option>د. سارة</option>
+          </select>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>الوقت</label>
+          <select id="b-time"></select>
+        </div>
+        <div class="field"><label>الخدمة</label>
+          <select id="b-service">
+            <option>تقويم</option><option>زراعة</option><option>تركيبات</option>
+            <option>كشف عادي</option><option>حشو</option><option>تنظيف</option><option>خلع</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>ملاحظات</label><input type="text" id="b-notes" placeholder="أي ملاحظات..."/></div>
+      <button class="btn btn-green btn-full" onclick="confirmBook()">✓ تأكيد الحجز</button>
+    </div>
+  </div>
+</div>
+
+<!-- APPOINTMENT DETAIL MODAL -->
+<div class="modal-bg" id="modal-appt">
+  <div class="modal-sheet">
+    <div class="modal-title">
+      <span>تفاصيل الموعد</span>
+      <button class="modal-close" onclick="closeModal('modal-appt')">✕</button>
+    </div>
+    <div id="appt-detail-body" style="display:flex;flex-direction:column;gap:10px"></div>
+    <div class="modal-actions" style="margin-top:1rem">
+      <button class="btn b-red" style="border-color:var(--red);color:var(--red)" onclick="cancelAppt()">إلغاء الموعد</button>
+      <button class="btn btn-green" onclick="closeModal('modal-appt')">✓ حسناً</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const PINS={reception:'1234',doctor:'5678'};
+const CLINICS=[{id:1,name:'عيادة ١',doctor:'د. رنا'},{id:2,name:'عيادة ٢',doctor:''},{id:3,name:'عيادة ٣',doctor:''}];
+const SLOTS_START=8, SLOTS_END=20, SLOT_MIN=30;
+
+let role=null, pinBuf='', txFilter='all', activeClinic=1, currentDay=new Date(), selectedApptId=null;
+
+let txns=[
+  {id:1,name:'أحمد محمود',phone:'0101234567',service:'تقويم',doctor:'د. رنا',total:8000,paid:8000,notes:'',time:new Date(Date.now()-7200000)},
+  {id:2,name:'سارة علي',phone:'0112345678',service:'زراعة',doctor:'د. أحمد',total:15000,paid:6000,notes:'دفعة أولى',time:new Date(Date.now()-3600000)},
+  {id:3,name:'محمد حسن',phone:'0123456789',service:'تركيبات',doctor:'د. رنا',total:4000,paid:1600,notes:'',time:new Date(Date.now()-1800000)},
+];
+
+let appointments=[
+  {id:1,name:'فاطمة إبراهيم',phone:'0134567890',clinic:1,doctor:'د. رنا',service:'تقويم',time:'09:00',date:todayStr(),notes:'متابعة',status:'confirmed'},
+  {id:2,name:'كريم سعيد',phone:'0145678901',clinic:1,doctor:'د. رنا',service:'كشف عادي',time:'10:30',date:todayStr(),notes:'',status:'confirmed'},
+  {id:3,name:'منى طارق',phone:'0156789012',clinic:2,doctor:'د. أحمد',service:'حشو',time:'11:00',date:todayStr(),notes:'',status:'confirmed'},
+  {id:4,name:'يوسف عادل',phone:'0167890123',clinic:1,doctor:'د. رنا',service:'تركيبات',time:'14:00',date:todayStr(),notes:'',status:'confirmed'},
+];
+let nxtTxn=4, nxtAppt=5;
+
+function todayStr(d){const dd=d||new Date();return dd.toISOString().split('T')[0];}
+function dayStr(d){return d.toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}
+function fmt(n){return Math.round(n).toLocaleString('ar-EG');}
+function tStr(d){return new Date(d).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});}
+
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+// PIN
+function selectRole(r){
+  role=r;
+  document.getElementById('pin-title').textContent=r==='doctor'?'أهلاً د. رنا، أدخلي رقمك السري':'أدخل الرقم السري للاستقبال';
+  document.getElementById('pin-sub').textContent=r==='doctor'?'رقم سري خاص بك':'للموظفين فقط';
+  pinBuf='';updateDots();document.getElementById('pin-err').textContent='';
+  show('s-pin');
+}
+function goBack(){show('s-login');}
+function updateDots(){for(let i=0;i<4;i++)document.getElementById('p'+i).classList.toggle('on',i<pinBuf.length);}
+function np(d){if(pinBuf.length>=4)return;pinBuf+=d;updateDots();if(pinBuf.length===4)checkPin();}
+function pinDel(){pinBuf=pinBuf.slice(0,-1);updateDots();}
+function pinClear(){pinBuf='';updateDots();}
+function checkPin(){
+  if(pinBuf===PINS[role]){
+    currentDay=new Date();
+    if(role==='reception'){renderToday();renderAgenda();show('s-reception');}
+    else{renderDoctor();renderDoctorAgenda();show('s-doctor');}
+  }else{
+    document.getElementById('pin-err').textContent='رقم سري خاطئ، حاول مرة أخرى';
+    pinBuf='';updateDots();
+  }
+}
+function logout(){show('s-login');role=null;}
+
+// TAB SWITCHING
+function switchRTab(tab){
+  ['pay','agenda'].forEach(t=>{
+    document.getElementById('r-tab-'+t).classList.toggle('active',t===tab);
+    document.getElementById('r-bnav-'+t).classList.toggle('active',t===tab);
+  });
+  if(tab==='agenda')renderAgenda();
+}
+function switchDTab(tab){
+  ['pay','agenda'].forEach(t=>{
+    document.getElementById('d-tab-'+t).classList.toggle('active',t===tab);
+    document.getElementById('d-bnav-'+t).classList.toggle('active',t===tab);
+  });
+  if(tab==='agenda')renderDoctorAgenda();
+}
+
+// DAY NAV
+function changeDay(dir){
+  currentDay=new Date(currentDay);
+  currentDay.setDate(currentDay.getDate()+dir);
+  if(role==='reception')renderAgenda();
+  else renderDoctorAgenda();
+}
+
+// PAYMENTS
+function calcBD(){
+  const total=parseFloat(document.getElementById('f-total').value)||0;
+  const paid=parseFloat(document.getElementById('f-paid').value)||0;
+  const name=document.getElementById('f-name').value;
+  const svc=document.getElementById('f-service').value;
+  const bd=document.getElementById('breakdown');
+  if(total>0&&name&&svc){
+    bd.style.display='flex';
+    document.getElementById('bd-total').textContent=fmt(total)+' ج';
+    document.getElementById('bd-paid').textContent=fmt(paid)+' ج';
+    document.getElementById('bd-rem').textContent=fmt(Math.max(0,total-paid))+' ج';
+  }else bd.style.display='none';
+}
+function submitPay(){
+  const name=document.getElementById('f-name').value.trim();
+  const phone=document.getElementById('f-phone').value.trim();
+  const svc=document.getElementById('f-service').value;
+  const doc=document.getElementById('f-doctor').value;
+  const total=parseFloat(document.getElementById('f-total').value)||0;
+  const paid=parseFloat(document.getElementById('f-paid').value)||0;
+  const notes=document.getElementById('f-notes').value;
+  if(!name||!svc||total<=0||paid<=0){alert('من فضلك أكمل البيانات الأساسية');return;}
+  if(paid>total){alert('المبلغ المدفوع أكبر من الإجمالي!');return;}
+  const t={id:nxtTxn++,name,phone,service:svc,doctor:doc,total,paid,notes,time:new Date()};
+  txns.unshift(t);
+  showReceipt(t);renderToday();
+  ['f-name','f-phone','f-total','f-paid','f-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-service').value='';
+  document.getElementById('breakdown').style.display='none';
+}
+function showReceipt(t){
+  const now=new Date();
+  document.getElementById('r-date').textContent=now.toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+' — '+tStr(now);
+  const rows=[['المريض',t.name],['الهاتف',t.phone||'—'],['الخدمة',t.service],['الطبيب',t.doctor],['إجمالي الأتعاب',fmt(t.total)+' جنيه'],['المدفوع',fmt(t.paid)+' جنيه'],['المتبقي',fmt(Math.max(0,t.total-t.paid))+' جنيه']];
+  if(t.notes)rows.push(['ملاحظات',t.notes]);
+  document.getElementById('r-rows').innerHTML=rows.map(([k,v])=>`<div class="r-row"><span class="r-key">${k}</span><span style="color:${k==='المتبقي'&&t.total>t.paid?'var(--red)':'var(--text)'};font-weight:${k==='المتبقي'?'700':'400'}">${v}</span></div>`).join('');
+  document.getElementById('modal-receipt').classList.add('open');
+}
+function badge(t){
+  if(t.total-t.paid<=0)return'<span class="badge b-green">مكتمل</span>';
+  if(t.paid/t.total>=0.4)return'<span class="badge b-amber">جاري</span>';
+  return'<span class="badge b-red">متأخر</span>';
+}
+function renderToday(){
+  const today=txns.filter(t=>new Date(t.time).toDateString()===new Date().toDateString());
+  document.getElementById('today-count').textContent=today.length+' معاملة';
+  const el=document.getElementById('today-list');
+  if(!today.length){el.innerHTML='<div class="empty">لا توجد مدفوعات اليوم بعد</div>';return;}
+  el.innerHTML=today.map(t=>`<div class="txn-item">
+    <div><div class="txn-name">${t.name}</div><div class="txn-meta">${t.service} — ${t.doctor}</div><div class="txn-time">${tStr(t.time)}</div></div>
+    <div class="txn-right"><div class="txn-paid">+${fmt(t.paid)} ج</div>${t.total>t.paid?`<div class="txn-rem">متبقي ${fmt(t.total-t.paid)} ج</div>`:'<div style="font-size:11px;color:var(--green-dark)">✓ مكتمل</div>'}</div>
+  </div>`).join('');
+}
+function setFilter(f,btn){
+  txFilter=f;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');renderDoctor();
+}
+function renderDoctor(){
+  let list=[...txns];
+  if(txFilter==='pending')list=list.filter(t=>t.paid<t.total);
+  if(txFilter==='done')list=list.filter(t=>t.paid>=t.total);
+  const totColl=txns.reduce((s,t)=>s+t.paid,0);
+  const totRem=txns.reduce((s,t)=>s+Math.max(0,t.total-t.paid),0);
+  const todayCnt=txns.filter(t=>new Date(t.time).toDateString()===new Date().toDateString()).length;
+  document.getElementById('doc-metrics').innerHTML=`
+    <div class="metric"><div class="metric-val" style="color:var(--green)">${fmt(totColl)}</div><div class="metric-lbl">محصّل (ج)</div></div>
+    <div class="metric"><div class="metric-val" style="color:var(--red)">${fmt(totRem)}</div><div class="metric-lbl">متبقي (ج)</div></div>
+    <div class="metric"><div class="metric-val">${todayCnt}</div><div class="metric-lbl">مرضى اليوم</div></div>`;
+  const pending=txns.filter(t=>t.paid<t.total);
+  const alertEl=document.getElementById('doc-alert');
+  if(pending.length){alertEl.style.display='flex';document.getElementById('doc-alert-msg').textContent=pending.length+' مريض لديهم مبالغ متبقية بإجمالي '+fmt(totRem)+' جنيه';}
+  else alertEl.style.display='none';
+  const el=document.getElementById('doc-list');
+  if(!list.length){el.innerHTML='<div class="empty">لا توجد معاملات</div>';return;}
+  el.innerHTML=list.map(t=>`<div class="txn-item">
+    <div><div class="txn-name">${t.name} ${badge(t)}</div><div class="txn-meta">${t.service} — ${t.doctor}${t.notes?' — '+t.notes:''}</div><div class="txn-time">${tStr(t.time)}</div></div>
+    <div class="txn-right"><div class="txn-paid">${fmt(t.paid)} ج</div>${t.total>t.paid?`<div class="txn-rem">من ${fmt(t.total)} ج</div>`:''}</div>
+  </div>`).join('');
+}
+
+// AGENDA
+function getSlotTimes(){
+  const times=[];
+  for(let h=SLOTS_START;h<SLOTS_END;h++){
+    times.push(`${String(h).padStart(2,'0')}:00`);
+    times.push(`${String(h).padStart(2,'0')}:30`);
+  }
+  return times;
+}
+function buildTimeOptions(){
+  const sel=document.getElementById('b-time');
+  sel.innerHTML=getSlotTimes().map(t=>`<option value="${t}">${t}</option>`).join('');
+}
+function renderClinicTabs(){
+  const container=document.getElementById('r-clinic-tabs');
+  container.innerHTML=CLINICS.map(c=>`<button class="clinic-tab ${c.id===activeClinic?'active':''}" onclick="setClinic(${c.id})">${c.name}${c.doctor?' — '+c.doctor:''}</button>`).join('');
+}
+function setClinic(id){
+  activeClinic=id;
+  renderAgenda();
+}
+function renderAgenda(){
+  const ds=todayStr(currentDay);
+  document.getElementById('r-date-label').textContent=dayStr(currentDay);
+  renderClinicTabs();
+  const clinic=CLINICS.find(c=>c.id===activeClinic);
+  document.getElementById('r-clinic-label').textContent=`📅 ${clinic.name}${clinic.doctor?' — '+clinic.doctor:''}`;
+  const dayAppts=appointments.filter(a=>a.date===ds&&a.clinic===activeClinic&&a.status!=='cancelled');
+  renderSlots('r-slots',dayAppts,ds,activeClinic);
+}
+function renderDoctorAgenda(){
+  const ds=todayStr(currentDay);
+  document.getElementById('d-date-label').textContent=dayStr(currentDay);
+  const dayAppts=appointments.filter(a=>a.date===ds&&a.clinic===1&&a.status!=='cancelled');
+  renderSlots('d-slots',dayAppts,ds,1);
+}
+function renderSlots(elId,dayAppts,ds,clinicId){
+  const times=getSlotTimes();
+  const el=document.getElementById(elId);
+  el.innerHTML=times.map(t=>{
+    const appt=dayAppts.find(a=>a.time===t);
+    if(appt){
+      return`<div class="slot">
+        <div class="slot-time">${t}</div>
+        <div class="slot-body"><button class="appt-card" onclick="openApptDetail(${appt.id})">
+          <div class="appt-name">${appt.name}</div>
+          <div class="appt-detail">${appt.service}${appt.notes?' — '+appt.notes:''}</div>
+        </button></div>
+      </div>`;
+    }
+    return`<div class="slot">
+      <div class="slot-time">${t}</div>
+      <div class="slot-body"><span class="slot-empty" onclick="openBookModalAt('${t}',${clinicId})">+ حجز</span></div>
+    </div>`;
+  }).join('');
+}
+function openBookModal(){
+  buildTimeOptions();
+  document.getElementById('book-modal-title').textContent='حجز موعد جديد';
+  document.getElementById('b-name').value='';
+  document.getElementById('b-phone').value='';
+  document.getElementById('b-notes').value='';
+  document.getElementById('modal-book').classList.add('open');
+}
+function openBookModalAt(time,clinicId){
+  buildTimeOptions();
+  document.getElementById('b-time').value=time;
+  document.getElementById('b-clinic').value=clinicId;
+  document.getElementById('b-name').value='';
+  document.getElementById('b-phone').value='';
+  document.getElementById('b-notes').value='';
+  document.getElementById('modal-book').classList.add('open');
+}
+function confirmBook(){
+  const name=document.getElementById('b-name').value.trim();
+  const phone=document.getElementById('b-phone').value.trim();
+  const clinic=parseInt(document.getElementById('b-clinic').value);
+  const doctor=document.getElementById('b-doctor').value;
+  const time=document.getElementById('b-time').value;
+  const service=document.getElementById('b-service').value;
+  const notes=document.getElementById('b-notes').value;
+  const ds=todayStr(currentDay);
+  if(!name){alert('من فضلك أدخل اسم المريض');return;}
+  const conflict=appointments.find(a=>a.date===ds&&a.clinic===clinic&&a.time===time&&a.status!=='cancelled');
+  if(conflict){alert('الوقت ده محجوز بالفعل! اختار وقت تاني');return;}
+  appointments.push({id:nxtAppt++,name,phone,clinic,doctor,service,time,date:ds,notes,status:'confirmed'});
+  closeModal('modal-book');
+  if(role==='reception')renderAgenda();
+  else renderDoctorAgenda();
+}
+function openApptDetail(id){
+  selectedApptId=id;
+  const a=appointments.find(x=>x.id===id);
+  if(!a)return;
+  const clinic=CLINICS.find(c=>c.id===a.clinic);
+  document.getElementById('appt-detail-body').innerHTML=[
+    ['المريض',a.name],['الهاتف',a.phone||'—'],['الموعد',a.time],
+    ['العيادة',clinic.name],['الدكتور',a.doctor],['الخدمة',a.service],
+    ['ملاحظات',a.notes||'—']
+  ].map(([k,v])=>`<div class="r-row"><span class="r-key">${k}</span><span>${v}</span></div>`).join('');
+  document.getElementById('modal-appt').classList.add('open');
+}
+function cancelAppt(){
+  if(!selectedApptId)return;
+  if(!confirm('هتلغي الموعد ده؟'))return;
+  const a=appointments.find(x=>x.id===selectedApptId);
+  if(a)a.status='cancelled';
+  closeModal('modal-appt');
+  if(role==='reception')renderAgenda();
+  else renderDoctorAgenda();
+}
+</script>
+</body>
+</html>
