@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Rouby Care — نظام المدفوعات والمواعيد</title>
+<title>Rouby Care Dental Center</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --green:#1D9E75;--green-light:#E1F5EE;--green-dark:#0F6E56;
+  --green:#1D9E75;--green-light:#E1F5EEE;--green-light:#E1F5EE;--green-dark:#0F6E56;
   --amber:#EF9F27;--amber-light:#FAEEDA;
   --red:#E24B4A;--red-light:#FCEBEB;
   --blue:#378ADD;--blue-light:#E6F1FB;
@@ -23,58 +23,56 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 /* LOGIN */
 .login-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;gap:2rem}
 .logo{display:flex;align-items:center;gap:10px}
-.logo-icon{width:52px;height:52px;background:var(--green);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px}
+.logo-icon{width:56px;height:56px;background:var(--green);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px}
 .logo-text{font-size:22px;font-weight:700;color:var(--text)}
 .logo-sub{font-size:13px;color:var(--text2);margin-top:2px}
-.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:360px}
-.role-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.5rem 1rem;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:all 0.15s;-webkit-appearance:none}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:380px}
+.role-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.5rem 1rem;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:all 0.15s;-webkit-appearance:none;width:100%}
 .role-btn:active{transform:scale(0.97);border-color:var(--green);background:var(--green-light)}
-.role-icon{font-size:32px}
-.role-name{font-size:15px;font-weight:600;color:var(--text)}
+.role-btn.patient{grid-column:1/-1;flex-direction:row;justify-content:center;gap:14px;padding:1.2rem}
+.role-icon{font-size:30px}
+.role-name{font-size:14px;font-weight:600;color:var(--text)}
 .role-desc{font-size:12px;color:var(--text2)}
 
 /* PIN */
 .pin-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;gap:1.5rem}
-.pin-header{text-align:center}
-.pin-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px}
-.pin-subtitle{font-size:13px;color:var(--text2)}
+.pin-title{font-size:18px;font-weight:600;color:var(--text);text-align:center}
+.pin-subtitle{font-size:13px;color:var(--text2);text-align:center}
 .pin-dots{display:flex;gap:14px;margin:8px 0}
 .dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--border2);background:transparent;transition:all 0.15s}
 .dot.on{background:var(--green);border-color:var(--green)}
 .pin-error{font-size:13px;color:var(--red);min-height:18px;text-align:center}
 .numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:300px}
-.num{padding:16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-size:20px;font-weight:500;cursor:pointer;text-align:center;-webkit-appearance:none;color:var(--text);transition:all 0.1s}
+.num{padding:16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-size:20px;font-weight:500;cursor:pointer;text-align:center;-webkit-appearance:none;color:var(--text);transition:all 0.1s;font-family:inherit}
 .num:active{transform:scale(0.94);background:var(--green-light);border-color:var(--green)}
-.num.sm{font-size:14px}
+.num.sm{font-size:13px}
 .back-link{font-size:14px;color:var(--text2);background:none;border:none;cursor:pointer;padding:8px}
 
-/* TOP NAV */
+/* NAV */
 .topnav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-.nav-logo{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:var(--text)}
-.nav-logo-icon{width:32px;height:32px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
-.nav-role{font-size:12px;color:var(--text2);background:var(--bg);padding:5px 10px;border-radius:20px;border:1px solid var(--border)}
-.logout{font-size:13px;color:var(--text2);background:none;border:1px solid var(--border);padding:6px 12px;cursor:pointer;border-radius:var(--radius-sm)}
-
-/* BOTTOM NAV */
-.bottomnav{background:var(--surface);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(3,1fr);position:sticky;bottom:0;z-index:10}
+.nav-logo{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--text)}
+.nav-logo-icon{width:30px;height:30px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.nav-role{font-size:11px;color:var(--text2);background:var(--bg);padding:4px 10px;border-radius:20px;border:1px solid var(--border)}
+.logout{font-size:12px;color:var(--text2);background:none;border:1px solid var(--border);padding:5px 10px;cursor:pointer;border-radius:var(--radius-sm)}
+.bottomnav{background:var(--surface);border-top:1px solid var(--border);display:grid;position:sticky;bottom:0;z-index:10}
 .bnav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 8px;cursor:pointer;border:none;background:none;font-family:inherit;color:var(--text2);font-size:11px;transition:all 0.15s}
 .bnav-item.active{color:var(--green)}
-.bnav-icon{font-size:22px}
+.bnav-icon{font-size:20px}
 
 /* CONTENT */
-.tab-content{display:none;flex:1;padding:16px;flex-direction:column;gap:14px;max-width:480px;width:100%;margin:0 auto;overflow-y:auto}
+.tab-content{display:none;flex:1;padding:16px;flex-direction:column;gap:14px;max-width:520px;width:100%;margin:0 auto;overflow-y:auto}
 .tab-content.active{display:flex}
 
 /* CARDS */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.card-head{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .card-title{font-size:14px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px}
 .card-body{padding:16px;display:flex;flex-direction:column;gap:12px}
 
 /* FORM */
-.field{display:flex;flex-direction:column;gap:6px}
-.field label{font-size:12px;font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:0.3px}
-.field input,.field select{padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:15px;background:var(--surface);color:var(--text);width:100%;-webkit-appearance:none;font-family:inherit}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:12px;font-weight:500;color:var(--text2)}
+.field input,.field select{padding:11px 13px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:15px;background:var(--surface);color:var(--text);width:100%;-webkit-appearance:none;font-family:inherit}
 .field input:focus,.field select:focus{outline:none;border-color:var(--green)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
@@ -84,38 +82,40 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .bd-row.total{font-weight:700;font-size:15px;border-top:1px solid #9FE1CB;padding-top:8px;margin-top:2px}
 
 /* BUTTONS */
-.btn{padding:14px 18px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--text);font-weight:500;font-family:inherit;transition:all 0.15s;-webkit-appearance:none}
+.btn{padding:12px 18px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--text);font-weight:500;font-family:inherit;transition:all 0.15s;-webkit-appearance:none}
 .btn:active{transform:scale(0.98)}
 .btn-green{background:var(--green);border-color:var(--green);color:#fff}
 .btn-green:active{background:var(--green-dark)}
-.btn-blue{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn-red{background:var(--red);border-color:var(--red);color:#fff}
 .btn-full{width:100%}
 
 /* ALERT */
-.alert{background:var(--amber-light);border:1px solid #FAC775;border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;color:#854F0B;display:flex;align-items:flex-start;gap:8px}
+.alert{border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;display:flex;align-items:flex-start;gap:8px}
+.alert-amber{background:var(--amber-light);border:1px solid #FAC775;color:#854F0B}
+.alert-green{background:var(--green-light);border:1px solid #9FE1CB;color:var(--green-dark)}
+.alert-red{background:var(--red-light);border:1px solid #F5AAAA;color:#A32D2D}
 
 /* METRICS */
-.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.metrics{display:grid;gap:10px}
 .metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center}
-.metric-val{font-size:18px;font-weight:700;color:var(--text)}
+.metric-val{font-size:20px;font-weight:700;color:var(--text)}
 .metric-lbl{font-size:11px;color:var(--text2);margin-top:3px}
 
 /* FILTER */
 .filter-bar{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
-.filter-chip{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;cursor:pointer;white-space:nowrap;color:var(--text2);-webkit-appearance:none;font-family:inherit}
-.filter-chip.active{background:var(--green-light);border-color:var(--green);color:var(--green-dark);font-weight:600}
+.chip{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;cursor:pointer;white-space:nowrap;color:var(--text2);-webkit-appearance:none;font-family:inherit}
+.chip.active{background:var(--green-light);border-color:var(--green);color:var(--green-dark);font-weight:600}
 
-/* TXN LIST */
-.txn-list{display:flex;flex-direction:column}
-.txn-item{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px}
-.txn-item:last-child{border-bottom:none}
-.txn-name{font-size:15px;font-weight:600;color:var(--text)}
-.txn-meta{font-size:12px;color:var(--text2);margin-top:3px}
-.txn-time{font-size:11px;color:var(--text3);margin-top:2px}
-.txn-right{text-align:left;direction:ltr;flex-shrink:0}
-.txn-paid{font-size:15px;font-weight:700;color:var(--green)}
-.txn-rem{font-size:12px;color:var(--red);margin-top:2px}
+/* LIST */
+.list{display:flex;flex-direction:column}
+.list-item{padding:13px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.list-item:last-child{border-bottom:none}
+.item-name{font-size:14px;font-weight:600;color:var(--text)}
+.item-meta{font-size:12px;color:var(--text2);margin-top:3px}
+.item-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.item-right{text-align:left;direction:ltr;flex-shrink:0}
 .empty{padding:2.5rem;text-align:center;color:var(--text2);font-size:14px}
+.loading{padding:2rem;text-align:center;color:var(--text2);font-size:13px}
 
 /* BADGE */
 .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
@@ -123,58 +123,80 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .b-amber{background:var(--amber-light);color:#854F0B}
 .b-red{background:var(--red-light);color:#A32D2D}
 .b-blue{background:var(--blue-light);color:#185FA5}
+.b-grey{background:#F0F0EE;color:#666}
 
 /* AGENDA */
-.date-nav{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px}
-.date-label{font-size:15px;font-weight:600;color:var(--text);text-align:center;flex:1}
-.date-arrow{background:none;border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 14px;font-size:16px;cursor:pointer;color:var(--text)}
+.date-nav{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px}
+.date-label{font-size:14px;font-weight:600;color:var(--text);text-align:center;flex:1}
+.date-arrow{background:none;border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px 13px;font-size:16px;cursor:pointer;color:var(--text)}
 .date-arrow:active{background:var(--green-light)}
-.clinic-tabs{display:flex;gap:8px;overflow-x:auto}
-.clinic-tab{padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;cursor:pointer;white-space:nowrap;color:var(--text2);-webkit-appearance:none;font-family:inherit;font-weight:500}
-.clinic-tab.active{background:var(--green);border-color:var(--green);color:#fff}
-.time-slots{display:flex;flex-direction:column;gap:0}
-.slot{display:flex;align-items:stretch;border-bottom:1px solid var(--border);min-height:56px}
+.slot{display:flex;align-items:stretch;border-bottom:1px solid var(--border);min-height:52px}
 .slot:last-child{border-bottom:none}
-.slot-time{width:64px;padding:8px 10px;font-size:12px;color:var(--text2);border-left:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg)}
+.slot-time{width:60px;padding:8px;font-size:11px;color:var(--text2);border-left:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg)}
 .slot-body{flex:1;padding:8px 12px;display:flex;align-items:center}
-.slot-empty{font-size:13px;color:var(--text3);cursor:pointer}
+.slot-empty{font-size:13px;color:var(--text3);cursor:pointer;background:none;border:none;font-family:inherit;padding:0;text-align:right}
 .slot-empty:hover{color:var(--green)}
-.appt-card{background:var(--green-light);border-radius:var(--radius-sm);padding:8px 12px;width:100%;cursor:pointer;border:none;text-align:right;font-family:inherit}
-.appt-card:active{opacity:0.85}
-.appt-name{font-size:14px;font-weight:600;color:var(--green-dark)}
-.appt-detail{font-size:12px;color:var(--green-dark);opacity:0.8;margin-top:2px}
+.appt-card{background:var(--green-light);border-radius:var(--radius-sm);padding:8px 10px;width:100%;cursor:pointer;border:none;text-align:right;font-family:inherit}
+.appt-name{font-size:13px;font-weight:600;color:var(--green-dark)}
+.appt-detail{font-size:11px;color:var(--green-dark);opacity:0.8;margin-top:2px}
 .appt-card.cancelled{background:var(--red-light)}
 .appt-card.cancelled .appt-name,.appt-card.cancelled .appt-detail{color:#A32D2D}
 
-/* MODALS */
+/* PATIENT BOOKING */
+.booking-wrap{flex:1;padding:20px 16px;display:flex;flex-direction:column;gap:16px;max-width:480px;width:100%;margin:0 auto}
+.booking-header{text-align:center;padding:1rem 0}
+.booking-logo{font-size:36px;margin-bottom:8px}
+.booking-title{font-size:20px;font-weight:700;color:var(--text)}
+.booking-sub{font-size:13px;color:var(--text2);margin-top:4px}
+.doctor-grid{display:flex;flex-direction:column;gap:10px}
+.doctor-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all 0.15s}
+.doctor-card:active{border-color:var(--green);background:var(--green-light)}
+.doctor-card.selected{border-color:var(--green);background:var(--green-light)}
+.doctor-card.unavailable{opacity:0.4;cursor:not-allowed}
+.doc-info{}
+.doc-name{font-size:15px;font-weight:600;color:var(--text)}
+.doc-hours{font-size:12px;color:var(--text2);margin-top:3px}
+.doc-check{font-size:20px;opacity:0}
+.doctor-card.selected .doc-check{opacity:1}
+.time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.time-btn{padding:10px 6px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-size:13px;cursor:pointer;text-align:center;-webkit-appearance:none;font-family:inherit;color:var(--text);transition:all 0.1s}
+.time-btn:active{transform:scale(0.96)}
+.time-btn.selected{background:var(--green);border-color:var(--green);color:#fff;font-weight:600}
+.time-btn.taken{background:var(--bg);color:var(--text3);cursor:not-allowed;border-color:var(--border)}
+.step-indicator{display:flex;align-items:center;justify-content:center;gap:8px}
+.step-dot{width:8px;height:8px;border-radius:50%;background:var(--border)}
+.step-dot.active{background:var(--green);width:20px;border-radius:4px}
+.step-dot.done{background:var(--green-dark)}
+
+/* MODAL */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;align-items:flex-end;justify-content:center}
 .modal-bg.open{display:flex}
-.modal-sheet{background:var(--surface);border-radius:20px 20px 0 0;padding:1.5rem;width:100%;max-width:480px;max-height:90vh;overflow-y:auto}
-.modal-title{font-size:17px;font-weight:700;color:var(--text);margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between}
+.modal-sheet{background:var(--surface);border-radius:20px 20px 0 0;padding:1.5rem;width:100%;max-width:500px;max-height:90vh;overflow-y:auto}
+.modal-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between}
 .modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text2);padding:4px}
-
-/* RECEIPT */
 .receipt-logo{text-align:center;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1.5px dashed var(--border)}
-.receipt-name{font-size:16px;font-weight:700;color:var(--green)}
-.receipt-addr{font-size:12px;color:var(--text2);margin-top:3px}
-.receipt-date{font-size:11px;color:var(--text3);margin-top:3px}
-.r-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
-.r-row:last-child{border:none;font-weight:700;font-size:15px;padding-top:12px}
+.receipt-name-lg{font-size:16px;font-weight:700;color:var(--green)}
+.r-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px}
+.r-row:last-child{border:none;font-weight:700;font-size:15px}
 .r-key{color:var(--text2)}
 .receipt-footer{text-align:center;font-size:12px;color:var(--text3);margin-top:1rem;padding-top:1rem;border-top:1px dashed var(--border)}
 .modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1rem}
+
+/* SPINNER */
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ═══════════════ LOGIN ═══════════════ -->
 <div class="screen active" id="s-login">
   <div class="login-wrap">
     <div class="logo">
       <div class="logo-icon">🦷</div>
       <div>
         <div class="logo-text">Rouby Care</div>
-        <div class="logo-sub">نظام المدفوعات والمواعيد</div>
+        <div class="logo-sub">Dental Center — الفيوم</div>
       </div>
     </div>
     <div class="role-grid">
@@ -188,41 +210,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="role-name">د. رنا</div>
         <div class="role-desc">لوحة المتابعة</div>
       </button>
+      <button class="role-btn patient" onclick="showPatientBooking()">
+        <div class="role-icon">🗓️</div>
+        <div>
+          <div class="role-name">حجز موعد</div>
+          <div class="role-desc">للمرضى — بدون رقم سري</div>
+        </div>
+      </button>
     </div>
   </div>
 </div>
 
-<!-- PIN -->
+<!-- ═══════════════ PIN ═══════════════ -->
 <div class="screen" id="s-pin">
   <div class="pin-wrap">
     <button class="back-link" onclick="goBack()">← رجوع</button>
-    <div class="pin-header">
-      <div class="pin-title" id="pin-title">أدخل الرقم السري</div>
-      <div class="pin-subtitle" id="pin-sub"></div>
-    </div>
+    <div class="pin-title" id="pin-title">أدخل الرقم السري</div>
+    <div class="pin-subtitle" id="pin-sub"></div>
     <div class="pin-dots">
       <div class="dot" id="p0"></div><div class="dot" id="p1"></div>
       <div class="dot" id="p2"></div><div class="dot" id="p3"></div>
     </div>
     <div class="pin-error" id="pin-err"></div>
     <div class="numpad">
-      <button class="num" onclick="np('1')">1</button>
-      <button class="num" onclick="np('2')">2</button>
-      <button class="num" onclick="np('3')">3</button>
-      <button class="num" onclick="np('4')">4</button>
-      <button class="num" onclick="np('5')">5</button>
-      <button class="num" onclick="np('6')">6</button>
-      <button class="num" onclick="np('7')">7</button>
-      <button class="num" onclick="np('8')">8</button>
-      <button class="num" onclick="np('9')">9</button>
-      <button class="num sm" onclick="pinClear()">مسح</button>
-      <button class="num" onclick="np('0')">0</button>
-      <button class="num sm" onclick="pinDel()">⌫</button>
+      <button class="num" onclick="np('1')">1</button><button class="num" onclick="np('2')">2</button><button class="num" onclick="np('3')">3</button>
+      <button class="num" onclick="np('4')">4</button><button class="num" onclick="np('5')">5</button><button class="num" onclick="np('6')">6</button>
+      <button class="num" onclick="np('7')">7</button><button class="num" onclick="np('8')">8</button><button class="num" onclick="np('9')">9</button>
+      <button class="num sm" onclick="pinClear()">مسح</button><button class="num" onclick="np('0')">0</button><button class="num sm" onclick="pinDel()">⌫</button>
     </div>
   </div>
 </div>
 
-<!-- RECEPTION SCREEN -->
+<!-- ═══════════════ RECEPTION ═══════════════ -->
 <div class="screen" id="s-reception">
   <div class="topnav">
     <div class="nav-logo"><div class="nav-logo-icon">🦷</div> Rouby Care</div>
@@ -231,8 +250,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <button class="logout" onclick="logout()">خروج</button>
     </div>
   </div>
-
-  <!-- TAB: دفعات -->
+  <!-- TAB: Pay -->
   <div class="tab-content active" id="r-tab-pay">
     <div class="card">
       <div class="card-head"><div class="card-title">💰 تسجيل دفعة</div></div>
@@ -251,13 +269,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           </div>
           <div class="field"><label>الدكتور</label>
             <select id="f-doctor">
-              <option>د. رنا</option><option>د. أحمد</option><option>د. سارة</option>
+              <option>د. رنا الروبي</option><option>د. لمى</option><option>د. آيه</option>
+              <option>د. محمد زكريا</option><option>د. عبد الرحمن ماجد</option>
+              <option>د. رباب</option><option>د. يارا</option><option>د. محمد مجدي</option>
             </select>
           </div>
         </div>
         <div class="row2">
-          <div class="field"><label>إجمالي الأتعاب</label><input type="number" id="f-total" placeholder="0 ج" oninput="calcBD()"/></div>
-          <div class="field"><label>المدفوع الآن</label><input type="number" id="f-paid" placeholder="0 ج" oninput="calcBD()"/></div>
+          <div class="field"><label>إجمالي الأتعاب (ج)</label><input type="number" id="f-total" placeholder="0" oninput="calcBD()"/></div>
+          <div class="field"><label>المدفوع الآن (ج)</label><input type="number" id="f-paid" placeholder="0" oninput="calcBD()"/></div>
         </div>
         <div class="field"><label>ملاحظات</label><input type="text" id="f-notes" placeholder="أي ملاحظات..."/></div>
         <div class="breakdown" id="breakdown">
@@ -265,7 +285,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <div class="bd-row"><span>المدفوع الآن</span><span id="bd-paid">—</span></div>
           <div class="bd-row total"><span>المتبقي</span><span id="bd-rem">—</span></div>
         </div>
-        <button class="btn btn-green btn-full" onclick="submitPay()">✓ تسجيل وإصدار الإيصال</button>
+        <button class="btn btn-green btn-full" id="pay-btn" onclick="submitPay()">✓ تسجيل وإصدار الإيصال</button>
       </div>
     </div>
     <div class="card">
@@ -273,41 +293,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="card-title">📋 مدفوعات اليوم</div>
         <span id="today-count" style="font-size:12px;color:var(--text2)"></span>
       </div>
-      <div id="today-list" class="txn-list"></div>
+      <div id="today-list" class="list"></div>
     </div>
   </div>
-
-  <!-- TAB: أجندة -->
+  <!-- TAB: Agenda -->
   <div class="tab-content" id="r-tab-agenda">
     <div class="date-nav">
       <button class="date-arrow" onclick="changeDay(-1)">›</button>
       <div class="date-label" id="r-date-label"></div>
       <button class="date-arrow" onclick="changeDay(1)">‹</button>
     </div>
-    <div class="clinic-tabs" id="r-clinic-tabs"></div>
+    <div class="filter-bar" id="r-doctor-filter"></div>
     <div class="card">
       <div class="card-head">
-        <div class="card-title" id="r-clinic-label">📅 المواعيد</div>
-        <button class="btn btn-green" style="padding:8px 14px;font-size:13px" onclick="openBookModal()">+ حجز جديد</button>
+        <div class="card-title" id="r-agenda-title">📅 المواعيد</div>
+        <button class="btn btn-green" style="padding:7px 12px;font-size:12px" onclick="openBookModal()">+ حجز</button>
       </div>
-      <div id="r-slots" class="time-slots"></div>
+      <div id="r-slots" class="list"></div>
     </div>
   </div>
-
-  <div class="bottomnav">
-    <button class="bnav-item active" id="r-bnav-pay" onclick="switchRTab('pay')">
-      <div class="bnav-icon">💰</div><div>الدفعات</div>
-    </button>
-    <button class="bnav-item" id="r-bnav-agenda" onclick="switchRTab('agenda')">
-      <div class="bnav-icon">📅</div><div>الأجندة</div>
-    </button>
-    <button class="bnav-item" id="r-bnav-dummy" style="opacity:0.3;pointer-events:none">
-      <div class="bnav-icon">⚙️</div><div>الإعدادات</div>
-    </button>
+  <div class="bottomnav" style="grid-template-columns:1fr 1fr">
+    <button class="bnav-item active" id="r-bnav-pay" onclick="switchRTab('pay')"><div class="bnav-icon">💰</div><div>الدفعات</div></button>
+    <button class="bnav-item" id="r-bnav-agenda" onclick="switchRTab('agenda')"><div class="bnav-icon">📅</div><div>الأجندة</div></button>
   </div>
 </div>
 
-<!-- DOCTOR SCREEN -->
+<!-- ═══════════════ DOCTOR (د. رنا) ═══════════════ -->
 <div class="screen" id="s-doctor">
   <div class="topnav">
     <div class="nav-logo"><div class="nav-logo-icon">🦷</div> Rouby Care</div>
@@ -316,200 +327,241 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <button class="logout" onclick="logout()">خروج</button>
     </div>
   </div>
-
-  <!-- TAB: متابعة -->
-  <div class="tab-content active" id="d-tab-pay">
-    <div id="doc-alert" style="display:none" class="alert">
-      <div>⚠️</div><div id="doc-alert-msg"></div>
-    </div>
-    <div class="metrics" id="doc-metrics"></div>
+  <!-- TAB: Finance -->
+  <div class="tab-content active" id="d-tab-finance">
+    <div id="doc-alert" style="display:none" class="alert alert-amber"><span>⚠️</span><span id="doc-alert-msg"></span></div>
+    <div class="metrics" id="doc-metrics" style="grid-template-columns:repeat(3,1fr)"></div>
     <div class="filter-bar">
-      <button class="filter-chip active" onclick="setFilter('all',this)">الكل</button>
-      <button class="filter-chip" onclick="setFilter('pending',this)">متبقي</button>
-      <button class="filter-chip" onclick="setFilter('done',this)">مكتمل</button>
+      <button class="chip active" onclick="setFilter('all',this)">الكل</button>
+      <button class="chip" onclick="setFilter('pending',this)">متبقي</button>
+      <button class="chip" onclick="setFilter('done',this)">مكتمل</button>
     </div>
-    <div class="card"><div id="doc-list" class="txn-list"></div></div>
+    <div class="card"><div id="doc-txn-list" class="list"></div></div>
   </div>
-
-  <!-- TAB: أجندتي -->
+  <!-- TAB: All Agenda -->
   <div class="tab-content" id="d-tab-agenda">
     <div class="date-nav">
       <button class="date-arrow" onclick="changeDay(-1)">›</button>
       <div class="date-label" id="d-date-label"></div>
       <button class="date-arrow" onclick="changeDay(1)">‹</button>
     </div>
+    <div class="filter-bar" id="d-doctor-filter"></div>
     <div class="card">
-      <div class="card-head"><div class="card-title">🏥 عيادة ١ — د. رنا</div></div>
-      <div id="d-slots" class="time-slots"></div>
+      <div class="card-head"><div class="card-title" id="d-agenda-title">📅 كل المواعيد</div></div>
+      <div id="d-slots" class="list"></div>
     </div>
   </div>
-
-  <div class="bottomnav">
-    <button class="bnav-item active" id="d-bnav-pay" onclick="switchDTab('pay')">
-      <div class="bnav-icon">📊</div><div>المتابعة</div>
-    </button>
-    <button class="bnav-item" id="d-bnav-agenda" onclick="switchDTab('agenda')">
-      <div class="bnav-icon">📅</div><div>أجندتي</div>
-    </button>
-    <button class="bnav-item" id="d-bnav-dummy" style="opacity:0.3;pointer-events:none">
-      <div class="bnav-icon">⚙️</div><div>الإعدادات</div>
-    </button>
+  <div class="bottomnav" style="grid-template-columns:1fr 1fr">
+    <button class="bnav-item active" id="d-bnav-finance" onclick="switchDTab('finance')"><div class="bnav-icon">📊</div><div>المتابعة</div></button>
+    <button class="bnav-item" id="d-bnav-agenda" onclick="switchDTab('agenda')"><div class="bnav-icon">📅</div><div>كل المواعيد</div></button>
   </div>
+</div>
+
+<!-- ═══════════════ PATIENT BOOKING ═══════════════ -->
+<div class="screen" id="s-patient">
+  <div class="topnav">
+    <div class="nav-logo"><div class="nav-logo-icon">🦷</div> Rouby Care</div>
+    <button class="logout" onclick="logout()">رجوع</button>
+  </div>
+  <div class="booking-wrap" id="booking-wrap"></div>
 </div>
 
 <!-- RECEIPT MODAL -->
 <div class="modal-bg" id="modal-receipt">
   <div class="modal-sheet">
     <div class="receipt-logo">
-      <div class="receipt-name">🦷 Rouby Care Dental Center</div>
-      <div class="receipt-addr">الفيوم — مركز طب الأسنان</div>
-      <div class="receipt-date" id="r-date"></div>
+      <div class="receipt-name-lg">🦷 Rouby Care Dental Center</div>
+      <div style="font-size:12px;color:var(--text2);margin-top:3px">الفيوم — مركز طب الأسنان</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:3px" id="r-date"></div>
     </div>
     <div id="r-rows"></div>
     <div class="receipt-footer">شكراً لثقتكم — ابتسامتك أمانة عندنا 🦷</div>
     <div class="modal-actions">
       <button class="btn" onclick="closeModal('modal-receipt')">🖨️ طباعة</button>
-      <button class="btn btn-green" onclick="closeModal('modal-receipt')">✓ تم التسليم</button>
+      <button class="btn btn-green" onclick="closeModal('modal-receipt')">✓ تم</button>
     </div>
   </div>
 </div>
 
-<!-- BOOKING MODAL -->
+<!-- BOOK MODAL -->
 <div class="modal-bg" id="modal-book">
   <div class="modal-sheet">
     <div class="modal-title">
-      <span id="book-modal-title">حجز موعد جديد</span>
+      <span>حجز موعد جديد</span>
       <button class="modal-close" onclick="closeModal('modal-book')">✕</button>
     </div>
     <div style="display:flex;flex-direction:column;gap:12px">
       <div class="field"><label>اسم المريض</label><input type="text" id="b-name" placeholder="الاسم الكامل"/></div>
       <div class="field"><label>رقم الهاتف</label><input type="tel" id="b-phone" placeholder="01X..."/></div>
       <div class="row2">
-        <div class="field"><label>العيادة</label>
-          <select id="b-clinic">
-            <option value="1">عيادة ١ — د. رنا</option>
-            <option value="2">عيادة ٢</option>
-            <option value="3">عيادة ٣</option>
-          </select>
-        </div>
         <div class="field"><label>الدكتور</label>
-          <select id="b-doctor">
-            <option>د. رنا</option><option>د. أحمد</option><option>د. سارة</option>
+          <select id="b-doctor" onchange="updateBookTimes()">
+            <option>د. رنا الروبي</option><option>د. لمى</option><option>د. آيه</option>
+            <option>د. محمد زكريا</option><option>د. عبد الرحمن ماجد</option>
+            <option>د. رباب</option><option>د. يارا</option><option>د. محمد مجدي</option>
           </select>
         </div>
+        <div class="field"><label>الوقت</label><select id="b-time"></select></div>
       </div>
-      <div class="row2">
-        <div class="field"><label>الوقت</label>
-          <select id="b-time"></select>
-        </div>
-        <div class="field"><label>الخدمة</label>
-          <select id="b-service">
-            <option>تقويم</option><option>زراعة</option><option>تركيبات</option>
-            <option>كشف عادي</option><option>حشو</option><option>تنظيف</option><option>خلع</option>
-          </select>
-        </div>
+      <div class="field"><label>الخدمة</label>
+        <select id="b-service">
+          <option>تقويم</option><option>زراعة</option><option>تركيبات</option>
+          <option>كشف عادي</option><option>حشو</option><option>تنظيف</option><option>خلع</option>
+        </select>
       </div>
       <div class="field"><label>ملاحظات</label><input type="text" id="b-notes" placeholder="أي ملاحظات..."/></div>
-      <button class="btn btn-green btn-full" onclick="confirmBook()">✓ تأكيد الحجز</button>
+      <button class="btn btn-green btn-full" id="book-btn" onclick="confirmBook()">✓ تأكيد الحجز</button>
     </div>
   </div>
 </div>
 
-<!-- APPOINTMENT DETAIL MODAL -->
+<!-- APPT DETAIL MODAL -->
 <div class="modal-bg" id="modal-appt">
   <div class="modal-sheet">
     <div class="modal-title">
       <span>تفاصيل الموعد</span>
       <button class="modal-close" onclick="closeModal('modal-appt')">✕</button>
     </div>
-    <div id="appt-detail-body" style="display:flex;flex-direction:column;gap:10px"></div>
+    <div id="appt-detail-body" style="display:flex;flex-direction:column;gap:0"></div>
     <div class="modal-actions" style="margin-top:1rem">
-      <button class="btn b-red" style="border-color:var(--red);color:var(--red)" onclick="cancelAppt()">إلغاء الموعد</button>
+      <button class="btn btn-red" onclick="cancelAppt()">إلغاء الموعد</button>
       <button class="btn btn-green" onclick="closeModal('modal-appt')">✓ حسناً</button>
     </div>
   </div>
 </div>
 
-<script>
-const PINS={reception:'1234',doctor:'5678'};
-const CLINICS=[{id:1,name:'عيادة ١',doctor:'د. رنا'},{id:2,name:'عيادة ٢',doctor:''},{id:3,name:'عيادة ٣',doctor:''}];
-const SLOTS_START=8, SLOTS_END=20, SLOT_MIN=30;
+<!-- BOOKING CONFIRM MODAL -->
+<div class="modal-bg" id="modal-booking-confirm">
+  <div class="modal-sheet">
+    <div style="text-align:center;padding:1rem 0">
+      <div style="font-size:48px;margin-bottom:12px">✅</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px">تم الحجز بنجاح!</div>
+      <div style="font-size:14px;color:var(--text2)" id="booking-confirm-msg"></div>
+    </div>
+    <div style="margin-top:1.5rem">
+      <button class="btn btn-green btn-full" onclick="closeModal('modal-booking-confirm');showPatientBooking()">حجز موعد آخر</button>
+      <button class="btn btn-full" style="margin-top:8px" onclick="logout()">الرئيسية</button>
+    </div>
+  </div>
+</div>
 
-let role=null, pinBuf='', txFilter='all', activeClinic=1, currentDay=new Date(), selectedApptId=null;
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, updateDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
-let txns=[
-  {id:1,name:'أحمد محمود',phone:'0101234567',service:'تقويم',doctor:'د. رنا',total:8000,paid:8000,notes:'',time:new Date(Date.now()-7200000)},
-  {id:2,name:'سارة علي',phone:'0112345678',service:'زراعة',doctor:'د. أحمد',total:15000,paid:6000,notes:'دفعة أولى',time:new Date(Date.now()-3600000)},
-  {id:3,name:'محمد حسن',phone:'0123456789',service:'تركيبات',doctor:'د. رنا',total:4000,paid:1600,notes:'',time:new Date(Date.now()-1800000)},
+const firebaseConfig = {
+  apiKey: "AIzaSyCjwSXhdm89KbGDQiQi3SaRDzEWFmtDw1M",
+  authDomain: "rouby-care-dental-centre.firebaseapp.com",
+  projectId: "rouby-care-dental-centre",
+  storageBucket: "rouby-care-dental-centre.firebasestorage.app",
+  messagingSenderId: "722917662260",
+  appId: "1:722917662260:web:1c2ba5e18dbe6217ca7461"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ═══════════════ DOCTORS DATA ═══════════════
+const DOCTORS = [
+  { name:'د. رنا الروبي', days:[6,0,1,2,3,4], start:14, end:22, color:'#1D9E75' },
+  { name:'د. لمى',        days:[6,0,1,2,3,4], start:18, end:22, color:'#378ADD' },
+  { name:'د. آيه',        days:[6,0,2],        start:14, end:22, color:'#9B59B6' },
+  { name:'د. محمد زكريا', days:[6,0,1,2,3,4], start:18, end:22, color:'#E67E22' },
+  { name:'د. عبد الرحمن ماجد', days:[3,4],   start:17, end:22, color:'#E74C3C', note:'ظروف مؤقتة' },
+  { name:'د. رباب',       days:[6,2],          start:14, end:22, color:'#16A085' },
+  { name:'د. يارا',       days:[0,3],          start:14, end:22, color:'#8E44AD' },
+  { name:'د. محمد مجدي',  days:[1,4],          start:14, end:22, color:'#2C3E50' },
 ];
 
-let appointments=[
-  {id:1,name:'فاطمة إبراهيم',phone:'0134567890',clinic:1,doctor:'د. رنا',service:'تقويم',time:'09:00',date:todayStr(),notes:'متابعة',status:'confirmed'},
-  {id:2,name:'كريم سعيد',phone:'0145678901',clinic:1,doctor:'د. رنا',service:'كشف عادي',time:'10:30',date:todayStr(),notes:'',status:'confirmed'},
-  {id:3,name:'منى طارق',phone:'0156789012',clinic:2,doctor:'د. أحمد',service:'حشو',time:'11:00',date:todayStr(),notes:'',status:'confirmed'},
-  {id:4,name:'يوسف عادل',phone:'0167890123',clinic:1,doctor:'د. رنا',service:'تركيبات',time:'14:00',date:todayStr(),notes:'',status:'confirmed'},
-];
-let nxtTxn=4, nxtAppt=5;
+const PINS = { reception:'1234', doctor:'5678' };
+const DAY_NAMES = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
 
-function todayStr(d){const dd=d||new Date();return dd.toISOString().split('T')[0];}
-function dayStr(d){return d.toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}
-function fmt(n){return Math.round(n).toLocaleString('ar-EG');}
-function tStr(d){return new Date(d).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});}
+// ═══════════════ STATE ═══════════════
+let role=null, pinBuf='', txFilter='all';
+let currentDay=new Date(), selectedDocFilter=null, selectedApptId=null;
+let bookStep=1, bookDoctor=null, bookTime=null;
 
+// ═══════════════ HELPERS ═══════════════
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
+function fmt(n){return Math.round(n).toLocaleString('ar-EG');}
+function tStr(d){return new Date(d.seconds?d.seconds*1000:d).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});}
+function todayStr(d){const dd=d||new Date();return dd.toISOString().split('T')[0];}
+function dayStr(d){return d.toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}
+function setLoading(btnId,loading,text=''){const b=document.getElementById(btnId);if(!b)return;b.disabled=loading;b.innerHTML=loading?`<span class="spinner"></span>`:(text||b.dataset.orig||b.innerHTML);if(!loading&&text)b.dataset.orig=text;}
 
-// PIN
-function selectRole(r){
+function getDoctorSlots(doctorName, dateStr){
+  const doc=DOCTORS.find(d=>d.name===doctorName);
+  if(!doc)return[];
+  const date=new Date(dateStr+'T00:00:00');
+  const dayOfWeek=date.getDay();
+  if(!doc.days.includes(dayOfWeek))return[];
+  const slots=[];
+  for(let h=doc.start;h<doc.end;h++){
+    slots.push(`${String(h).padStart(2,'0')}:00`);
+    slots.push(`${String(h).padStart(2,'0')}:30`);
+  }
+  return slots;
+}
+
+function isDoctorAvailableToday(doctorName){
+  const doc=DOCTORS.find(d=>d.name===doctorName);
+  if(!doc)return false;
+  const dayOfWeek=new Date().getDay();
+  return doc.days.includes(dayOfWeek);
+}
+
+// ═══════════════ PIN ═══════════════
+window.selectRole=function(r){
   role=r;
-  document.getElementById('pin-title').textContent=r==='doctor'?'أهلاً د. رنا، أدخلي رقمك السري':'أدخل الرقم السري للاستقبال';
+  document.getElementById('pin-title').textContent=r==='doctor'?'أهلاً د. رنا 👑':'رقم سري الاستقبال';
   document.getElementById('pin-sub').textContent=r==='doctor'?'رقم سري خاص بك':'للموظفين فقط';
   pinBuf='';updateDots();document.getElementById('pin-err').textContent='';
   show('s-pin');
 }
-function goBack(){show('s-login');}
+window.goBack=function(){show('s-login');}
 function updateDots(){for(let i=0;i<4;i++)document.getElementById('p'+i).classList.toggle('on',i<pinBuf.length);}
-function np(d){if(pinBuf.length>=4)return;pinBuf+=d;updateDots();if(pinBuf.length===4)checkPin();}
-function pinDel(){pinBuf=pinBuf.slice(0,-1);updateDots();}
-function pinClear(){pinBuf='';updateDots();}
+window.np=function(d){if(pinBuf.length>=4)return;pinBuf+=d;updateDots();if(pinBuf.length===4)checkPin();}
+window.pinDel=function(){pinBuf=pinBuf.slice(0,-1);updateDots();}
+window.pinClear=function(){pinBuf='';updateDots();}
 function checkPin(){
   if(pinBuf===PINS[role]){
     currentDay=new Date();
-    if(role==='reception'){renderToday();renderAgenda();show('s-reception');}
-    else{renderDoctor();renderDoctorAgenda();show('s-doctor');}
+    if(role==='reception'){switchRTab('pay');renderToday();show('s-reception');}
+    else{switchDTab('finance');renderDoctor();show('s-doctor');}
   }else{
-    document.getElementById('pin-err').textContent='رقم سري خاطئ، حاول مرة أخرى';
+    document.getElementById('pin-err').textContent='رقم سري خاطئ';
     pinBuf='';updateDots();
   }
 }
-function logout(){show('s-login');role=null;}
+window.logout=function(){show('s-login');role=null;}
 
-// TAB SWITCHING
-function switchRTab(tab){
+// ═══════════════ TAB SWITCHING ═══════════════
+window.switchRTab=function(tab){
   ['pay','agenda'].forEach(t=>{
     document.getElementById('r-tab-'+t).classList.toggle('active',t===tab);
     document.getElementById('r-bnav-'+t).classList.toggle('active',t===tab);
   });
-  if(tab==='agenda')renderAgenda();
+  if(tab==='agenda'){currentDay=new Date();renderReceptionAgenda();}
 }
-function switchDTab(tab){
-  ['pay','agenda'].forEach(t=>{
+window.switchDTab=function(tab){
+  ['finance','agenda'].forEach(t=>{
     document.getElementById('d-tab-'+t).classList.toggle('active',t===tab);
     document.getElementById('d-bnav-'+t).classList.toggle('active',t===tab);
   });
-  if(tab==='agenda')renderDoctorAgenda();
+  if(tab==='agenda'){currentDay=new Date();renderDoctorAgenda();}
 }
 
-// DAY NAV
-function changeDay(dir){
+// ═══════════════ DAY NAV ═══════════════
+window.changeDay=function(dir){
   currentDay=new Date(currentDay);
   currentDay.setDate(currentDay.getDate()+dir);
-  if(role==='reception')renderAgenda();
+  if(role==='reception')renderReceptionAgenda();
   else renderDoctorAgenda();
 }
 
-// PAYMENTS
-function calcBD(){
+// ═══════════════ PAYMENTS ═══════════════
+window.calcBD=function(){
   const total=parseFloat(document.getElementById('f-total').value)||0;
   const paid=parseFloat(document.getElementById('f-paid').value)||0;
   const name=document.getElementById('f-name').value;
@@ -522,185 +574,394 @@ function calcBD(){
     document.getElementById('bd-rem').textContent=fmt(Math.max(0,total-paid))+' ج';
   }else bd.style.display='none';
 }
-function submitPay(){
+
+window.submitPay=async function(){
   const name=document.getElementById('f-name').value.trim();
   const phone=document.getElementById('f-phone').value.trim();
   const svc=document.getElementById('f-service').value;
-  const doc=document.getElementById('f-doctor').value;
+  const doctor=document.getElementById('f-doctor').value;
   const total=parseFloat(document.getElementById('f-total').value)||0;
   const paid=parseFloat(document.getElementById('f-paid').value)||0;
   const notes=document.getElementById('f-notes').value;
   if(!name||!svc||total<=0||paid<=0){alert('من فضلك أكمل البيانات الأساسية');return;}
   if(paid>total){alert('المبلغ المدفوع أكبر من الإجمالي!');return;}
-  const t={id:nxtTxn++,name,phone,service:svc,doctor:doc,total,paid,notes,time:new Date()};
-  txns.unshift(t);
-  showReceipt(t);renderToday();
-  ['f-name','f-phone','f-total','f-paid','f-notes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('f-service').value='';
-  document.getElementById('breakdown').style.display='none';
+  setLoading('pay-btn',true);
+  try{
+    const docRef=await addDoc(collection(db,'payments'),{
+      name,phone,service:svc,doctor,total,paid,notes,
+      remaining:total-paid,date:todayStr(),createdAt:serverTimestamp()
+    });
+    showReceipt({name,phone,service:svc,doctor,total,paid,notes,time:new Date()});
+    renderToday();
+    ['f-name','f-phone','f-total','f-paid','f-notes'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('f-service').value='';
+    document.getElementById('breakdown').style.display='none';
+  }catch(e){alert('خطأ في الحفظ: '+e.message);}
+  setLoading('pay-btn',false,'✓ تسجيل وإصدار الإيصال');
 }
+
 function showReceipt(t){
   const now=new Date();
-  document.getElementById('r-date').textContent=now.toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+' — '+tStr(now);
-  const rows=[['المريض',t.name],['الهاتف',t.phone||'—'],['الخدمة',t.service],['الطبيب',t.doctor],['إجمالي الأتعاب',fmt(t.total)+' جنيه'],['المدفوع',fmt(t.paid)+' جنيه'],['المتبقي',fmt(Math.max(0,t.total-t.paid))+' جنيه']];
+  document.getElementById('r-date').textContent=now.toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const rows=[['المريض',t.name],['الهاتف',t.phone||'—'],['الخدمة',t.service],['الطبيب',t.doctor],
+    ['إجمالي الأتعاب',fmt(t.total)+' جنيه'],['المدفوع',fmt(t.paid)+' جنيه'],
+    ['المتبقي',fmt(Math.max(0,t.total-t.paid))+' جنيه']];
   if(t.notes)rows.push(['ملاحظات',t.notes]);
   document.getElementById('r-rows').innerHTML=rows.map(([k,v])=>`<div class="r-row"><span class="r-key">${k}</span><span style="color:${k==='المتبقي'&&t.total>t.paid?'var(--red)':'var(--text)'};font-weight:${k==='المتبقي'?'700':'400'}">${v}</span></div>`).join('');
   document.getElementById('modal-receipt').classList.add('open');
 }
-function badge(t){
-  if(t.total-t.paid<=0)return'<span class="badge b-green">مكتمل</span>';
+
+function payBadge(t){
+  if(t.remaining<=0)return'<span class="badge b-green">مكتمل</span>';
   if(t.paid/t.total>=0.4)return'<span class="badge b-amber">جاري</span>';
   return'<span class="badge b-red">متأخر</span>';
 }
-function renderToday(){
-  const today=txns.filter(t=>new Date(t.time).toDateString()===new Date().toDateString());
-  document.getElementById('today-count').textContent=today.length+' معاملة';
+
+async function renderToday(){
   const el=document.getElementById('today-list');
-  if(!today.length){el.innerHTML='<div class="empty">لا توجد مدفوعات اليوم بعد</div>';return;}
-  el.innerHTML=today.map(t=>`<div class="txn-item">
-    <div><div class="txn-name">${t.name}</div><div class="txn-meta">${t.service} — ${t.doctor}</div><div class="txn-time">${tStr(t.time)}</div></div>
-    <div class="txn-right"><div class="txn-paid">+${fmt(t.paid)} ج</div>${t.total>t.paid?`<div class="txn-rem">متبقي ${fmt(t.total-t.paid)} ج</div>`:'<div style="font-size:11px;color:var(--green-dark)">✓ مكتمل</div>'}</div>
-  </div>`).join('');
-}
-function setFilter(f,btn){
-  txFilter=f;
-  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
-  btn.classList.add('active');renderDoctor();
-}
-function renderDoctor(){
-  let list=[...txns];
-  if(txFilter==='pending')list=list.filter(t=>t.paid<t.total);
-  if(txFilter==='done')list=list.filter(t=>t.paid>=t.total);
-  const totColl=txns.reduce((s,t)=>s+t.paid,0);
-  const totRem=txns.reduce((s,t)=>s+Math.max(0,t.total-t.paid),0);
-  const todayCnt=txns.filter(t=>new Date(t.time).toDateString()===new Date().toDateString()).length;
-  document.getElementById('doc-metrics').innerHTML=`
-    <div class="metric"><div class="metric-val" style="color:var(--green)">${fmt(totColl)}</div><div class="metric-lbl">محصّل (ج)</div></div>
-    <div class="metric"><div class="metric-val" style="color:var(--red)">${fmt(totRem)}</div><div class="metric-lbl">متبقي (ج)</div></div>
-    <div class="metric"><div class="metric-val">${todayCnt}</div><div class="metric-lbl">مرضى اليوم</div></div>`;
-  const pending=txns.filter(t=>t.paid<t.total);
-  const alertEl=document.getElementById('doc-alert');
-  if(pending.length){alertEl.style.display='flex';document.getElementById('doc-alert-msg').textContent=pending.length+' مريض لديهم مبالغ متبقية بإجمالي '+fmt(totRem)+' جنيه';}
-  else alertEl.style.display='none';
-  const el=document.getElementById('doc-list');
-  if(!list.length){el.innerHTML='<div class="empty">لا توجد معاملات</div>';return;}
-  el.innerHTML=list.map(t=>`<div class="txn-item">
-    <div><div class="txn-name">${t.name} ${badge(t)}</div><div class="txn-meta">${t.service} — ${t.doctor}${t.notes?' — '+t.notes:''}</div><div class="txn-time">${tStr(t.time)}</div></div>
-    <div class="txn-right"><div class="txn-paid">${fmt(t.paid)} ج</div>${t.total>t.paid?`<div class="txn-rem">من ${fmt(t.total)} ج</div>`:''}</div>
-  </div>`).join('');
+  el.innerHTML='<div class="loading">جاري التحميل...</div>';
+  try{
+    const q=query(collection(db,'payments'),where('date','==',todayStr()),orderBy('createdAt','desc'));
+    const snap=await getDocs(q);
+    const docs=snap.docs.map(d=>({id:d.id,...d.data()}));
+    document.getElementById('today-count').textContent=docs.length+' معاملة';
+    if(!docs.length){el.innerHTML='<div class="empty">لا توجد مدفوعات اليوم بعد</div>';return;}
+    el.innerHTML=docs.map(t=>`<div class="list-item">
+      <div><div class="item-name">${t.name}</div><div class="item-meta">${t.service} — ${t.doctor}</div></div>
+      <div class="item-right"><div style="font-size:14px;font-weight:700;color:var(--green)">+${fmt(t.paid)} ج</div>
+      ${t.remaining>0?`<div style="font-size:12px;color:var(--red)">متبقي ${fmt(t.remaining)} ج</div>`:'<div style="font-size:11px;color:var(--green-dark)">✓ مكتمل</div>'}</div>
+    </div>`).join('');
+  }catch(e){el.innerHTML=`<div class="empty">خطأ في التحميل</div>`;}
 }
 
-// AGENDA
-function getSlotTimes(){
-  const times=[];
-  for(let h=SLOTS_START;h<SLOTS_END;h++){
-    times.push(`${String(h).padStart(2,'0')}:00`);
-    times.push(`${String(h).padStart(2,'0')}:30`);
+window.setFilter=function(f,btn){
+  txFilter=f;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');renderDoctor();
+}
+
+async function renderDoctor(){
+  const el=document.getElementById('doc-txn-list');
+  el.innerHTML='<div class="loading">جاري التحميل...</div>';
+  try{
+    const q=query(collection(db,'payments'),orderBy('createdAt','desc'));
+    const snap=await getDocs(q);
+    let docs=snap.docs.map(d=>({id:d.id,...d.data()}));
+    const totColl=docs.reduce((s,t)=>s+t.paid,0);
+    const totRem=docs.reduce((s,t)=>s+(t.remaining||0),0);
+    const todayCnt=docs.filter(t=>t.date===todayStr()).length;
+    document.getElementById('doc-metrics').innerHTML=`
+      <div class="metric"><div class="metric-val" style="color:var(--green)">${fmt(totColl)}</div><div class="metric-lbl">محصّل (ج)</div></div>
+      <div class="metric"><div class="metric-val" style="color:var(--red)">${fmt(totRem)}</div><div class="metric-lbl">متبقي (ج)</div></div>
+      <div class="metric"><div class="metric-val">${todayCnt}</div><div class="metric-lbl">مرضى اليوم</div></div>`;
+    const pending=docs.filter(t=>(t.remaining||0)>0);
+    const alertEl=document.getElementById('doc-alert');
+    if(pending.length){alertEl.style.display='flex';document.getElementById('doc-alert-msg').textContent=pending.length+' مريض لديهم مبالغ متبقية — إجمالي '+fmt(totRem)+' ج';}
+    else alertEl.style.display='none';
+    if(txFilter==='pending')docs=docs.filter(t=>(t.remaining||0)>0);
+    if(txFilter==='done')docs=docs.filter(t=>(t.remaining||0)<=0);
+    if(!docs.length){el.innerHTML='<div class="empty">لا توجد معاملات</div>';return;}
+    el.innerHTML=docs.map(t=>`<div class="list-item">
+      <div><div class="item-name">${t.name} ${payBadge(t)}</div><div class="item-meta">${t.service} — ${t.doctor}</div><div class="item-sub">${t.date}${t.notes?' — '+t.notes:''}</div></div>
+      <div class="item-right"><div style="font-size:14px;font-weight:700;color:var(--green)">${fmt(t.paid)} ج</div>${(t.remaining||0)>0?`<div style="font-size:12px;color:var(--red)">من ${fmt(t.total)} ج</div>`:''}</div>
+    </div>`).join('');
+  }catch(e){el.innerHTML='<div class="empty">خطأ في التحميل</div>';}
+}
+
+// ═══════════════ AGENDA ═══════════════
+function buildDoctorFilter(containerId, onSelect){
+  const container=document.getElementById(containerId);
+  const all=`<button class="chip ${!selectedDocFilter?'active':''}" onclick="(${onSelect})('')">الكل</button>`;
+  const btns=DOCTORS.map(d=>`<button class="chip ${selectedDocFilter===d.name?'active':''}" onclick="(${onSelect})('${d.name}')">${d.name.replace('د. ','')}</button>`).join('');
+  container.innerHTML=all+btns;
+}
+
+window.setDocFilter=function(name){
+  selectedDocFilter=name||null;
+  if(role==='reception')renderReceptionAgenda();
+  else renderDoctorAgenda();
+}
+
+async function getAppointments(dateStr, doctorFilter){
+  let q;
+  if(doctorFilter){
+    q=query(collection(db,'appointments'),where('date','==',dateStr),where('doctor','==',doctorFilter));
+  }else{
+    q=query(collection(db,'appointments'),where('date','==',dateStr));
   }
-  return times;
+  const snap=await getDocs(q);
+  return snap.docs.map(d=>({id:d.id,...d.data()}));
 }
-function buildTimeOptions(){
-  const sel=document.getElementById('b-time');
-  sel.innerHTML=getSlotTimes().map(t=>`<option value="${t}">${t}</option>`).join('');
-}
-function renderClinicTabs(){
-  const container=document.getElementById('r-clinic-tabs');
-  container.innerHTML=CLINICS.map(c=>`<button class="clinic-tab ${c.id===activeClinic?'active':''}" onclick="setClinic(${c.id})">${c.name}${c.doctor?' — '+c.doctor:''}</button>`).join('');
-}
-function setClinic(id){
-  activeClinic=id;
-  renderAgenda();
-}
-function renderAgenda(){
+
+async function renderReceptionAgenda(){
   const ds=todayStr(currentDay);
   document.getElementById('r-date-label').textContent=dayStr(currentDay);
-  renderClinicTabs();
-  const clinic=CLINICS.find(c=>c.id===activeClinic);
-  document.getElementById('r-clinic-label').textContent=`📅 ${clinic.name}${clinic.doctor?' — '+clinic.doctor:''}`;
-  const dayAppts=appointments.filter(a=>a.date===ds&&a.clinic===activeClinic&&a.status!=='cancelled');
-  renderSlots('r-slots',dayAppts,ds,activeClinic);
+  buildDoctorFilter('r-doctor-filter','window.setDocFilter');
+  const slotsEl=document.getElementById('r-slots');
+  slotsEl.innerHTML='<div class="loading">جاري التحميل...</div>';
+  try{
+    const appts=await getAppointments(ds,selectedDocFilter);
+    const doctor=selectedDocFilter||null;
+    const slots=doctor?getDoctorSlots(doctor,ds):getAllSlots(ds);
+    if(!slots.length){slotsEl.innerHTML='<div class="empty">الدكتور غير متاح هذا اليوم</div>';return;}
+    renderSlots(slotsEl,slots,appts,doctor);
+    document.getElementById('r-agenda-title').textContent=`📅 ${doctor||'كل المواعيد'} — ${DAY_NAMES[currentDay.getDay()]}`;
+  }catch(e){slotsEl.innerHTML='<div class="empty">خطأ في التحميل</div>';}
 }
-function renderDoctorAgenda(){
+
+async function renderDoctorAgenda(){
   const ds=todayStr(currentDay);
   document.getElementById('d-date-label').textContent=dayStr(currentDay);
-  const dayAppts=appointments.filter(a=>a.date===ds&&a.clinic===1&&a.status!=='cancelled');
-  renderSlots('d-slots',dayAppts,ds,1);
+  buildDoctorFilter('d-doctor-filter','window.setDocFilter');
+  const slotsEl=document.getElementById('d-slots');
+  slotsEl.innerHTML='<div class="loading">جاري التحميل...</div>';
+  try{
+    const appts=await getAppointments(ds,selectedDocFilter);
+    const doctor=selectedDocFilter||null;
+    const slots=doctor?getDoctorSlots(doctor,ds):getAllSlots(ds);
+    if(!slots.length){slotsEl.innerHTML='<div class="empty">لا مواعيد متاحة هذا اليوم</div>';return;}
+    renderSlots(slotsEl,slots,appts,doctor);
+    document.getElementById('d-agenda-title').textContent=`📅 ${doctor||'كل الأطباء'} — ${DAY_NAMES[currentDay.getDay()]}`;
+  }catch(e){slotsEl.innerHTML='<div class="empty">خطأ في التحميل</div>';}
 }
-function renderSlots(elId,dayAppts,ds,clinicId){
-  const times=getSlotTimes();
-  const el=document.getElementById(elId);
-  el.innerHTML=times.map(t=>{
-    const appt=dayAppts.find(a=>a.time===t);
+
+function getAllSlots(dateStr){
+  const allTimes=new Set();
+  DOCTORS.forEach(doc=>{
+    const slots=getDoctorSlots(doc.name,dateStr);
+    slots.forEach(s=>allTimes.add(s));
+  });
+  return [...allTimes].sort();
+}
+
+function renderSlots(el,slots,appts,doctorFilter){
+  el.innerHTML=slots.map(time=>{
+    const appt=appts.find(a=>a.time===time&&a.status!=='cancelled');
     if(appt){
+      const isCancelled=appt.status==='cancelled';
       return`<div class="slot">
-        <div class="slot-time">${t}</div>
-        <div class="slot-body"><button class="appt-card" onclick="openApptDetail(${appt.id})">
+        <div class="slot-time">${time}</div>
+        <div class="slot-body"><button class="appt-card ${isCancelled?'cancelled':''}" onclick="window.openApptDetail('${appt.id}')">
           <div class="appt-name">${appt.name}</div>
-          <div class="appt-detail">${appt.service}${appt.notes?' — '+appt.notes:''}</div>
+          <div class="appt-detail">${appt.service} — ${appt.doctor}${appt.notes?' — '+appt.notes:''}</div>
         </button></div>
       </div>`;
     }
     return`<div class="slot">
-      <div class="slot-time">${t}</div>
-      <div class="slot-body"><span class="slot-empty" onclick="openBookModalAt('${t}',${clinicId})">+ حجز</span></div>
+      <div class="slot-time">${time}</div>
+      <div class="slot-body"><button class="slot-empty" onclick="window.openBookModalAt('${time}','${doctorFilter||''}')">+ حجز</button></div>
     </div>`;
   }).join('');
 }
-function openBookModal(){
-  buildTimeOptions();
-  document.getElementById('book-modal-title').textContent='حجز موعد جديد';
+
+window.openBookModal=function(){
+  updateBookTimes();
   document.getElementById('b-name').value='';
   document.getElementById('b-phone').value='';
   document.getElementById('b-notes').value='';
   document.getElementById('modal-book').classList.add('open');
 }
-function openBookModalAt(time,clinicId){
-  buildTimeOptions();
+
+window.openBookModalAt=function(time,doctor){
+  if(doctor)document.getElementById('b-doctor').value=doctor;
+  updateBookTimes();
   document.getElementById('b-time').value=time;
-  document.getElementById('b-clinic').value=clinicId;
   document.getElementById('b-name').value='';
   document.getElementById('b-phone').value='';
   document.getElementById('b-notes').value='';
   document.getElementById('modal-book').classList.add('open');
 }
-function confirmBook(){
+
+window.updateBookTimes=function(){
+  const doctor=document.getElementById('b-doctor').value;
+  const ds=todayStr(currentDay);
+  const slots=getDoctorSlots(doctor,ds);
+  const sel=document.getElementById('b-time');
+  sel.innerHTML=slots.length?slots.map(t=>`<option value="${t}">${t}</option>`).join(''):'<option>غير متاح</option>';
+}
+
+window.confirmBook=async function(){
   const name=document.getElementById('b-name').value.trim();
   const phone=document.getElementById('b-phone').value.trim();
-  const clinic=parseInt(document.getElementById('b-clinic').value);
   const doctor=document.getElementById('b-doctor').value;
   const time=document.getElementById('b-time').value;
   const service=document.getElementById('b-service').value;
   const notes=document.getElementById('b-notes').value;
   const ds=todayStr(currentDay);
   if(!name){alert('من فضلك أدخل اسم المريض');return;}
-  const conflict=appointments.find(a=>a.date===ds&&a.clinic===clinic&&a.time===time&&a.status!=='cancelled');
-  if(conflict){alert('الوقت ده محجوز بالفعل! اختار وقت تاني');return;}
-  appointments.push({id:nxtAppt++,name,phone,clinic,doctor,service,time,date:ds,notes,status:'confirmed'});
-  closeModal('modal-book');
-  if(role==='reception')renderAgenda();
-  else renderDoctorAgenda();
+  setLoading('book-btn',true);
+  try{
+    const existing=await getAppointments(ds,doctor);
+    const conflict=existing.find(a=>a.time===time&&a.status!=='cancelled');
+    if(conflict){alert('الوقت ده محجوز بالفعل! اختار وقت تاني');setLoading('book-btn',false,'✓ تأكيد الحجز');return;}
+    await addDoc(collection(db,'appointments'),{
+      name,phone,doctor,time,service,notes,date:ds,status:'confirmed',createdAt:serverTimestamp()
+    });
+    closeModal('modal-book');
+    if(role==='reception')renderReceptionAgenda();
+    else renderDoctorAgenda();
+  }catch(e){alert('خطأ: '+e.message);}
+  setLoading('book-btn',false,'✓ تأكيد الحجز');
 }
-function openApptDetail(id){
+
+window.openApptDetail=async function(id){
   selectedApptId=id;
-  const a=appointments.find(x=>x.id===id);
-  if(!a)return;
-  const clinic=CLINICS.find(c=>c.id===a.clinic);
-  document.getElementById('appt-detail-body').innerHTML=[
-    ['المريض',a.name],['الهاتف',a.phone||'—'],['الموعد',a.time],
-    ['العيادة',clinic.name],['الدكتور',a.doctor],['الخدمة',a.service],
-    ['ملاحظات',a.notes||'—']
-  ].map(([k,v])=>`<div class="r-row"><span class="r-key">${k}</span><span>${v}</span></div>`).join('');
-  document.getElementById('modal-appt').classList.add('open');
+  try{
+    const snap=await getDocs(query(collection(db,'appointments'),where('__name__','==',id)));
+    if(snap.empty)return;
+    const a=snap.docs[0].data();
+    document.getElementById('appt-detail-body').innerHTML=[
+      ['المريض',a.name],['الهاتف',a.phone||'—'],['الموعد',a.time],
+      ['الدكتور',a.doctor],['الخدمة',a.service],['الحالة',a.status==='cancelled'?'ملغي':'مؤكد'],
+      ['ملاحظات',a.notes||'—']
+    ].map(([k,v])=>`<div class="r-row"><span class="r-key">${k}</span><span>${v}</span></div>`).join('');
+    document.getElementById('modal-appt').classList.add('open');
+  }catch(e){alert('خطأ في التحميل');}
 }
-function cancelAppt(){
+
+window.cancelAppt=async function(){
   if(!selectedApptId)return;
   if(!confirm('هتلغي الموعد ده؟'))return;
-  const a=appointments.find(x=>x.id===selectedApptId);
-  if(a)a.status='cancelled';
-  closeModal('modal-appt');
-  if(role==='reception')renderAgenda();
-  else renderDoctorAgenda();
+  try{
+    await updateDoc(doc(db,'appointments',selectedApptId),{status:'cancelled'});
+    closeModal('modal-appt');
+    if(role==='reception')renderReceptionAgenda();
+    else renderDoctorAgenda();
+  }catch(e){alert('خطأ: '+e.message);}
 }
+
+// ═══════════════ PATIENT BOOKING ═══════════════
+window.showPatientBooking=function(){
+  bookStep=1;bookDoctor=null;bookTime=null;
+  show('s-patient');
+  renderBookingStep();
+}
+
+function renderBookingStep(){
+  const wrap=document.getElementById('booking-wrap');
+  const ds=todayStr(new Date());
+  const dayOfWeek=new Date().getDay();
+
+  if(bookStep===1){
+    const available=DOCTORS.filter(d=>d.days.includes(dayOfWeek));
+    wrap.innerHTML=`
+      <div class="booking-header">
+        <div class="booking-logo">🦷</div>
+        <div class="booking-title">احجز موعدك</div>
+        <div class="booking-sub">اختار الدكتور المناسب ليك</div>
+      </div>
+      <div class="step-indicator">
+        <div class="step-dot active"></div>
+        <div class="step-dot"></div>
+        <div class="step-dot"></div>
+      </div>
+      <div class="doctor-grid">
+        ${DOCTORS.map(d=>{
+          const avail=d.days.includes(dayOfWeek);
+          return`<div class="doctor-card ${!avail?'unavailable':''}" onclick="${avail?`window.selectBookDoctor('${d.name}')`:''}">
+            <div class="doc-info">
+              <div class="doc-name">${d.name}</div>
+              <div class="doc-hours">${avail?`متاح اليوم — ${d.start}:00 إلى ${d.end}:00`:'غير متاح اليوم'}${d.note?' ⚠️':''}</div>
+            </div>
+            <div class="doc-check" style="color:${d.color}">✓</div>
+          </div>`;
+        }).join('')}
+      </div>`;
+  }
+  else if(bookStep===2){
+    const doc=DOCTORS.find(d=>d.name===bookDoctor);
+    const slots=getDoctorSlots(bookDoctor,ds);
+    wrap.innerHTML=`
+      <div class="booking-header">
+        <div class="booking-title">اختار الوقت</div>
+        <div class="booking-sub">${bookDoctor} — اليوم</div>
+      </div>
+      <div class="step-indicator">
+        <div class="step-dot done"></div>
+        <div class="step-dot active"></div>
+        <div class="step-dot"></div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="time-grid" id="time-grid">
+            <div class="loading">جاري التحميل...</div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-full" onclick="bookStep=1;renderBookingStep()">← رجوع</button>`;
+    loadAvailableTimes(ds);
+  }
+  else if(bookStep===3){
+    wrap.innerHTML=`
+      <div class="booking-header">
+        <div class="booking-title">بياناتك</div>
+        <div class="booking-sub">${bookDoctor} — ${bookTime}</div>
+      </div>
+      <div class="step-indicator">
+        <div class="step-dot done"></div>
+        <div class="step-dot done"></div>
+        <div class="step-dot active"></div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="field"><label>اسمك</label><input type="text" id="pt-name" placeholder="الاسم الكامل"/></div>
+          <div class="field"><label>رقم تليفونك</label><input type="tel" id="pt-phone" placeholder="01X..."/></div>
+          <div class="field"><label>نوع الخدمة</label>
+            <select id="pt-service">
+              <option>كشف عادي</option><option>تقويم</option><option>زراعة</option>
+              <option>تركيبات</option><option>حشو</option><option>تنظيف</option><option>خلع</option>
+            </select>
+          </div>
+          <div class="field"><label>ملاحظات (اختياري)</label><input type="text" id="pt-notes" placeholder="أي ملاحظات..."/></div>
+          <button class="btn btn-green btn-full" id="pt-confirm-btn" onclick="window.confirmPatientBook()">✓ تأكيد الحجز</button>
+        </div>
+      </div>
+      <button class="btn btn-full" onclick="bookStep=2;renderBookingStep()">← رجوع</button>`;
+  }
+}
+
+async function loadAvailableTimes(ds){
+  const grid=document.getElementById('time-grid');
+  if(!grid)return;
+  try{
+    const existing=await getAppointments(ds,bookDoctor);
+    const takenTimes=existing.filter(a=>a.status!=='cancelled').map(a=>a.time);
+    const slots=getDoctorSlots(bookDoctor,ds);
+    grid.innerHTML=slots.map(t=>{
+      const taken=takenTimes.includes(t);
+      return`<button class="time-btn ${taken?'taken':''}" ${taken?'disabled':''} onclick="window.selectBookTime('${t}')">${t}</button>`;
+    }).join('');
+  }catch(e){grid.innerHTML='<div class="empty">خطأ في التحميل</div>';}
+}
+
+window.selectBookDoctor=function(name){
+  bookDoctor=name;bookStep=2;renderBookingStep();
+}
+window.selectBookTime=function(time){
+  bookTime=time;bookStep=3;renderBookingStep();
+}
+
+window.confirmPatientBook=async function(){
+  const name=document.getElementById('pt-name').value.trim();
+  const phone=document.getElementById('pt-phone').value.trim();
+  const service=document.getElementById('pt-service').value;
+  const notes=document.getElementById('pt-notes').value;
+  if(!name||!phone){alert('من فضلك أدخل اسمك ورقم تليفونك');return;}
+  setLoading('pt-confirm-btn',true);
+  try{
+    const ds=todayStr(new Date());
+    await addDoc(collection(db,'appointments'),{
+      name,phone,doctor:bookDoctor,time:bookTime,service,notes,
+      date:ds,status:'confirmed',source:'patient',createdAt:serverTimestamp()
+    });
+    document.getElementById('booking-confirm-msg').textContent=`${name}، موعدك مع ${bookDoctor} الساعة ${bookTime} اتأكد ✓`;
+    document.getElementById('modal-booking-confirm').classList.add('open');
+  }catch(e){alert('خطأ في الحجز: '+e.message);}
+  setLoading('pt-confirm-btn',false,'✓ تأكيد الحجز');
+}
+
+window.closeModal=closeModal;
+
 </script>
 </body>
 </html>
