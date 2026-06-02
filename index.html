@@ -7,10 +7,11 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --green:#1D9E75;--green-light:#E1F5EEE;--green-light:#E1F5EE;--green-dark:#0F6E56;
+  --green:#1D9E75;--green-light:#E1F5EE;--green-dark:#0F6E56;
   --amber:#EF9F27;--amber-light:#FAEEDA;
   --red:#E24B4A;--red-light:#FCEBEB;
   --blue:#378ADD;--blue-light:#E6F1FB;
+  --purple:#9B59B6;--purple-light:#F3E5F5;
   --bg:#F7F7F5;--surface:#FFFFFF;
   --text:#1A1A1A;--text2:#666;--text3:#999;
   --border:#E5E5E3;--border2:#D0D0CE;
@@ -26,13 +27,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .logo-icon{width:56px;height:56px;background:var(--green);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px}
 .logo-text{font-size:22px;font-weight:700;color:var(--text)}
 .logo-sub{font-size:13px;color:var(--text2);margin-top:2px}
-.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:380px}
-.role-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.5rem 1rem;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:all 0.15s;-webkit-appearance:none;width:100%}
+.role-grid{display:flex;flex-direction:column;gap:10px;width:100%;max-width:380px}
+.role-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.role-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.4rem 1rem;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all 0.15s;-webkit-appearance:none;width:100%}
 .role-btn:active{transform:scale(0.97);border-color:var(--green);background:var(--green-light)}
-.role-btn.patient{grid-column:1/-1;flex-direction:row;justify-content:center;gap:14px;padding:1.2rem}
-.role-icon{font-size:30px}
-.role-name{font-size:14px;font-weight:600;color:var(--text)}
-.role-desc{font-size:12px;color:var(--text2)}
+.role-btn.wide{flex-direction:row;justify-content:center;gap:14px;padding:1.1rem}
+.role-icon{font-size:28px}
+.role-name{font-size:13px;font-weight:600;color:var(--text)}
+.role-desc{font-size:11px;color:var(--text2)}
 
 /* PIN */
 .pin-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;gap:1.5rem}
@@ -55,7 +57,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nav-role{font-size:11px;color:var(--text2);background:var(--bg);padding:4px 10px;border-radius:20px;border:1px solid var(--border)}
 .logout{font-size:12px;color:var(--text2);background:none;border:1px solid var(--border);padding:5px 10px;cursor:pointer;border-radius:var(--radius-sm)}
 .bottomnav{background:var(--surface);border-top:1px solid var(--border);display:grid;position:sticky;bottom:0;z-index:10}
-.bnav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 8px;cursor:pointer;border:none;background:none;font-family:inherit;color:var(--text2);font-size:11px;transition:all 0.15s}
+.bnav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 6px;cursor:pointer;border:none;background:none;font-family:inherit;color:var(--text2);font-size:10px;transition:all 0.15s}
 .bnav-item.active{color:var(--green)}
 .bnav-icon{font-size:20px}
 
@@ -87,13 +89,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .btn-green{background:var(--green);border-color:var(--green);color:#fff}
 .btn-green:active{background:var(--green-dark)}
 .btn-red{background:var(--red);border-color:var(--red);color:#fff}
+.btn-amber{background:var(--amber);border-color:var(--amber);color:#fff}
 .btn-full{width:100%}
+.btn-sm{padding:7px 12px;font-size:12px}
 
 /* ALERT */
 .alert{border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;display:flex;align-items:flex-start;gap:8px}
 .alert-amber{background:var(--amber-light);border:1px solid #FAC775;color:#854F0B}
 .alert-green{background:var(--green-light);border:1px solid #9FE1CB;color:var(--green-dark)}
 .alert-red{background:var(--red-light);border:1px solid #F5AAAA;color:#A32D2D}
+.alert-blue{background:var(--blue-light);border:1px solid #99C6F0;color:#185FA5}
 
 /* METRICS */
 .metrics{display:grid;gap:10px}
@@ -105,6 +110,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .filter-bar{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
 .chip{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;cursor:pointer;white-space:nowrap;color:var(--text2);-webkit-appearance:none;font-family:inherit}
 .chip.active{background:var(--green-light);border-color:var(--green);color:var(--green-dark);font-weight:600}
+.chip.day-chip{padding:5px 10px;font-size:12px}
+.chip.day-chip.selected{background:var(--green);color:#fff;border-color:var(--green)}
 
 /* LIST */
 .list{display:flex;flex-direction:column}
@@ -124,6 +131,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .b-red{background:var(--red-light);color:#A32D2D}
 .b-blue{background:var(--blue-light);color:#185FA5}
 .b-grey{background:#F0F0EE;color:#666}
+.b-purple{background:var(--purple-light);color:var(--purple)}
 
 /* AGENDA */
 .date-nav{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px}
@@ -132,37 +140,39 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .date-arrow:active{background:var(--green-light)}
 .slot{display:flex;align-items:stretch;border-bottom:1px solid var(--border);min-height:52px}
 .slot:last-child{border-bottom:none}
-.slot-time{width:60px;padding:8px;font-size:11px;color:var(--text2);border-left:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg)}
-.slot-body{flex:1;padding:8px 12px;display:flex;align-items:center}
-.slot-empty{font-size:13px;color:var(--text3);cursor:pointer;background:none;border:none;font-family:inherit;padding:0;text-align:right}
+.slot-time{width:58px;padding:8px;font-size:11px;color:var(--text2);border-left:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg)}
+.slot-body{flex:1;padding:6px 10px;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:center}
+.slot-empty{font-size:13px;color:var(--text3);cursor:pointer;background:none;border:none;font-family:inherit;padding:4px 0;text-align:right}
 .slot-empty:hover{color:var(--green)}
-.appt-card{background:var(--green-light);border-radius:var(--radius-sm);padding:8px 10px;width:100%;cursor:pointer;border:none;text-align:right;font-family:inherit}
-.appt-name{font-size:13px;font-weight:600;color:var(--green-dark)}
-.appt-detail{font-size:11px;color:var(--green-dark);opacity:0.8;margin-top:2px}
+.appt-card{background:var(--green-light);border-radius:var(--radius-sm);padding:7px 10px;width:100%;cursor:pointer;border:none;text-align:right;font-family:inherit}
 .appt-card.cancelled{background:var(--red-light)}
 .appt-card.cancelled .appt-name,.appt-card.cancelled .appt-detail{color:#A32D2D}
+.appt-card.checked-in{background:#E8F5E9;border:1.5px solid var(--green)}
+.appt-name{font-size:13px;font-weight:600;color:var(--green-dark)}
+.appt-detail{font-size:11px;color:var(--green-dark);opacity:0.8;margin-top:2px}
+.checkin-btn{font-size:10px;background:var(--green);color:#fff;border:none;border-radius:6px;padding:3px 7px;cursor:pointer;margin-top:3px;font-family:inherit;align-self:flex-start}
+.checkout-btn{font-size:10px;background:var(--amber);color:#fff;border:none;border-radius:6px;padding:3px 7px;cursor:pointer;font-family:inherit}
 
 /* PATIENT BOOKING */
 .booking-wrap{flex:1;padding:20px 16px;display:flex;flex-direction:column;gap:16px;max-width:480px;width:100%;margin:0 auto}
-.booking-header{text-align:center;padding:1rem 0}
-.booking-logo{font-size:36px;margin-bottom:8px}
+.booking-header{text-align:center;padding:.5rem 0}
 .booking-title{font-size:20px;font-weight:700;color:var(--text)}
 .booking-sub{font-size:13px;color:var(--text2);margin-top:4px}
-.doctor-grid{display:flex;flex-direction:column;gap:10px}
-.doctor-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all 0.15s}
+.doctor-grid{display:flex;flex-direction:column;gap:8px}
+.doctor-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:13px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all 0.15s}
 .doctor-card:active{border-color:var(--green);background:var(--green-light)}
 .doctor-card.selected{border-color:var(--green);background:var(--green-light)}
 .doctor-card.unavailable{opacity:0.4;cursor:not-allowed}
-.doc-info{}
 .doc-name{font-size:15px;font-weight:600;color:var(--text)}
 .doc-hours{font-size:12px;color:var(--text2);margin-top:3px}
 .doc-check{font-size:20px;opacity:0}
 .doctor-card.selected .doc-check{opacity:1}
-.time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.time-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .time-btn{padding:10px 6px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-size:13px;cursor:pointer;text-align:center;-webkit-appearance:none;font-family:inherit;color:var(--text);transition:all 0.1s}
 .time-btn:active{transform:scale(0.96)}
 .time-btn.selected{background:var(--green);border-color:var(--green);color:#fff;font-weight:600}
 .time-btn.taken{background:var(--bg);color:var(--text3);cursor:not-allowed;border-color:var(--border)}
+.time-btn.room-full{background:#FFF3E0;color:#E65100;cursor:not-allowed;border-color:#FFCC02}
 .step-indicator{display:flex;align-items:center;justify-content:center;gap:8px}
 .step-dot{width:8px;height:8px;border-radius:50%;background:var(--border)}
 .step-dot.active{background:var(--green);width:20px;border-radius:4px}
@@ -182,14 +192,51 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .receipt-footer{text-align:center;font-size:12px;color:var(--text3);margin-top:1rem;padding-top:1rem;border-top:1px dashed var(--border)}
 .modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1rem}
 
+/* SEARCH */
+.search-input-wrap{position:relative}
+.search-input-wrap input{padding-right:40px}
+.search-icon{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:16px;pointer-events:none}
+.patient-history-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:8px}
+.ph-header{background:var(--green-light);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.ph-name{font-size:15px;font-weight:700;color:var(--green-dark)}
+.ph-meta{font-size:12px;color:var(--green-dark);opacity:.8}
+
+/* ADMIN */
+.admin-nav{display:flex;gap:0;border-bottom:1px solid var(--border);background:var(--surface);border-radius:var(--radius) var(--radius) 0 0;overflow:hidden}
+.atab{flex:1;padding:11px 6px;border:none;background:none;font-family:inherit;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s}
+.atab.active{color:var(--green);border-bottom-color:var(--green);background:var(--green-light)}
+.admin-content{display:none;flex-direction:column;gap:12px}
+.admin-content.active{display:flex}
+.doc-row{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--border)}
+.doc-row:last-child{border-bottom:none}
+.doc-color-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.day-picker{display:flex;gap:4px;flex-wrap:wrap}
+.svc-tag{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;background:var(--blue-light);border-radius:20px;font-size:13px;color:#185FA5;margin:3px}
+.svc-remove{background:none;border:none;cursor:pointer;color:#185FA5;font-size:14px;padding:0;line-height:1}
+
+/* RETENTION BANNER */
+.retention-banner{background:#FFF8E1;border:1px solid #FFD54F;border-radius:var(--radius-sm);padding:12px 14px}
+.retention-banner-title{font-size:13px;font-weight:600;color:#E65100;margin-bottom:6px}
+.retention-banner-body{font-size:12px;color:#795548;margin-bottom:10px}
+.retention-actions{display:flex;gap:8px}
+
 /* SPINNER */
 .spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* PRINT */
+@media print{
+  body *{visibility:hidden!important}
+  #modal-receipt,#modal-receipt *{visibility:visible!important}
+  #modal-receipt{position:fixed!important;inset:0!important;background:#fff!important;z-index:9999!important;border-radius:0!important;max-height:none!important;padding:2rem!important}
+  .modal-actions{display:none!important}
+  .modal-close{display:none!important}
+}
 </style>
 </head>
 <body>
 
-<!-- ═══════════════ LOGIN ═══════════════ -->
+<!-- ═══ LOGIN ═══ -->
 <div class="screen active" id="s-login">
   <div class="login-wrap">
     <div class="logo">
@@ -200,17 +247,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       </div>
     </div>
     <div class="role-grid">
-      <button class="role-btn" onclick="selectRole('reception')">
-        <div class="role-icon">👩‍💼</div>
-        <div class="role-name">الاستقبال</div>
-        <div class="role-desc">دفعات ومواعيد</div>
+      <div class="role-row">
+        <button class="role-btn" onclick="selectRole('reception')">
+          <div class="role-icon">👩‍💼</div>
+          <div class="role-name">الاستقبال</div>
+          <div class="role-desc">دفعات ومواعيد</div>
+        </button>
+        <button class="role-btn" onclick="selectRole('doctor')">
+          <div class="role-icon">👑</div>
+          <div class="role-name">د. رنا</div>
+          <div class="role-desc">إدارة كاملة</div>
+        </button>
+      </div>
+      <button class="role-btn wide" onclick="selectRole('otherdoc')">
+        <div class="role-icon">👨‍⚕️</div>
+        <div>
+          <div class="role-name">الأطباء</div>
+          <div class="role-desc">جدول المواعيد ومتابعة المرضى</div>
+        </div>
       </button>
-      <button class="role-btn" onclick="selectRole('doctor')">
-        <div class="role-icon">👩‍⚕️</div>
-        <div class="role-name">د. رنا</div>
-        <div class="role-desc">لوحة المتابعة</div>
-      </button>
-      <button class="role-btn patient" onclick="showPatientBooking()">
+      <button class="role-btn wide" onclick="showPatientBooking()">
         <div class="role-icon">🗓️</div>
         <div>
           <div class="role-name">حجز موعد</div>
@@ -221,7 +277,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
 </div>
 
-<!-- ═══════════════ PIN ═══════════════ -->
+<!-- ═══ PIN ═══ -->
 <div class="screen" id="s-pin">
   <div class="pin-wrap">
     <button class="back-link" onclick="goBack()">← رجوع</button>
@@ -241,7 +297,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
 </div>
 
-<!-- ═══════════════ RECEPTION ═══════════════ -->
+<!-- ═══ RECEPTION (4 tabs) ═══ -->
 <div class="screen" id="s-reception">
   <div class="topnav">
     <div class="nav-logo"><div class="nav-logo-icon">🦷</div> Rouby Care</div>
@@ -250,6 +306,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <button class="logout" onclick="logout()">خروج</button>
     </div>
   </div>
+
   <!-- TAB: Pay -->
   <div class="tab-content active" id="r-tab-pay">
     <div class="card">
@@ -260,20 +317,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <div class="field"><label>الهاتف</label><input type="tel" id="f-phone" placeholder="01X..."/></div>
         </div>
         <div class="row2">
-          <div class="field"><label>الخدمة</label>
-            <select id="f-service" onchange="calcBD()">
-              <option value="">اختر...</option>
-              <option>تقويم</option><option>زراعة</option><option>تركيبات</option>
-              <option>كشف عادي</option><option>حشو</option><option>تنظيف</option><option>خلع</option>
-            </select>
-          </div>
-          <div class="field"><label>الدكتور</label>
-            <select id="f-doctor">
-              <option>د. رنا الروبي</option><option>د. لمى</option><option>د. آيه</option>
-              <option>د. محمد زكريا</option><option>د. عبد الرحمن ماجد</option>
-              <option>د. رباب</option><option>د. يارا</option><option>د. محمد مجدي</option>
-            </select>
-          </div>
+          <div class="field"><label>الخدمة</label><select id="f-service" onchange="calcBD()"><option value="">اختر...</option></select></div>
+          <div class="field"><label>الدكتور</label><select id="f-doctor"></select></div>
         </div>
         <div class="row2">
           <div class="field"><label>إجمالي الأتعاب (ج)</label><input type="number" id="f-total" placeholder="0" oninput="calcBD()"/></div>
@@ -296,6 +341,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div id="today-list" class="list"></div>
     </div>
   </div>
+
   <!-- TAB: Agenda -->
   <div class="tab-content" id="r-tab-agenda">
     <div class="date-nav">
@@ -307,28 +353,55 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="card">
       <div class="card-head">
         <div class="card-title" id="r-agenda-title">📅 المواعيد</div>
-        <button class="btn btn-green" style="padding:7px 12px;font-size:12px" onclick="openBookModal()">+ حجز</button>
+        <button class="btn btn-green btn-sm" onclick="openBookModal()">+ حجز</button>
       </div>
       <div id="r-slots" class="list"></div>
     </div>
   </div>
-  <div class="bottomnav" style="grid-template-columns:1fr 1fr">
+
+  <!-- TAB: Search -->
+  <div class="tab-content" id="r-tab-search">
+    <div class="card">
+      <div class="card-body">
+        <div class="search-input-wrap field">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="r-search-input" placeholder="ابحث باسم أو رقم هاتف..." oninput="debounceSearch('r')"/>
+        </div>
+      </div>
+    </div>
+    <div id="r-search-results"></div>
+  </div>
+
+  <!-- TAB: Check-in -->
+  <div class="tab-content" id="r-tab-checkin">
+    <div class="alert alert-blue"><span>ℹ️</span><span>اختر مريضًا من مواعيد اليوم لبدء جلسته مع الدكتور</span></div>
+    <div class="card">
+      <div class="card-head"><div class="card-title">🏥 مرضى اليوم</div><button class="btn btn-sm" onclick="renderCheckinList()">↻ تحديث</button></div>
+      <div id="checkin-list" class="list"></div>
+    </div>
+  </div>
+
+  <div class="bottomnav" style="grid-template-columns:repeat(4,1fr)">
     <button class="bnav-item active" id="r-bnav-pay" onclick="switchRTab('pay')"><div class="bnav-icon">💰</div><div>الدفعات</div></button>
     <button class="bnav-item" id="r-bnav-agenda" onclick="switchRTab('agenda')"><div class="bnav-icon">📅</div><div>الأجندة</div></button>
+    <button class="bnav-item" id="r-bnav-search" onclick="switchRTab('search')"><div class="bnav-icon">🔍</div><div>بحث</div></button>
+    <button class="bnav-item" id="r-bnav-checkin" onclick="switchRTab('checkin');renderCheckinList()"><div class="bnav-icon">🏥</div><div>استقبال</div></button>
   </div>
 </div>
 
-<!-- ═══════════════ DOCTOR (د. رنا) ═══════════════ -->
+<!-- ═══ DOCTOR / DR. RANA (4 tabs) ═══ -->
 <div class="screen" id="s-doctor">
   <div class="topnav">
     <div class="nav-logo"><div class="nav-logo-icon">🦷</div> Rouby Care</div>
     <div style="display:flex;align-items:center;gap:8px">
-      <div class="nav-role">د. رنا</div>
+      <div class="nav-role">د. رنا 👑</div>
       <button class="logout" onclick="logout()">خروج</button>
     </div>
   </div>
+
   <!-- TAB: Finance -->
   <div class="tab-content active" id="d-tab-finance">
+    <div id="retention-banner" style="display:none"></div>
     <div id="doc-alert" style="display:none" class="alert alert-amber"><span>⚠️</span><span id="doc-alert-msg"></span></div>
     <div class="metrics" id="doc-metrics" style="grid-template-columns:repeat(3,1fr)"></div>
     <div class="filter-bar">
@@ -338,6 +411,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="card"><div id="doc-txn-list" class="list"></div></div>
   </div>
+
   <!-- TAB: All Agenda -->
   <div class="tab-content" id="d-tab-agenda">
     <div class="date-nav">
@@ -351,13 +425,84 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div id="d-slots" class="list"></div>
     </div>
   </div>
-  <div class="bottomnav" style="grid-template-columns:1fr 1fr">
+
+  <!-- TAB: Search -->
+  <div class="tab-content" id="d-tab-search">
+    <div class="card">
+      <div class="card-body">
+        <div class="search-input-wrap field">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="d-search-input" placeholder="ابحث باسم أو رقم هاتف..." oninput="debounceSearch('d')"/>
+        </div>
+      </div>
+    </div>
+    <div id="d-search-results"></div>
+  </div>
+
+  <!-- TAB: Admin -->
+  <div class="tab-content" id="d-tab-admin">
+    <div class="card" style="padding:0">
+      <div class="admin-nav">
+        <button class="atab active" onclick="switchAdminTab('doctors')">الأطباء</button>
+        <button class="atab" onclick="switchAdminTab('services')">الخدمات</button>
+        <button class="atab" onclick="switchAdminTab('audit')">السجل</button>
+        <button class="atab" onclick="switchAdminTab('pins')">الأرقام</button>
+      </div>
+      <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
+        <div class="admin-content active" id="at-doctors"></div>
+        <div class="admin-content" id="at-services"></div>
+        <div class="admin-content" id="at-audit"></div>
+        <div class="admin-content" id="at-pins"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottomnav" style="grid-template-columns:repeat(4,1fr)">
     <button class="bnav-item active" id="d-bnav-finance" onclick="switchDTab('finance')"><div class="bnav-icon">📊</div><div>المتابعة</div></button>
-    <button class="bnav-item" id="d-bnav-agenda" onclick="switchDTab('agenda')"><div class="bnav-icon">📅</div><div>كل المواعيد</div></button>
+    <button class="bnav-item" id="d-bnav-agenda" onclick="switchDTab('agenda')"><div class="bnav-icon">📅</div><div>المواعيد</div></button>
+    <button class="bnav-item" id="d-bnav-search" onclick="switchDTab('search')"><div class="bnav-icon">🔍</div><div>بحث</div></button>
+    <button class="bnav-item" id="d-bnav-admin" onclick="switchDTab('admin');renderAdmin()"><div class="bnav-icon">⚙️</div><div>إعدادات</div></button>
   </div>
 </div>
 
-<!-- ═══════════════ PATIENT BOOKING ═══════════════ -->
+<!-- ═══ OTHER DOCTOR (2 tabs) ═══ -->
+<div class="screen" id="s-otherdoc">
+  <div class="topnav">
+    <div class="nav-logo"><div class="nav-logo-icon">🦷</div> Rouby Care</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="nav-role" id="od-role-label">طبيب</div>
+      <button class="logout" onclick="logout()">خروج</button>
+    </div>
+  </div>
+
+  <!-- TAB: Calendar -->
+  <div class="tab-content active" id="od-tab-calendar">
+    <div class="date-nav">
+      <button class="date-arrow" onclick="changeDay(-1)">›</button>
+      <div class="date-label" id="od-date-label"></div>
+      <button class="date-arrow" onclick="changeDay(1)">‹</button>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-title" id="od-cal-title">📅 جدولي</div></div>
+      <div id="od-slots" class="list"></div>
+    </div>
+  </div>
+
+  <!-- TAB: Patient -->
+  <div class="tab-content" id="od-tab-patient">
+    <div style="display:flex;justify-content:flex-end">
+      <button class="btn btn-sm" onclick="renderOtherDocPatient()">↻ تحديث</button>
+    </div>
+    <div id="od-patient-content"></div>
+  </div>
+
+  <div class="bottomnav" style="grid-template-columns:1fr 1fr">
+    <button class="bnav-item active" id="od-bnav-calendar" onclick="switchODTab('calendar')"><div class="bnav-icon">📅</div><div>جدولي</div></button>
+    <button class="bnav-item" id="od-bnav-patient" onclick="switchODTab('patient');renderOtherDocPatient()"><div class="bnav-icon">🧑‍⚕️</div><div>المريض</div></button>
+  </div>
+</div>
+
+<!-- ═══ PATIENT BOOKING ═══ -->
 <div class="screen" id="s-patient">
   <div class="topnav">
     <div class="nav-logo"><div class="nav-logo-icon">🦷</div> Rouby Care</div>
@@ -366,9 +511,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="booking-wrap" id="booking-wrap"></div>
 </div>
 
-<!-- RECEIPT MODAL -->
+<!-- ══ RECEIPT MODAL ══ -->
 <div class="modal-bg" id="modal-receipt">
-  <div class="modal-sheet">
+  <div class="modal-sheet" id="receipt-sheet">
     <div class="receipt-logo">
       <div class="receipt-name-lg">🦷 Rouby Care Dental Center</div>
       <div style="font-size:12px;color:var(--text2);margin-top:3px">الفيوم — مركز طب الأسنان</div>
@@ -377,13 +522,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div id="r-rows"></div>
     <div class="receipt-footer">شكراً لثقتكم — ابتسامتك أمانة عندنا 🦷</div>
     <div class="modal-actions">
-      <button class="btn" onclick="closeModal('modal-receipt')">🖨️ طباعة</button>
+      <button class="btn" onclick="printReceipt()">🖨️ طباعة / PDF</button>
       <button class="btn btn-green" onclick="closeModal('modal-receipt')">✓ تم</button>
     </div>
   </div>
 </div>
 
-<!-- BOOK MODAL -->
+<!-- ══ BOOK MODAL ══ -->
 <div class="modal-bg" id="modal-book">
   <div class="modal-sheet">
     <div class="modal-title">
@@ -394,28 +539,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="field"><label>اسم المريض</label><input type="text" id="b-name" placeholder="الاسم الكامل"/></div>
       <div class="field"><label>رقم الهاتف</label><input type="tel" id="b-phone" placeholder="01X..."/></div>
       <div class="row2">
-        <div class="field"><label>الدكتور</label>
-          <select id="b-doctor" onchange="updateBookTimes()">
-            <option>د. رنا الروبي</option><option>د. لمى</option><option>د. آيه</option>
-            <option>د. محمد زكريا</option><option>د. عبد الرحمن ماجد</option>
-            <option>د. رباب</option><option>د. يارا</option><option>د. محمد مجدي</option>
-          </select>
-        </div>
+        <div class="field"><label>الدكتور</label><select id="b-doctor" onchange="updateBookTimes()"></select></div>
         <div class="field"><label>الوقت</label><select id="b-time"></select></div>
       </div>
-      <div class="field"><label>الخدمة</label>
-        <select id="b-service">
-          <option>تقويم</option><option>زراعة</option><option>تركيبات</option>
-          <option>كشف عادي</option><option>حشو</option><option>تنظيف</option><option>خلع</option>
-        </select>
-      </div>
+      <div class="field"><label>الخدمة</label><select id="b-service"></select></div>
       <div class="field"><label>ملاحظات</label><input type="text" id="b-notes" placeholder="أي ملاحظات..."/></div>
       <button class="btn btn-green btn-full" id="book-btn" onclick="confirmBook()">✓ تأكيد الحجز</button>
     </div>
   </div>
 </div>
 
-<!-- APPT DETAIL MODAL -->
+<!-- ══ APPT DETAIL MODAL ══ -->
 <div class="modal-bg" id="modal-appt">
   <div class="modal-sheet">
     <div class="modal-title">
@@ -430,7 +564,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
 </div>
 
-<!-- BOOKING CONFIRM MODAL -->
+<!-- ══ BOOKING CONFIRM MODAL ══ -->
 <div class="modal-bg" id="modal-booking-confirm">
   <div class="modal-sheet">
     <div style="text-align:center;padding:1rem 0">
@@ -445,9 +579,36 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
 </div>
 
+<!-- ══ ADMIN DOCTOR FORM MODAL ══ -->
+<div class="modal-bg" id="modal-admin-doc">
+  <div class="modal-sheet">
+    <div class="modal-title">
+      <span id="admin-doc-modal-title">إضافة طبيب</span>
+      <button class="modal-close" onclick="closeModal('modal-admin-doc')">✕</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="field"><label>الاسم</label><input type="text" id="adf-name" placeholder="د. الاسم"/></div>
+      <div class="field">
+        <label>أيام العمل</label>
+        <div class="day-picker" id="adf-days"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>من الساعة</label><select id="adf-start"></select></div>
+        <div class="field"><label>إلى الساعة</label><select id="adf-end"></select></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>لون مميز</label><input type="color" id="adf-color" value="#1D9E75" style="height:44px;cursor:pointer"/></div>
+        <div class="field"><label>الرقم السري (4 أرقام)</label><input type="password" id="adf-pin" maxlength="4" placeholder="0000"/></div>
+      </div>
+      <div class="field"><label>ملاحظة (اختياري)</label><input type="text" id="adf-note" placeholder="مثل: ظروف مؤقتة"/></div>
+      <button class="btn btn-green btn-full" id="adf-save-btn" onclick="saveAdminDoctor()">حفظ</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, updateDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, getDoc, query, where, orderBy, updateDoc, deleteDoc, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjwSXhdm89KbGDQiQi3SaRDzEWFmtDw1M",
@@ -461,309 +622,556 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ═══════════════ DOCTORS DATA ═══════════════
-const DOCTORS = [
-  { name:'د. رنا الروبي', days:[6,0,1,2,3,4], start:14, end:22, color:'#1D9E75' },
-  { name:'د. لمى',        days:[6,0,1,2,3,4], start:18, end:22, color:'#378ADD' },
-  { name:'د. آيه',        days:[6,0,2],        start:14, end:22, color:'#9B59B6' },
-  { name:'د. محمد زكريا', days:[6,0,1,2,3,4], start:18, end:22, color:'#E67E22' },
-  { name:'د. عبد الرحمن ماجد', days:[3,4],   start:17, end:22, color:'#E74C3C', note:'ظروف مؤقتة' },
-  { name:'د. رباب',       days:[6,2],          start:14, end:22, color:'#16A085' },
-  { name:'د. يارا',       days:[0,3],          start:14, end:22, color:'#8E44AD' },
-  { name:'د. محمد مجدي',  days:[1,4],          start:14, end:22, color:'#2C3E50' },
+// ═══ DEFAULT CONFIG ═══
+const DEFAULT_DOCTORS = [
+  { name:'د. رنا الروبي',        days:[6,0,1,2,3,4], start:14, end:22, color:'#1D9E75', note:'' },
+  { name:'د. لمى',               days:[6,0,1,2,3,4], start:18, end:22, color:'#378ADD', note:'' },
+  { name:'د. آيه',               days:[6,0,2],        start:14, end:22, color:'#9B59B6', note:'' },
+  { name:'د. محمد زكريا',        days:[6,0,1,2,3,4], start:18, end:22, color:'#E67E22', note:'' },
+  { name:'د. عبد الرحمن ماجد',  days:[3,4],          start:17, end:22, color:'#E74C3C', note:'ظروف مؤقتة' },
+  { name:'د. رباب',              days:[6,2],          start:14, end:22, color:'#16A085', note:'' },
+  { name:'د. يارا',              days:[0,3],          start:14, end:22, color:'#8E44AD', note:'' },
+  { name:'د. محمد مجدي',         days:[1,4],          start:14, end:22, color:'#2C3E50', note:'' },
 ];
-
-const PINS = { reception:'1234', doctor:'5678' };
+const DEFAULT_SERVICES = ['تقويم','زراعة','تركيبات','كشف عادي','حشو','تنظيف','خلع'];
 const DAY_NAMES = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const DAY_SHORT = ['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
 
-// ═══════════════ STATE ═══════════════
-let role=null, pinBuf='', txFilter='all';
-let currentDay=new Date(), selectedDocFilter=null, selectedApptId=null;
-let bookStep=1, bookDoctor=null, bookTime=null;
+// ═══ MUTABLE CONFIG ═══
+let DOCTORS = [...DEFAULT_DOCTORS];
+let SERVICES = [...DEFAULT_SERVICES];
+let PINS = { reception:'1234', doctor:'5678' };
+let DOCTOR_PINS = {}; // doctorName → pin
 
-// ═══════════════ HELPERS ═══════════════
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-function fmt(n){return Math.round(n).toLocaleString('ar-EG');}
-function tStr(d){return new Date(d.seconds?d.seconds*1000:d).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});}
-function todayStr(d){const dd=d||new Date();return dd.toISOString().split('T')[0];}
-function dayStr(d){return d.toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}
-function setLoading(btnId,loading,text=''){const b=document.getElementById(btnId);if(!b)return;b.disabled=loading;b.innerHTML=loading?`<span class="spinner"></span>`:(text||b.dataset.orig||b.innerHTML);if(!loading&&text)b.dataset.orig=text;}
+// ═══ STATE ═══
+let role = null, pinBuf = '', txFilter = 'all';
+let currentDay = new Date(), selectedDocFilter = null, selectedApptId = null;
+let bookStep = 1, bookDoctor = null, bookTime = null, bookDate = todayStr(new Date());
+let currentDocName = null;
+let editingDoctorIndex = -1;
+let searchTimers = {};
 
-function getDoctorSlots(doctorName, dateStr){
-  const doc=DOCTORS.find(d=>d.name===doctorName);
-  if(!doc)return[];
-  const date=new Date(dateStr+'T00:00:00');
-  const dayOfWeek=date.getDay();
-  if(!doc.days.includes(dayOfWeek))return[];
-  const slots=[];
-  for(let h=doc.start;h<doc.end;h++){
-    slots.push(`${String(h).padStart(2,'0')}:00`);
-    slots.push(`${String(h).padStart(2,'0')}:30`);
+// ═══ CONFIG LOADING ═══
+let configLoaded = false;
+const configReady = loadConfig();
+
+async function loadConfig() {
+  try {
+    const [dSnap, sSnap, pSnap] = await Promise.all([
+      getDoc(doc(db,'config','doctors')),
+      getDoc(doc(db,'config','services')),
+      getDoc(doc(db,'config','pins')),
+    ]);
+    if (dSnap.exists() && dSnap.data().list?.length) DOCTORS = dSnap.data().list;
+    else await setDoc(doc(db,'config','doctors'), {list: DEFAULT_DOCTORS});
+
+    if (sSnap.exists() && sSnap.data().list?.length) SERVICES = sSnap.data().list;
+    else await setDoc(doc(db,'config','services'), {list: DEFAULT_SERVICES});
+
+    if (pSnap.exists()) {
+      const pd = pSnap.data();
+      if (pd.reception) PINS.reception = pd.reception;
+      if (pd.doctor) PINS.doctor = pd.doctor;
+      // remaining keys are doctor names → pins
+      Object.entries(pd).forEach(([k,v]) => {
+        if (k !== 'reception' && k !== 'doctor') DOCTOR_PINS[k] = v;
+      });
+    } else {
+      await setDoc(doc(db,'config','pins'), {reception: PINS.reception, doctor: PINS.doctor});
+    }
+  } catch(e) { console.warn('Config load error:', e); }
+  configLoaded = true;
+  rebuildDropdowns();
+}
+
+function rebuildDropdowns() {
+  const docOpts = DOCTORS.map(d => `<option>${d.name}</option>`).join('');
+  const svcOpts = SERVICES.map(s => `<option>${s}</option>`).join('');
+  const svcOptsBlank = `<option value="">اختر...</option>` + svcOpts;
+  ['f-doctor','b-doctor'].forEach(id => { const el=document.getElementById(id); if(el) el.innerHTML=docOpts; });
+  document.getElementById('f-service').innerHTML = svcOptsBlank;
+  document.getElementById('b-service').innerHTML = svcOpts;
+}
+
+// ═══ HELPERS ═══
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+function fmt(n){ return Math.round(n).toLocaleString('ar-EG'); }
+function todayStr(d){ const dd=d||new Date(); return dd.toISOString().split('T')[0]; }
+function dayStr(d){ return d.toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'}); }
+function setLoading(btnId,loading,text){
+  const b=document.getElementById(btnId); if(!b) return;
+  b.disabled=loading;
+  b.innerHTML=loading?`<span class="spinner"></span>`:(text||b.dataset.orig||b.innerHTML);
+  if(!loading&&text) b.dataset.orig=text;
+}
+
+// 40-minute slots
+function getDoctorSlots(doctorName, dateStr) {
+  const dr = DOCTORS.find(d => d.name === doctorName);
+  if (!dr) return [];
+  const date = new Date(dateStr + 'T00:00:00');
+  if (!dr.days.includes(date.getDay())) return [];
+  const slots = [];
+  let mins = dr.start * 60;
+  const endMins = dr.end * 60;
+  while (mins < endMins) {
+    const h = Math.floor(mins/60), m = mins%60;
+    slots.push(`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`);
+    mins += 40;
   }
   return slots;
 }
 
-function isDoctorAvailableToday(doctorName){
-  const doc=DOCTORS.find(d=>d.name===doctorName);
-  if(!doc)return false;
-  const dayOfWeek=new Date().getDay();
-  return doc.days.includes(dayOfWeek);
+function getAllSlots(dateStr) {
+  const all = new Set();
+  DOCTORS.forEach(dr => getDoctorSlots(dr.name, dateStr).forEach(s => all.add(s)));
+  return [...all].sort();
 }
 
-// ═══════════════ PIN ═══════════════
-window.selectRole=function(r){
-  role=r;
-  document.getElementById('pin-title').textContent=r==='doctor'?'أهلاً د. رنا 👑':'رقم سري الاستقبال';
-  document.getElementById('pin-sub').textContent=r==='doctor'?'رقم سري خاص بك':'للموظفين فقط';
-  pinBuf='';updateDots();document.getElementById('pin-err').textContent='';
+// ═══ PIN / AUTH ═══
+window.selectRole = function(r) {
+  role = r;
+  const titles = { reception:'رقم سري الاستقبال', doctor:'أهلاً د. رنا 👑', otherdoc:'رقم سري الطبيب' };
+  const subs = { reception:'للموظفين فقط', doctor:'رقم سري خاص بك', otherdoc:'أدخل رقمك السري' };
+  document.getElementById('pin-title').textContent = titles[r];
+  document.getElementById('pin-sub').textContent = subs[r];
+  pinBuf=''; updateDots(); document.getElementById('pin-err').textContent='';
   show('s-pin');
 }
-window.goBack=function(){show('s-login');}
-function updateDots(){for(let i=0;i<4;i++)document.getElementById('p'+i).classList.toggle('on',i<pinBuf.length);}
-window.np=function(d){if(pinBuf.length>=4)return;pinBuf+=d;updateDots();if(pinBuf.length===4)checkPin();}
-window.pinDel=function(){pinBuf=pinBuf.slice(0,-1);updateDots();}
-window.pinClear=function(){pinBuf='';updateDots();}
-function checkPin(){
-  if(pinBuf===PINS[role]){
-    currentDay=new Date();
-    if(role==='reception'){switchRTab('pay');renderToday();show('s-reception');}
-    else{switchDTab('finance');renderDoctor();show('s-doctor');}
-  }else{
-    document.getElementById('pin-err').textContent='رقم سري خاطئ';
-    pinBuf='';updateDots();
+window.goBack = function(){ show('s-login'); }
+function updateDots(){ for(let i=0;i<4;i++) document.getElementById('p'+i).classList.toggle('on',i<pinBuf.length); }
+window.np = function(d){ if(pinBuf.length>=4) return; pinBuf+=d; updateDots(); if(pinBuf.length===4) checkPin(); }
+window.pinDel = function(){ pinBuf=pinBuf.slice(0,-1); updateDots(); }
+window.pinClear = function(){ pinBuf=''; updateDots(); }
+
+async function checkPin() {
+  if (!configLoaded) await configReady;
+  if (pinBuf === PINS.reception) {
+    role = 'reception'; currentDay = new Date();
+    switchRTab('pay'); renderToday(); show('s-reception');
+  } else if (pinBuf === PINS.doctor) {
+    role = 'doctor'; currentDay = new Date();
+    switchDTab('finance'); renderDoctor(); checkRetention(); show('s-doctor');
+  } else {
+    const match = Object.entries(DOCTOR_PINS).find(([,pin]) => pin === pinBuf);
+    if (match) {
+      role = 'otherdoc'; currentDocName = match[0]; currentDay = new Date();
+      document.getElementById('od-role-label').textContent = currentDocName;
+      switchODTab('calendar'); renderOtherDocCalendar(); show('s-otherdoc');
+    } else {
+      document.getElementById('pin-err').textContent = 'رقم سري خاطئ';
+      pinBuf=''; updateDots();
+    }
   }
 }
-window.logout=function(){show('s-login');role=null;}
 
-// ═══════════════ TAB SWITCHING ═══════════════
-window.switchRTab=function(tab){
-  ['pay','agenda'].forEach(t=>{
-    document.getElementById('r-tab-'+t).classList.toggle('active',t===tab);
-    document.getElementById('r-bnav-'+t).classList.toggle('active',t===tab);
+window.logout = function(){ show('s-login'); role=null; currentDocName=null; }
+
+// ═══ TAB SWITCHING ═══
+window.switchRTab = function(tab) {
+  ['pay','agenda','search','checkin'].forEach(t => {
+    document.getElementById('r-tab-'+t).classList.toggle('active', t===tab);
+    document.getElementById('r-bnav-'+t).classList.toggle('active', t===tab);
   });
-  if(tab==='agenda'){currentDay=new Date();renderReceptionAgenda();}
+  if (tab==='agenda') { currentDay=new Date(); renderReceptionAgenda(); }
 }
-window.switchDTab=function(tab){
-  ['finance','agenda'].forEach(t=>{
-    document.getElementById('d-tab-'+t).classList.toggle('active',t===tab);
-    document.getElementById('d-bnav-'+t).classList.toggle('active',t===tab);
+window.switchDTab = function(tab) {
+  ['finance','agenda','search','admin'].forEach(t => {
+    document.getElementById('d-tab-'+t).classList.toggle('active', t===tab);
+    document.getElementById('d-bnav-'+t).classList.toggle('active', t===tab);
   });
-  if(tab==='agenda'){currentDay=new Date();renderDoctorAgenda();}
+  if (tab==='agenda') { currentDay=new Date(); renderDoctorAgenda(); }
+}
+window.switchODTab = function(tab) {
+  ['calendar','patient'].forEach(t => {
+    document.getElementById('od-tab-'+t).classList.toggle('active', t===tab);
+    document.getElementById('od-bnav-'+t).classList.toggle('active', t===tab);
+  });
+}
+window.switchAdminTab = function(tab) {
+  document.querySelectorAll('.atab').forEach((b,i) => {
+    const tabs = ['doctors','services','audit','pins'];
+    b.classList.toggle('active', tabs[i]===tab);
+  });
+  ['doctors','services','audit','pins'].forEach(t => {
+    document.getElementById('at-'+t).classList.toggle('active', t===tab);
+  });
+  if (tab==='doctors') renderAdminDoctors();
+  else if (tab==='services') renderAdminServices();
+  else if (tab==='audit') renderAuditLog();
+  else if (tab==='pins') renderAdminPins();
 }
 
-// ═══════════════ DAY NAV ═══════════════
-window.changeDay=function(dir){
-  currentDay=new Date(currentDay);
-  currentDay.setDate(currentDay.getDate()+dir);
-  if(role==='reception')renderReceptionAgenda();
-  else renderDoctorAgenda();
+// ═══ DAY NAV ═══
+window.changeDay = function(dir) {
+  currentDay = new Date(currentDay);
+  currentDay.setDate(currentDay.getDate() + dir);
+  if (role==='reception') renderReceptionAgenda();
+  else if (role==='doctor') renderDoctorAgenda();
+  else renderOtherDocCalendar();
 }
 
-// ═══════════════ PAYMENTS ═══════════════
-window.calcBD=function(){
-  const total=parseFloat(document.getElementById('f-total').value)||0;
-  const paid=parseFloat(document.getElementById('f-paid').value)||0;
-  const name=document.getElementById('f-name').value;
-  const svc=document.getElementById('f-service').value;
-  const bd=document.getElementById('breakdown');
-  if(total>0&&name&&svc){
+// ═══ PAYMENTS ═══
+window.calcBD = function() {
+  const total = parseFloat(document.getElementById('f-total').value)||0;
+  const paid  = parseFloat(document.getElementById('f-paid').value)||0;
+  const name  = document.getElementById('f-name').value;
+  const svc   = document.getElementById('f-service').value;
+  const bd    = document.getElementById('breakdown');
+  if (total>0 && name && svc) {
     bd.style.display='flex';
-    document.getElementById('bd-total').textContent=fmt(total)+' ج';
-    document.getElementById('bd-paid').textContent=fmt(paid)+' ج';
-    document.getElementById('bd-rem').textContent=fmt(Math.max(0,total-paid))+' ج';
-  }else bd.style.display='none';
+    document.getElementById('bd-total').textContent = fmt(total)+' ج';
+    document.getElementById('bd-paid').textContent  = fmt(paid)+' ج';
+    document.getElementById('bd-rem').textContent   = fmt(Math.max(0,total-paid))+' ج';
+  } else bd.style.display='none';
 }
 
-window.submitPay=async function(){
-  const name=document.getElementById('f-name').value.trim();
-  const phone=document.getElementById('f-phone').value.trim();
-  const svc=document.getElementById('f-service').value;
-  const doctor=document.getElementById('f-doctor').value;
-  const total=parseFloat(document.getElementById('f-total').value)||0;
-  const paid=parseFloat(document.getElementById('f-paid').value)||0;
-  const notes=document.getElementById('f-notes').value;
-  if(!name||!svc||total<=0||paid<=0){alert('من فضلك أكمل البيانات الأساسية');return;}
-  if(paid>total){alert('المبلغ المدفوع أكبر من الإجمالي!');return;}
+window.submitPay = async function() {
+  const name   = document.getElementById('f-name').value.trim();
+  const phone  = document.getElementById('f-phone').value.trim();
+  const svc    = document.getElementById('f-service').value;
+  const doctor = document.getElementById('f-doctor').value;
+  const total  = parseFloat(document.getElementById('f-total').value)||0;
+  const paid   = parseFloat(document.getElementById('f-paid').value)||0;
+  const notes  = document.getElementById('f-notes').value;
+  if (!name||!svc||total<=0||paid<=0) { alert('من فضلك أكمل البيانات الأساسية'); return; }
+  if (paid>total) { alert('المبلغ المدفوع أكبر من الإجمالي!'); return; }
   setLoading('pay-btn',true);
-  try{
-    const docRef=await addDoc(collection(db,'payments'),{
-      name,phone,service:svc,doctor,total,paid,notes,
-      remaining:total-paid,date:todayStr(),createdAt:serverTimestamp()
+  try {
+    await addDoc(collection(db,'payments'), {
+      name, phone, service:svc, doctor, total, paid, notes,
+      remaining: total-paid, date: todayStr(), createdAt: serverTimestamp()
     });
     showReceipt({name,phone,service:svc,doctor,total,paid,notes,time:new Date()});
     renderToday();
-    ['f-name','f-phone','f-total','f-paid','f-notes'].forEach(id=>document.getElementById(id).value='');
+    ['f-name','f-phone','f-total','f-paid','f-notes'].forEach(id => document.getElementById(id).value='');
     document.getElementById('f-service').value='';
     document.getElementById('breakdown').style.display='none';
-  }catch(e){alert('خطأ في الحفظ: '+e.message);}
+  } catch(e) { alert('خطأ في الحفظ: '+e.message); }
   setLoading('pay-btn',false,'✓ تسجيل وإصدار الإيصال');
 }
 
-function showReceipt(t){
-  const now=new Date();
-  document.getElementById('r-date').textContent=now.toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const rows=[['المريض',t.name],['الهاتف',t.phone||'—'],['الخدمة',t.service],['الطبيب',t.doctor],
+function showReceipt(t) {
+  const now = new Date();
+  document.getElementById('r-date').textContent = now.toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'}) + ' — ' + now.toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});
+  const rows = [['المريض',t.name],['الهاتف',t.phone||'—'],['الخدمة',t.service],['الطبيب',t.doctor],
     ['إجمالي الأتعاب',fmt(t.total)+' جنيه'],['المدفوع',fmt(t.paid)+' جنيه'],
     ['المتبقي',fmt(Math.max(0,t.total-t.paid))+' جنيه']];
-  if(t.notes)rows.push(['ملاحظات',t.notes]);
-  document.getElementById('r-rows').innerHTML=rows.map(([k,v])=>`<div class="r-row"><span class="r-key">${k}</span><span style="color:${k==='المتبقي'&&t.total>t.paid?'var(--red)':'var(--text)'};font-weight:${k==='المتبقي'?'700':'400'}">${v}</span></div>`).join('');
+  if (t.notes) rows.push(['ملاحظات',t.notes]);
+  document.getElementById('r-rows').innerHTML = rows.map(([k,v]) =>
+    `<div class="r-row"><span class="r-key">${k}</span><span style="color:${k==='المتبقي'&&t.total>t.paid?'var(--red)':'var(--text)'};font-weight:${k==='المتبقي'?'700':'400'}">${v}</span></div>`
+  ).join('');
   document.getElementById('modal-receipt').classList.add('open');
 }
 
-function payBadge(t){
-  if(t.remaining<=0)return'<span class="badge b-green">مكتمل</span>';
-  if(t.paid/t.total>=0.4)return'<span class="badge b-amber">جاري</span>';
-  return'<span class="badge b-red">متأخر</span>';
+window.printReceipt = function() {
+  window.print();
 }
 
-async function renderToday(){
-  const el=document.getElementById('today-list');
-  el.innerHTML='<div class="loading">جاري التحميل...</div>';
-  try{
-    const q=query(collection(db,'payments'),where('date','==',todayStr()),orderBy('createdAt','desc'));
-    const snap=await getDocs(q);
-    const docs=snap.docs.map(d=>({id:d.id,...d.data()}));
-    document.getElementById('today-count').textContent=docs.length+' معاملة';
-    if(!docs.length){el.innerHTML='<div class="empty">لا توجد مدفوعات اليوم بعد</div>';return;}
-    el.innerHTML=docs.map(t=>`<div class="list-item">
+function payBadge(t) {
+  if (t.remaining<=0) return '<span class="badge b-green">مكتمل</span>';
+  if (t.paid/t.total>=0.4) return '<span class="badge b-amber">جاري</span>';
+  return '<span class="badge b-red">متأخر</span>';
+}
+
+async function renderToday() {
+  const el = document.getElementById('today-list');
+  el.innerHTML = '<div class="loading">جاري التحميل...</div>';
+  try {
+    const q = query(collection(db,'payments'), where('date','==',todayStr()), orderBy('createdAt','desc'));
+    const snap = await getDocs(q);
+    const docs = snap.docs.map(d => ({id:d.id,...d.data()}));
+    document.getElementById('today-count').textContent = docs.length+' معاملة';
+    if (!docs.length) { el.innerHTML='<div class="empty">لا توجد مدفوعات اليوم بعد</div>'; return; }
+    el.innerHTML = docs.map(t => `<div class="list-item">
       <div><div class="item-name">${t.name}</div><div class="item-meta">${t.service} — ${t.doctor}</div></div>
-      <div class="item-right"><div style="font-size:14px;font-weight:700;color:var(--green)">+${fmt(t.paid)} ج</div>
-      ${t.remaining>0?`<div style="font-size:12px;color:var(--red)">متبقي ${fmt(t.remaining)} ج</div>`:'<div style="font-size:11px;color:var(--green-dark)">✓ مكتمل</div>'}</div>
+      <div class="item-right">
+        <div style="font-size:14px;font-weight:700;color:var(--green)">+${fmt(t.paid)} ج</div>
+        ${t.remaining>0?`<div style="font-size:12px;color:var(--red)">متبقي ${fmt(t.remaining)} ج</div>`:'<div style="font-size:11px;color:var(--green-dark)">✓ مكتمل</div>'}
+      </div>
     </div>`).join('');
-  }catch(e){el.innerHTML=`<div class="empty">خطأ في التحميل</div>`;}
+  } catch(e) { el.innerHTML='<div class="empty">خطأ في التحميل</div>'; }
 }
 
-window.setFilter=function(f,btn){
+window.setFilter = function(f,btn) {
   txFilter=f;
-  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-  btn.classList.add('active');renderDoctor();
+  document.querySelectorAll('#d-tab-finance .chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active'); renderDoctor();
 }
 
-async function renderDoctor(){
-  const el=document.getElementById('doc-txn-list');
-  el.innerHTML='<div class="loading">جاري التحميل...</div>';
-  try{
-    const q=query(collection(db,'payments'),orderBy('createdAt','desc'));
-    const snap=await getDocs(q);
-    let docs=snap.docs.map(d=>({id:d.id,...d.data()}));
-    const totColl=docs.reduce((s,t)=>s+t.paid,0);
-    const totRem=docs.reduce((s,t)=>s+(t.remaining||0),0);
-    const todayCnt=docs.filter(t=>t.date===todayStr()).length;
-    document.getElementById('doc-metrics').innerHTML=`
+async function renderDoctor() {
+  const el = document.getElementById('doc-txn-list');
+  el.innerHTML = '<div class="loading">جاري التحميل...</div>';
+  try {
+    const q = query(collection(db,'payments'), orderBy('createdAt','desc'));
+    const snap = await getDocs(q);
+    let docs = snap.docs.map(d => ({id:d.id,...d.data()}));
+    const totColl = docs.reduce((s,t) => s+t.paid, 0);
+    const totRem  = docs.reduce((s,t) => s+(t.remaining||0), 0);
+    const todayCnt = docs.filter(t => t.date===todayStr()).length;
+    document.getElementById('doc-metrics').innerHTML = `
       <div class="metric"><div class="metric-val" style="color:var(--green)">${fmt(totColl)}</div><div class="metric-lbl">محصّل (ج)</div></div>
       <div class="metric"><div class="metric-val" style="color:var(--red)">${fmt(totRem)}</div><div class="metric-lbl">متبقي (ج)</div></div>
       <div class="metric"><div class="metric-val">${todayCnt}</div><div class="metric-lbl">مرضى اليوم</div></div>`;
-    const pending=docs.filter(t=>(t.remaining||0)>0);
-    const alertEl=document.getElementById('doc-alert');
-    if(pending.length){alertEl.style.display='flex';document.getElementById('doc-alert-msg').textContent=pending.length+' مريض لديهم مبالغ متبقية — إجمالي '+fmt(totRem)+' ج';}
+    const pending = docs.filter(t => (t.remaining||0)>0);
+    const alertEl = document.getElementById('doc-alert');
+    if (pending.length) { alertEl.style.display='flex'; document.getElementById('doc-alert-msg').textContent=pending.length+' مريض لديهم مبالغ متبقية — إجمالي '+fmt(totRem)+' ج'; }
     else alertEl.style.display='none';
-    if(txFilter==='pending')docs=docs.filter(t=>(t.remaining||0)>0);
-    if(txFilter==='done')docs=docs.filter(t=>(t.remaining||0)<=0);
-    if(!docs.length){el.innerHTML='<div class="empty">لا توجد معاملات</div>';return;}
-    el.innerHTML=docs.map(t=>`<div class="list-item">
-      <div><div class="item-name">${t.name} ${payBadge(t)}</div><div class="item-meta">${t.service} — ${t.doctor}</div><div class="item-sub">${t.date}${t.notes?' — '+t.notes:''}</div></div>
-      <div class="item-right"><div style="font-size:14px;font-weight:700;color:var(--green)">${fmt(t.paid)} ج</div>${(t.remaining||0)>0?`<div style="font-size:12px;color:var(--red)">من ${fmt(t.total)} ج</div>`:''}</div>
+    if (txFilter==='pending') docs = docs.filter(t => (t.remaining||0)>0);
+    if (txFilter==='done')    docs = docs.filter(t => (t.remaining||0)<=0);
+    if (!docs.length) { el.innerHTML='<div class="empty">لا توجد معاملات</div>'; return; }
+    el.innerHTML = docs.map(t => `<div class="list-item">
+      <div>
+        <div class="item-name">${t.name} ${payBadge(t)}</div>
+        <div class="item-meta">${t.service} — ${t.doctor}</div>
+        <div class="item-sub">${t.date}${t.notes?' — '+t.notes:''}</div>
+      </div>
+      <div class="item-right">
+        <div style="font-size:14px;font-weight:700;color:var(--green)">${fmt(t.paid)} ج</div>
+        ${(t.remaining||0)>0?`<div style="font-size:12px;color:var(--red)">من ${fmt(t.total)} ج</div>`:''}
+      </div>
     </div>`).join('');
-  }catch(e){el.innerHTML='<div class="empty">خطأ في التحميل</div>';}
+  } catch(e) { el.innerHTML='<div class="empty">خطأ في التحميل</div>'; }
 }
 
-// ═══════════════ AGENDA ═══════════════
-function buildDoctorFilter(containerId, onSelect){
-  const container=document.getElementById(containerId);
-  const all=`<button class="chip ${!selectedDocFilter?'active':''}" onclick="(${onSelect})('')">الكل</button>`;
-  const btns=DOCTORS.map(d=>`<button class="chip ${selectedDocFilter===d.name?'active':''}" onclick="(${onSelect})('${d.name}')">${d.name.replace('د. ','')}</button>`).join('');
-  container.innerHTML=all+btns;
+// ═══ DATA RETENTION ═══
+async function checkRetention() {
+  const banner = document.getElementById('retention-banner');
+  banner.style.display='none';
+  try {
+    const snap = await getDocs(query(collection(db,'payments'), orderBy('createdAt')));
+    const now = Date.now();
+    const WARN_MS  = 80 * 86400000;
+    const DEL_MS   = 90 * 86400000;
+    const toWarn = [], toDel = [];
+    snap.docs.forEach(d => {
+      const ts = (d.data().createdAt?.seconds||0)*1000;
+      if (!ts) return;
+      const age = now - ts;
+      if (age >= DEL_MS) toDel.push({id:d.id,...d.data()});
+      else if (age >= WARN_MS) toWarn.push({id:d.id,...d.data()});
+    });
+    if (!toDel.length && !toWarn.length) return;
+    const msg = toDel.length
+      ? `${toDel.length} سجل تجاوز 90 يومًا — يجب النسخ الاحتياطي والحذف`
+      : `${toWarn.length} سجل سيتجاوز 90 يومًا خلال 10 أيام`;
+    banner.style.display='block';
+    banner.innerHTML=`<div class="retention-banner">
+      <div class="retention-banner-title">⚠️ تنبيه الأرشفة</div>
+      <div class="retention-banner-body">${msg}</div>
+      <div class="retention-actions">
+        ${toDel.length?`<button class="btn btn-sm btn-green" onclick="exportRetentionData(${JSON.stringify(toDel).split('"').join("'")})" style="font-size:11px">⬇️ تنزيل نسخة</button>`:''}
+        ${toDel.length?`<button class="btn btn-sm btn-red" onclick="deleteOldRecords()" style="font-size:11px">🗑️ حذف القديم</button>`:''}
+      </div>
+    </div>`;
+    window._retentionDel = toDel;
+  } catch(e) {}
 }
 
-window.setDocFilter=function(name){
-  selectedDocFilter=name||null;
-  if(role==='reception')renderReceptionAgenda();
+window.exportRetentionData = function() {
+  const data = window._retentionDel || [];
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download=`backup_${todayStr()}.json`; a.click();
+  URL.revokeObjectURL(url);
+}
+
+window.deleteOldRecords = async function() {
+  const data = window._retentionDel || [];
+  if (!data.length) return;
+  if (!confirm(`سيتم حذف ${data.length} سجل قديم. هل تنزّلت النسخة الاحتياطية؟`)) return;
+  for (const rec of data) {
+    try { await deleteDoc(doc(db,'payments',rec.id)); } catch(e) {}
+  }
+  window._retentionDel = [];
+  await checkRetention();
+  await renderDoctor();
+}
+
+// ═══ AGENDA ═══
+function buildDoctorFilter(containerId, onSelectFn) {
+  const container = document.getElementById(containerId);
+  const chips = [`<button class="chip ${!selectedDocFilter?'active':''}" onclick="${onSelectFn}('')">الكل</button>`];
+  DOCTORS.forEach(d => chips.push(`<button class="chip ${selectedDocFilter===d.name?'active':''}" onclick="${onSelectFn}('${d.name}')">${d.name.replace('د. ','')}</button>`));
+  container.innerHTML = chips.join('');
+}
+
+window.setDocFilter = function(name) {
+  selectedDocFilter = name||null;
+  if (role==='reception') renderReceptionAgenda();
   else renderDoctorAgenda();
 }
 
-async function getAppointments(dateStr, doctorFilter){
-  let q;
-  if(doctorFilter){
-    q=query(collection(db,'appointments'),where('date','==',dateStr),where('doctor','==',doctorFilter));
-  }else{
-    q=query(collection(db,'appointments'),where('date','==',dateStr));
-  }
-  const snap=await getDocs(q);
-  return snap.docs.map(d=>({id:d.id,...d.data()}));
+async function getAppointments(dateStr, doctorFilter) {
+  const constraints = [where('date','==',dateStr)];
+  if (doctorFilter) constraints.push(where('doctor','==',doctorFilter));
+  const snap = await getDocs(query(collection(db,'appointments'),...constraints));
+  return snap.docs.map(d => ({id:d.id,...d.data()}));
 }
 
-async function renderReceptionAgenda(){
-  const ds=todayStr(currentDay);
-  document.getElementById('r-date-label').textContent=dayStr(currentDay);
+async function checkSlotAvailability(dateStr, time, doctorName) {
+  const all = await getAppointments(dateStr, null);
+  const active = all.filter(a => a.status!=='cancelled' && a.time===time);
+  if (active.find(a => a.doctor===doctorName)) return 'blocked';
+  if (active.length >= 3) return 'full';
+  return 'available';
+}
+
+async function renderReceptionAgenda() {
+  const ds = todayStr(currentDay);
+  document.getElementById('r-date-label').textContent = dayStr(currentDay);
   buildDoctorFilter('r-doctor-filter','window.setDocFilter');
-  const slotsEl=document.getElementById('r-slots');
-  slotsEl.innerHTML='<div class="loading">جاري التحميل...</div>';
-  try{
-    const appts=await getAppointments(ds,selectedDocFilter);
-    const doctor=selectedDocFilter||null;
-    const slots=doctor?getDoctorSlots(doctor,ds):getAllSlots(ds);
-    if(!slots.length){slotsEl.innerHTML='<div class="empty">الدكتور غير متاح هذا اليوم</div>';return;}
-    renderSlots(slotsEl,slots,appts,doctor);
-    document.getElementById('r-agenda-title').textContent=`📅 ${doctor||'كل المواعيد'} — ${DAY_NAMES[currentDay.getDay()]}`;
-  }catch(e){slotsEl.innerHTML='<div class="empty">خطأ في التحميل</div>';}
+  const slotsEl = document.getElementById('r-slots');
+  slotsEl.innerHTML = '<div class="loading">جاري التحميل...</div>';
+  try {
+    const appts = await getAppointments(ds, selectedDocFilter);
+    const slots = selectedDocFilter ? getDoctorSlots(selectedDocFilter,ds) : getAllSlots(ds);
+    if (!slots.length) { slotsEl.innerHTML='<div class="empty">لا مواعيد متاحة هذا اليوم</div>'; return; }
+    renderSlots(slotsEl, slots, appts, selectedDocFilter, true);
+    document.getElementById('r-agenda-title').textContent = `📅 ${selectedDocFilter||'كل المواعيد'} — ${DAY_NAMES[currentDay.getDay()]}`;
+  } catch(e) { slotsEl.innerHTML='<div class="empty">خطأ في التحميل</div>'; }
 }
 
-async function renderDoctorAgenda(){
-  const ds=todayStr(currentDay);
-  document.getElementById('d-date-label').textContent=dayStr(currentDay);
+async function renderDoctorAgenda() {
+  const ds = todayStr(currentDay);
+  document.getElementById('d-date-label').textContent = dayStr(currentDay);
   buildDoctorFilter('d-doctor-filter','window.setDocFilter');
-  const slotsEl=document.getElementById('d-slots');
-  slotsEl.innerHTML='<div class="loading">جاري التحميل...</div>';
-  try{
-    const appts=await getAppointments(ds,selectedDocFilter);
-    const doctor=selectedDocFilter||null;
-    const slots=doctor?getDoctorSlots(doctor,ds):getAllSlots(ds);
-    if(!slots.length){slotsEl.innerHTML='<div class="empty">لا مواعيد متاحة هذا اليوم</div>';return;}
-    renderSlots(slotsEl,slots,appts,doctor);
-    document.getElementById('d-agenda-title').textContent=`📅 ${doctor||'كل الأطباء'} — ${DAY_NAMES[currentDay.getDay()]}`;
-  }catch(e){slotsEl.innerHTML='<div class="empty">خطأ في التحميل</div>';}
+  const slotsEl = document.getElementById('d-slots');
+  slotsEl.innerHTML = '<div class="loading">جاري التحميل...</div>';
+  try {
+    const appts = await getAppointments(ds, selectedDocFilter);
+    const slots = selectedDocFilter ? getDoctorSlots(selectedDocFilter,ds) : getAllSlots(ds);
+    if (!slots.length) { slotsEl.innerHTML='<div class="empty">لا مواعيد متاحة هذا اليوم</div>'; return; }
+    renderSlots(slotsEl, slots, appts, selectedDocFilter, false);
+    document.getElementById('d-agenda-title').textContent = `📅 ${selectedDocFilter||'كل الأطباء'} — ${DAY_NAMES[currentDay.getDay()]}`;
+  } catch(e) { slotsEl.innerHTML='<div class="empty">خطأ في التحميل</div>'; }
 }
 
-function getAllSlots(dateStr){
-  const allTimes=new Set();
-  DOCTORS.forEach(doc=>{
-    const slots=getDoctorSlots(doc.name,dateStr);
-    slots.forEach(s=>allTimes.add(s));
-  });
-  return [...allTimes].sort();
+async function renderOtherDocCalendar() {
+  if (!currentDocName) return;
+  const ds = todayStr(currentDay);
+  document.getElementById('od-date-label').textContent = dayStr(currentDay);
+  document.getElementById('od-cal-title').textContent = `📅 ${currentDocName} — ${DAY_NAMES[currentDay.getDay()]}`;
+  const slotsEl = document.getElementById('od-slots');
+  slotsEl.innerHTML = '<div class="loading">جاري التحميل...</div>';
+  try {
+    const appts = await getAppointments(ds, currentDocName);
+    const slots = getDoctorSlots(currentDocName, ds);
+    if (!slots.length) { slotsEl.innerHTML='<div class="empty">غير متاح هذا اليوم</div>'; return; }
+    renderSlots(slotsEl, slots, appts, currentDocName, false, false);
+  } catch(e) { slotsEl.innerHTML='<div class="empty">خطأ في التحميل</div>'; }
 }
 
-function renderSlots(el,slots,appts,doctorFilter){
-  el.innerHTML=slots.map(time=>{
-    const appt=appts.find(a=>a.time===time&&a.status!=='cancelled');
-    if(appt){
-      const isCancelled=appt.status==='cancelled';
-      return`<div class="slot">
+function renderSlots(el, slots, appts, doctorFilter, showCheckin=false, allowBook=true) {
+  el.innerHTML = slots.map(time => {
+    const slotAppts = appts.filter(a => a.time===time && a.status!=='cancelled');
+    if (doctorFilter) {
+      const appt = slotAppts[0];
+      if (appt) {
+        const isCheckedIn = appt.checkedIn;
+        return `<div class="slot">
+          <div class="slot-time">${time}</div>
+          <div class="slot-body">
+            <button class="appt-card${isCheckedIn?' checked-in':''}" onclick="window.openApptDetail('${appt.id}')">
+              <div class="appt-name">${appt.name}${isCheckedIn?' <span class="badge b-green" style="font-size:10px">هنا ✓</span>':''}</div>
+              <div class="appt-detail">${appt.service}${appt.notes?' — '+appt.notes:''}</div>
+            </button>
+            ${showCheckin && !isCheckedIn ? `<button class="checkin-btn" onclick="window.checkInPatient('${appt.id}')">🏥 تسجيل دخول</button>` : ''}
+            ${showCheckin && isCheckedIn ? `<button class="checkout-btn" onclick="window.checkOutPatient('${appt.id}')">✓ إنهاء الجلسة</button>` : ''}
+          </div>
+        </div>`;
+      }
+      return `<div class="slot">
         <div class="slot-time">${time}</div>
-        <div class="slot-body"><button class="appt-card ${isCancelled?'cancelled':''}" onclick="window.openApptDetail('${appt.id}')">
+        <div class="slot-body">${allowBook?`<button class="slot-empty" onclick="window.openBookModalAt('${time}','${doctorFilter}')">+ حجز</button>`:'<span style="font-size:12px;color:var(--text3)">فارغ</span>'}</div>
+      </div>`;
+    } else {
+      const cards = slotAppts.map(appt => `
+        <button class="appt-card" onclick="window.openApptDetail('${appt.id}')">
           <div class="appt-name">${appt.name}</div>
-          <div class="appt-detail">${appt.service} — ${appt.doctor}${appt.notes?' — '+appt.notes:''}</div>
-        </button></div>
+          <div class="appt-detail">${appt.doctor} — ${appt.service}</div>
+        </button>`).join('');
+      return `<div class="slot">
+        <div class="slot-time">${time}</div>
+        <div class="slot-body">
+          ${cards || (allowBook?`<button class="slot-empty" onclick="window.openBookModalAt('${time}','')">+ حجز</button>`:'<span style="font-size:12px;color:var(--text3)">فارغ</span>')}
+        </div>
       </div>`;
     }
-    return`<div class="slot">
-      <div class="slot-time">${time}</div>
-      <div class="slot-body"><button class="slot-empty" onclick="window.openBookModalAt('${time}','${doctorFilter||''}')">+ حجز</button></div>
-    </div>`;
   }).join('');
 }
 
-window.openBookModal=function(){
-  updateBookTimes();
+// ═══ CHECK-IN ═══
+async function renderCheckinList() {
+  const el = document.getElementById('checkin-list');
+  el.innerHTML = '<div class="loading">جاري التحميل...</div>';
+  try {
+    const appts = await getAppointments(todayStr(), null);
+    const active = appts.filter(a => a.status!=='cancelled').sort((a,b) => a.time.localeCompare(b.time));
+    if (!active.length) { el.innerHTML='<div class="empty">لا توجد مواعيد اليوم</div>'; return; }
+    el.innerHTML = active.map(a => `<div class="list-item">
+      <div>
+        <div class="item-name">${a.name} ${a.checkedIn?'<span class="badge b-green">داخل</span>':'<span class="badge b-grey">ينتظر</span>'}</div>
+        <div class="item-meta">${a.time} — ${a.doctor} — ${a.service}</div>
+      </div>
+      <div>
+        ${!a.checkedIn
+          ? `<button class="btn btn-green btn-sm" onclick="window.checkInPatient('${a.id}')">🏥 دخول</button>`
+          : `<button class="btn btn-sm" style="border-color:var(--amber);color:var(--amber)" onclick="window.checkOutPatient('${a.id}')">✓ خروج</button>`}
+      </div>
+    </div>`).join('');
+  } catch(e) { el.innerHTML='<div class="empty">خطأ</div>'; }
+}
+
+window.checkInPatient = async function(apptId) {
+  try {
+    await updateDoc(doc(db,'appointments',apptId), {checkedIn:true, checkedInAt:serverTimestamp()});
+    await logAudit('appointments', apptId, 'check-in', {checkedIn:false}, {checkedIn:true});
+    if (role==='reception') { renderCheckinList(); renderReceptionAgenda(); }
+    else if (role==='doctor') renderDoctorAgenda();
+  } catch(e) { alert('خطأ: '+e.message); }
+}
+
+window.checkOutPatient = async function(apptId) {
+  try {
+    await updateDoc(doc(db,'appointments',apptId), {checkedIn:false});
+    await logAudit('appointments', apptId, 'check-out', {checkedIn:true}, {checkedIn:false});
+    if (role==='reception') { renderCheckinList(); renderReceptionAgenda(); }
+    else if (role==='doctor') renderDoctorAgenda();
+    else if (role==='otherdoc') { renderOtherDocPatient(); renderOtherDocCalendar(); }
+  } catch(e) { alert('خطأ: '+e.message); }
+}
+
+// ═══ OTHER DOCTOR — PATIENT VIEW ═══
+async function renderOtherDocPatient() {
+  const el = document.getElementById('od-patient-content');
+  el.innerHTML = '<div class="loading">جاري البحث...</div>';
+  try {
+    const appts = await getAppointments(todayStr(), currentDocName);
+    const checkedIn = appts.find(a => a.checkedIn && a.status!=='cancelled');
+    if (!checkedIn) {
+      el.innerHTML = '<div class="empty" style="padding:3rem">لا يوجد مريض في الجلسة حاليًا<br><small style="color:var(--text3)">يقوم الاستقبال بتسجيل دخول المريض</small></div>';
+      return;
+    }
+    const hist = await getPatientHistory(checkedIn.phone);
+    el.innerHTML = renderPatientHistoryHTML(checkedIn.name, checkedIn.phone, hist, false) +
+      `<button class="btn btn-full" style="margin-top:12px;border-color:var(--amber);color:var(--amber)" onclick="window.checkOutPatient('${checkedIn.id}')">✓ إنهاء الجلسة</button>`;
+  } catch(e) { el.innerHTML='<div class="empty">خطأ في التحميل</div>'; }
+}
+
+// ═══ BOOKING MODALS ═══
+window.openBookModal = function() {
+  rebuildDropdowns(); updateBookTimes();
   document.getElementById('b-name').value='';
   document.getElementById('b-phone').value='';
   document.getElementById('b-notes').value='';
   document.getElementById('modal-book').classList.add('open');
 }
 
-window.openBookModalAt=function(time,doctor){
-  if(doctor)document.getElementById('b-doctor').value=doctor;
+window.openBookModalAt = function(time, doctor) {
+  rebuildDropdowns();
+  if (doctor) document.getElementById('b-doctor').value=doctor;
   updateBookTimes();
   document.getElementById('b-time').value=time;
   document.getElementById('b-name').value='';
@@ -772,145 +1180,208 @@ window.openBookModalAt=function(time,doctor){
   document.getElementById('modal-book').classList.add('open');
 }
 
-window.updateBookTimes=function(){
-  const doctor=document.getElementById('b-doctor').value;
-  const ds=todayStr(currentDay);
-  const slots=getDoctorSlots(doctor,ds);
-  const sel=document.getElementById('b-time');
-  sel.innerHTML=slots.length?slots.map(t=>`<option value="${t}">${t}</option>`).join(''):'<option>غير متاح</option>';
+window.updateBookTimes = function() {
+  const doctor = document.getElementById('b-doctor').value;
+  const ds = todayStr(currentDay);
+  const slots = getDoctorSlots(doctor, ds);
+  const sel = document.getElementById('b-time');
+  sel.innerHTML = slots.length ? slots.map(t=>`<option value="${t}">${t}</option>`).join('') : '<option>غير متاح</option>';
 }
 
-window.confirmBook=async function(){
-  const name=document.getElementById('b-name').value.trim();
-  const phone=document.getElementById('b-phone').value.trim();
-  const doctor=document.getElementById('b-doctor').value;
-  const time=document.getElementById('b-time').value;
-  const service=document.getElementById('b-service').value;
-  const notes=document.getElementById('b-notes').value;
-  const ds=todayStr(currentDay);
-  if(!name){alert('من فضلك أدخل اسم المريض');return;}
+window.confirmBook = async function() {
+  const name    = document.getElementById('b-name').value.trim();
+  const phone   = document.getElementById('b-phone').value.trim();
+  const doctor  = document.getElementById('b-doctor').value;
+  const time    = document.getElementById('b-time').value;
+  const service = document.getElementById('b-service').value;
+  const notes   = document.getElementById('b-notes').value;
+  const ds      = todayStr(currentDay);
+  if (!name) { alert('من فضلك أدخل اسم المريض'); return; }
   setLoading('book-btn',true);
-  try{
-    const existing=await getAppointments(ds,doctor);
-    const conflict=existing.find(a=>a.time===time&&a.status!=='cancelled');
-    if(conflict){alert('الوقت ده محجوز بالفعل! اختار وقت تاني');setLoading('book-btn',false,'✓ تأكيد الحجز');return;}
-    await addDoc(collection(db,'appointments'),{
-      name,phone,doctor,time,service,notes,date:ds,status:'confirmed',createdAt:serverTimestamp()
+  try {
+    const avail = await checkSlotAvailability(ds, time, doctor);
+    if (avail==='blocked') { alert('الدكتور لديه موعد بالفعل في هذا الوقت'); setLoading('book-btn',false,'✓ تأكيد الحجز'); return; }
+    if (avail==='full')    { alert('الغرف الثلاث محجوزة في هذا الوقت'); setLoading('book-btn',false,'✓ تأكيد الحجز'); return; }
+    await addDoc(collection(db,'appointments'), {
+      name, phone, doctor, time, service, notes, date:ds, status:'confirmed', createdAt:serverTimestamp()
     });
     closeModal('modal-book');
-    if(role==='reception')renderReceptionAgenda();
+    if (role==='reception') renderReceptionAgenda();
     else renderDoctorAgenda();
-  }catch(e){alert('خطأ: '+e.message);}
+  } catch(e) { alert('خطأ: '+e.message); }
   setLoading('book-btn',false,'✓ تأكيد الحجز');
 }
 
-window.openApptDetail=async function(id){
-  selectedApptId=id;
-  try{
-    const snap=await getDocs(query(collection(db,'appointments'),where('__name__','==',id)));
-    if(snap.empty)return;
-    const a=snap.docs[0].data();
-    document.getElementById('appt-detail-body').innerHTML=[
+window.openApptDetail = async function(id) {
+  selectedApptId = id;
+  try {
+    const snap = await getDocs(query(collection(db,'appointments'), where('__name__','==',id)));
+    if (snap.empty) return;
+    const a = snap.docs[0].data();
+    document.getElementById('appt-detail-body').innerHTML = [
       ['المريض',a.name],['الهاتف',a.phone||'—'],['الموعد',a.time],
-      ['الدكتور',a.doctor],['الخدمة',a.service],['الحالة',a.status==='cancelled'?'ملغي':'مؤكد'],
+      ['الدكتور',a.doctor],['الخدمة',a.service],
+      ['الحالة',a.status==='cancelled'?'ملغي':a.checkedIn?'في الجلسة ✓':'مؤكد'],
       ['ملاحظات',a.notes||'—']
     ].map(([k,v])=>`<div class="r-row"><span class="r-key">${k}</span><span>${v}</span></div>`).join('');
     document.getElementById('modal-appt').classList.add('open');
-  }catch(e){alert('خطأ في التحميل');}
+  } catch(e) { alert('خطأ في التحميل'); }
 }
 
-window.cancelAppt=async function(){
-  if(!selectedApptId)return;
-  if(!confirm('هتلغي الموعد ده؟'))return;
-  try{
-    await updateDoc(doc(db,'appointments',selectedApptId),{status:'cancelled'});
+window.cancelAppt = async function() {
+  if (!selectedApptId) return;
+  if (!confirm('هتلغي الموعد ده؟')) return;
+  try {
+    const before = {status:'confirmed'};
+    await updateDoc(doc(db,'appointments',selectedApptId), {status:'cancelled'});
+    await logAudit('appointments', selectedApptId, 'cancel', before, {status:'cancelled'});
     closeModal('modal-appt');
-    if(role==='reception')renderReceptionAgenda();
-    else renderDoctorAgenda();
-  }catch(e){alert('خطأ: '+e.message);}
+    if (role==='reception') renderReceptionAgenda();
+    else if (role==='doctor') renderDoctorAgenda();
+  } catch(e) { alert('خطأ: '+e.message); }
 }
 
-// ═══════════════ PATIENT BOOKING ═══════════════
-window.showPatientBooking=function(){
-  bookStep=1;bookDoctor=null;bookTime=null;
-  show('s-patient');
-  renderBookingStep();
+// ═══ PATIENT SEARCH ═══
+function debounceSearch(prefix) {
+  clearTimeout(searchTimers[prefix]);
+  searchTimers[prefix] = setTimeout(() => runSearch(prefix), 400);
+}
+window.debounceSearch = debounceSearch;
+
+async function runSearch(prefix) {
+  const q = document.getElementById(prefix+'-search-input').value.trim();
+  const el = document.getElementById(prefix+'-search-results');
+  if (q.length < 2) { el.innerHTML=''; return; }
+  el.innerHTML = '<div class="loading">جاري البحث...</div>';
+  try {
+    const [pSnap, aSnap] = await Promise.all([
+      getDocs(query(collection(db,'payments'), orderBy('createdAt','desc'))),
+      getDocs(query(collection(db,'appointments'), orderBy('createdAt','desc')))
+    ]);
+    const ql = q.toLowerCase();
+    const payments = pSnap.docs.map(d=>({id:d.id,...d.data()})).filter(t => t.name?.toLowerCase().includes(ql)||t.phone?.includes(q));
+    const appts    = aSnap.docs.map(d=>({id:d.id,...d.data()})).filter(t => t.name?.toLowerCase().includes(ql)||t.phone?.includes(q));
+    if (!payments.length && !appts.length) { el.innerHTML='<div class="empty">لا نتائج</div>'; return; }
+    const phoneSet = new Set([...payments.map(p=>p.phone), ...appts.map(a=>a.phone)].filter(Boolean));
+    const names    = [...new Set([...payments.map(p=>p.name), ...appts.map(a=>a.name)].filter(Boolean))];
+    const canEdit  = role==='doctor';
+    el.innerHTML = names.map(name => {
+      const ph = payments.filter(p=>p.name===name);
+      const ap = appts.filter(a=>a.name===name);
+      const phone = ph[0]?.phone || ap[0]?.phone || '';
+      return renderPatientHistoryHTML(name, phone, {payments:ph, appointments:ap}, canEdit);
+    }).join('');
+  } catch(e) { el.innerHTML='<div class="empty">خطأ في البحث</div>'; }
 }
 
-function renderBookingStep(){
-  const wrap=document.getElementById('booking-wrap');
-  const ds=todayStr(new Date());
-  const dayOfWeek=new Date().getDay();
+async function getPatientHistory(phone) {
+  if (!phone) return {payments:[], appointments:[]};
+  const [pSnap, aSnap] = await Promise.all([
+    getDocs(query(collection(db,'payments'), where('phone','==',phone), orderBy('createdAt','desc'))),
+    getDocs(query(collection(db,'appointments'), where('phone','==',phone), orderBy('createdAt','desc')))
+  ]);
+  return {
+    payments: pSnap.docs.map(d=>({id:d.id,...d.data()})),
+    appointments: aSnap.docs.map(d=>({id:d.id,...d.data()}))
+  };
+}
 
-  if(bookStep===1){
-    const available=DOCTORS.filter(d=>d.days.includes(dayOfWeek));
+function renderPatientHistoryHTML(name, phone, hist, canEdit) {
+  const totPaid = hist.payments.reduce((s,p)=>s+p.paid,0);
+  const totRem  = hist.payments.reduce((s,p)=>s+(p.remaining||0),0);
+  const payRows = hist.payments.map(p=>`<div class="list-item" style="font-size:13px">
+    <div><div class="item-name">${p.service} ${payBadge(p)}</div><div class="item-sub">${p.date} — ${p.doctor}</div></div>
+    <div class="item-right"><div style="color:var(--green);font-weight:700">${fmt(p.paid)} ج</div>${p.remaining>0?`<div style="color:var(--red);font-size:11px">من ${fmt(p.total)} ج</div>`:''}</div>
+  </div>`).join('') || '<div class="empty" style="padding:1rem">لا سجلات مالية</div>';
+  const apptRows = hist.appointments.filter(a=>a.status!=='cancelled').map(a=>`<div class="list-item" style="font-size:13px">
+    <div><div class="item-name">${a.service}</div><div class="item-sub">${a.date} ${a.time} — ${a.doctor}</div></div>
+    <div><span class="badge ${a.checkedIn?'b-green':'b-grey'}">${a.checkedIn?'تم':'مؤكد'}</span></div>
+  </div>`).join('') || '<div class="empty" style="padding:1rem">لا مواعيد</div>';
+  return `<div class="patient-history-card">
+    <div class="ph-header">
+      <div><div class="ph-name">${name}</div><div class="ph-meta">${phone||'بدون هاتف'}</div></div>
+      <div style="text-align:left;direction:ltr">
+        <div style="font-size:13px;font-weight:700;color:var(--green-dark)">${fmt(totPaid)} ج</div>
+        ${totRem>0?`<div style="font-size:11px;color:#A32D2D">متبقي ${fmt(totRem)} ج</div>`:''}
+      </div>
+    </div>
+    <div style="padding:8px 16px 4px;font-size:12px;font-weight:600;color:var(--text2)">المدفوعات</div>
+    <div class="list">${payRows}</div>
+    <div style="padding:8px 16px 4px;font-size:12px;font-weight:600;color:var(--text2);border-top:1px solid var(--border)">المواعيد</div>
+    <div class="list">${apptRows}</div>
+  </div>`;
+}
+
+// ═══ PATIENT BOOKING (3 steps + date) ═══
+window.showPatientBooking = function() {
+  bookStep=1; bookDoctor=null; bookTime=null; bookDate=todayStr(new Date());
+  show('s-patient'); renderBookingStep();
+}
+
+function renderBookingStep() {
+  const wrap = document.getElementById('booking-wrap');
+  const dayOfWeek = new Date(bookDate+'T00:00:00').getDay();
+
+  if (bookStep===1) {
+    const todayISO = todayStr(new Date());
+    const maxDate  = new Date(); maxDate.setDate(maxDate.getDate()+30);
     wrap.innerHTML=`
       <div class="booking-header">
-        <div class="booking-logo">🦷</div>
-        <div class="booking-title">احجز موعدك</div>
-        <div class="booking-sub">اختار الدكتور المناسب ليك</div>
+        <div class="booking-title">🦷 احجز موعدك</div>
+        <div class="booking-sub">اختار اليوم والدكتور المناسب</div>
       </div>
       <div class="step-indicator">
-        <div class="step-dot active"></div>
-        <div class="step-dot"></div>
-        <div class="step-dot"></div>
+        <div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div>
+      </div>
+      <div class="field">
+        <label>تاريخ الموعد</label>
+        <input type="date" id="book-date-input" value="${bookDate}" min="${todayISO}" max="${todayStr(maxDate)}" onchange="window.onBookDateChange(this.value)"/>
       </div>
       <div class="doctor-grid">
-        ${DOCTORS.map(d=>{
-          const avail=d.days.includes(dayOfWeek);
-          return`<div class="doctor-card ${!avail?'unavailable':''}" onclick="${avail?`window.selectBookDoctor('${d.name}')`:''}">
-            <div class="doc-info">
+        ${DOCTORS.map(d => {
+          const avail = d.days.includes(dayOfWeek);
+          return `<div class="doctor-card ${!avail?'unavailable':''}" onclick="${avail?`window.selectBookDoctor('${d.name}')`:''}">
+            <div>
               <div class="doc-name">${d.name}</div>
-              <div class="doc-hours">${avail?`متاح اليوم — ${d.start}:00 إلى ${d.end}:00`:'غير متاح اليوم'}${d.note?' ⚠️':''}</div>
+              <div class="doc-hours">${avail?`متاح — ${d.start}:00 إلى ${d.end}:00`:'غير متاح هذا اليوم'}${d.note?' ⚠️':''}</div>
             </div>
             <div class="doc-check" style="color:${d.color}">✓</div>
           </div>`;
         }).join('')}
       </div>`;
   }
-  else if(bookStep===2){
-    const doc=DOCTORS.find(d=>d.name===bookDoctor);
-    const slots=getDoctorSlots(bookDoctor,ds);
+  else if (bookStep===2) {
     wrap.innerHTML=`
       <div class="booking-header">
         <div class="booking-title">اختار الوقت</div>
-        <div class="booking-sub">${bookDoctor} — اليوم</div>
+        <div class="booking-sub">${bookDoctor} — ${bookDate}</div>
       </div>
       <div class="step-indicator">
-        <div class="step-dot done"></div>
-        <div class="step-dot active"></div>
-        <div class="step-dot"></div>
+        <div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div>
       </div>
       <div class="card">
         <div class="card-body">
-          <div class="time-grid" id="time-grid">
-            <div class="loading">جاري التحميل...</div>
-          </div>
+          <div class="time-grid" id="time-grid"><div class="loading">جاري التحميل...</div></div>
         </div>
       </div>
       <button class="btn btn-full" onclick="bookStep=1;renderBookingStep()">← رجوع</button>`;
-    loadAvailableTimes(ds);
+    loadAvailableTimes(bookDate);
   }
-  else if(bookStep===3){
+  else if (bookStep===3) {
     wrap.innerHTML=`
       <div class="booking-header">
         <div class="booking-title">بياناتك</div>
-        <div class="booking-sub">${bookDoctor} — ${bookTime}</div>
+        <div class="booking-sub">${bookDoctor} — ${bookDate} — ${bookTime}</div>
       </div>
       <div class="step-indicator">
-        <div class="step-dot done"></div>
-        <div class="step-dot done"></div>
-        <div class="step-dot active"></div>
+        <div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div>
       </div>
       <div class="card">
         <div class="card-body">
           <div class="field"><label>اسمك</label><input type="text" id="pt-name" placeholder="الاسم الكامل"/></div>
           <div class="field"><label>رقم تليفونك</label><input type="tel" id="pt-phone" placeholder="01X..."/></div>
           <div class="field"><label>نوع الخدمة</label>
-            <select id="pt-service">
-              <option>كشف عادي</option><option>تقويم</option><option>زراعة</option>
-              <option>تركيبات</option><option>حشو</option><option>تنظيف</option><option>خلع</option>
-            </select>
+            <select id="pt-service">${SERVICES.map(s=>`<option>${s}</option>`).join('')}</select>
           </div>
           <div class="field"><label>ملاحظات (اختياري)</label><input type="text" id="pt-notes" placeholder="أي ملاحظات..."/></div>
           <button class="btn btn-green btn-full" id="pt-confirm-btn" onclick="window.confirmPatientBook()">✓ تأكيد الحجز</button>
@@ -920,48 +1391,230 @@ function renderBookingStep(){
   }
 }
 
-async function loadAvailableTimes(ds){
-  const grid=document.getElementById('time-grid');
-  if(!grid)return;
-  try{
-    const existing=await getAppointments(ds,bookDoctor);
-    const takenTimes=existing.filter(a=>a.status!=='cancelled').map(a=>a.time);
-    const slots=getDoctorSlots(bookDoctor,ds);
-    grid.innerHTML=slots.map(t=>{
-      const taken=takenTimes.includes(t);
-      return`<button class="time-btn ${taken?'taken':''}" ${taken?'disabled':''} onclick="window.selectBookTime('${t}')">${t}</button>`;
+window.onBookDateChange = function(val) {
+  bookDate = val;
+  renderBookingStep();
+}
+
+async function loadAvailableTimes(ds) {
+  const grid = document.getElementById('time-grid');
+  if (!grid) return;
+  try {
+    const allAppts = await getAppointments(ds, null);
+    const slots = getDoctorSlots(bookDoctor, ds);
+    if (!slots.length) { grid.innerHTML='<div class="empty">لا توجد أوقات متاحة</div>'; return; }
+    grid.innerHTML = slots.map(t => {
+      const atTime = allAppts.filter(a => a.status!=='cancelled' && a.time===t);
+      const docBlocked = atTime.find(a => a.doctor===bookDoctor);
+      const roomFull   = atTime.length >= 3;
+      if (docBlocked)  return `<button class="time-btn taken" disabled>${t}<br><span style="font-size:10px">محجوز</span></button>`;
+      if (roomFull)    return `<button class="time-btn room-full" disabled>${t}<br><span style="font-size:10px">الغرف ممتلئة</span></button>`;
+      return `<button class="time-btn" onclick="window.selectBookTime('${t}')">${t}</button>`;
     }).join('');
-  }catch(e){grid.innerHTML='<div class="empty">خطأ في التحميل</div>';}
+  } catch(e) { grid.innerHTML='<div class="empty">خطأ في التحميل</div>'; }
 }
 
-window.selectBookDoctor=function(name){
-  bookDoctor=name;bookStep=2;renderBookingStep();
-}
-window.selectBookTime=function(time){
-  bookTime=time;bookStep=3;renderBookingStep();
-}
+window.selectBookDoctor = function(name) { bookDoctor=name; bookStep=2; renderBookingStep(); }
+window.selectBookTime   = function(time) { bookTime=time; bookStep=3; renderBookingStep(); }
 
-window.confirmPatientBook=async function(){
-  const name=document.getElementById('pt-name').value.trim();
-  const phone=document.getElementById('pt-phone').value.trim();
-  const service=document.getElementById('pt-service').value;
-  const notes=document.getElementById('pt-notes').value;
-  if(!name||!phone){alert('من فضلك أدخل اسمك ورقم تليفونك');return;}
+window.confirmPatientBook = async function() {
+  const name    = document.getElementById('pt-name').value.trim();
+  const phone   = document.getElementById('pt-phone').value.trim();
+  const service = document.getElementById('pt-service').value;
+  const notes   = document.getElementById('pt-notes').value;
+  if (!name||!phone) { alert('من فضلك أدخل اسمك ورقم تليفونك'); return; }
   setLoading('pt-confirm-btn',true);
-  try{
-    const ds=todayStr(new Date());
-    await addDoc(collection(db,'appointments'),{
-      name,phone,doctor:bookDoctor,time:bookTime,service,notes,
-      date:ds,status:'confirmed',source:'patient',createdAt:serverTimestamp()
+  try {
+    const avail = await checkSlotAvailability(bookDate, bookTime, bookDoctor);
+    if (avail!=='available') { alert('عذرًا، هذا الوقت لم يعد متاحًا. اختر وقتًا آخر.'); bookStep=2; renderBookingStep(); return; }
+    await addDoc(collection(db,'appointments'), {
+      name, phone, doctor:bookDoctor, time:bookTime, service, notes,
+      date:bookDate, status:'confirmed', source:'patient', createdAt:serverTimestamp()
     });
-    document.getElementById('booking-confirm-msg').textContent=`${name}، موعدك مع ${bookDoctor} الساعة ${bookTime} اتأكد ✓`;
+    document.getElementById('booking-confirm-msg').textContent = `${name}، موعدك مع ${bookDoctor} بتاريخ ${bookDate} الساعة ${bookTime} اتأكد ✓`;
     document.getElementById('modal-booking-confirm').classList.add('open');
-  }catch(e){alert('خطأ في الحجز: '+e.message);}
+  } catch(e) { alert('خطأ في الحجز: '+e.message); }
   setLoading('pt-confirm-btn',false,'✓ تأكيد الحجز');
 }
 
-window.closeModal=closeModal;
+// ═══ ADMIN ═══
+window.renderAdmin = function() { renderAdminDoctors(); }
 
+function renderAdminDoctors() {
+  const el = document.getElementById('at-doctors');
+  el.innerHTML = `
+    <button class="btn btn-green btn-sm" onclick="window.openAdminDocForm(-1)">+ إضافة طبيب</button>
+    <div class="card">
+      <div class="list">
+        ${DOCTORS.map((d,i) => `<div class="doc-row">
+          <div class="doc-color-dot" style="background:${d.color}"></div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:600">${d.name}</div>
+            <div style="font-size:11px;color:var(--text2)">${d.days.map(x=>DAY_SHORT[x]).join('، ')} — ${d.start}:00 → ${d.end}:00${d.note?' ⚠️'+d.note:''}</div>
+          </div>
+          <button class="btn btn-sm" onclick="window.openAdminDocForm(${i})" style="margin-left:4px">✏️</button>
+          <button class="btn btn-sm btn-red" onclick="window.deleteAdminDoctor(${i})">🗑️</button>
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+window.openAdminDocForm = function(idx) {
+  editingDoctorIndex = idx;
+  const d = idx>=0 ? DOCTORS[idx] : null;
+  document.getElementById('admin-doc-modal-title').textContent = d ? 'تعديل طبيب' : 'إضافة طبيب جديد';
+  document.getElementById('adf-name').value  = d?.name||'';
+  document.getElementById('adf-color').value = d?.color||'#1D9E75';
+  document.getElementById('adf-note').value  = d?.note||'';
+  document.getElementById('adf-pin').value   = d ? (DOCTOR_PINS[d.name]||'') : '';
+  // Hours select
+  const hoursOpts = Array.from({length:16},(_,i)=>`<option value="${i+8}">${i+8}:00</option>`).join('');
+  document.getElementById('adf-start').innerHTML = hoursOpts;
+  document.getElementById('adf-end').innerHTML   = hoursOpts;
+  document.getElementById('adf-start').value = d?.start||14;
+  document.getElementById('adf-end').value   = d?.end||22;
+  // Days picker
+  const selDays = d?.days||[];
+  document.getElementById('adf-days').innerHTML = DAY_SHORT.map((name,i) =>
+    `<button type="button" class="chip day-chip${selDays.includes(i)?' selected':''}" onclick="this.classList.toggle('selected')" data-day="${i}">${name}</button>`
+  ).join('');
+  document.getElementById('modal-admin-doc').classList.add('open');
+}
+
+window.saveAdminDoctor = async function() {
+  const name  = document.getElementById('adf-name').value.trim();
+  const start = parseInt(document.getElementById('adf-start').value);
+  const end   = parseInt(document.getElementById('adf-end').value);
+  const color = document.getElementById('adf-color').value;
+  const note  = document.getElementById('adf-note').value.trim();
+  const pin   = document.getElementById('adf-pin').value.trim();
+  if (!name) { alert('أدخل اسم الطبيب'); return; }
+  if (end<=start) { alert('وقت النهاية يجب أن يكون بعد البداية'); return; }
+  const days = [...document.querySelectorAll('#adf-days .day-chip.selected')].map(b=>parseInt(b.dataset.day));
+  const newDoc = {name, days, start, end, color, note};
+  if (editingDoctorIndex>=0) {
+    const oldName = DOCTORS[editingDoctorIndex].name;
+    DOCTORS[editingDoctorIndex] = newDoc;
+    if (oldName !== name && DOCTOR_PINS[oldName]) { DOCTOR_PINS[name]=DOCTOR_PINS[oldName]; delete DOCTOR_PINS[oldName]; }
+  } else {
+    DOCTORS.push(newDoc);
+  }
+  if (pin.length===4) DOCTOR_PINS[name] = pin;
+  await saveConfigToFirestore();
+  closeModal('modal-admin-doc');
+  renderAdminDoctors(); rebuildDropdowns();
+}
+
+window.deleteAdminDoctor = async function(idx) {
+  if (!confirm('حذف هذا الطبيب؟')) return;
+  const name = DOCTORS[idx].name;
+  DOCTORS.splice(idx,1);
+  delete DOCTOR_PINS[name];
+  await saveConfigToFirestore();
+  renderAdminDoctors(); rebuildDropdowns();
+}
+
+function renderAdminServices() {
+  const el = document.getElementById('at-services');
+  el.innerHTML = `
+    <div class="card card-body" style="gap:8px">
+      <div style="display:flex;gap:8px">
+        <input type="text" id="new-svc-input" placeholder="خدمة جديدة..." style="flex:1;padding:10px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:inherit"/>
+        <button class="btn btn-green btn-sm" onclick="window.addService()">+ إضافة</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px">
+        ${SERVICES.map((s,i) => `<span class="svc-tag">${s}<button class="svc-remove" onclick="window.removeService(${i})">✕</button></span>`).join('')}
+      </div>
+    </div>`;
+}
+
+window.addService = async function() {
+  const inp = document.getElementById('new-svc-input');
+  const val = inp.value.trim();
+  if (!val || SERVICES.includes(val)) return;
+  SERVICES.push(val); inp.value='';
+  await saveConfigToFirestore();
+  renderAdminServices(); rebuildDropdowns();
+}
+
+window.removeService = async function(idx) {
+  SERVICES.splice(idx,1);
+  await saveConfigToFirestore();
+  renderAdminServices(); rebuildDropdowns();
+}
+
+function renderAdminPins() {
+  const el = document.getElementById('at-pins');
+  el.innerHTML = `<div class="card card-body" style="gap:12px">
+    <div class="row2">
+      <div class="field"><label>رقم الاستقبال</label><input type="password" id="pin-reception" value="${PINS.reception}" maxlength="4"/></div>
+      <div class="field"><label>رقم د. رنا</label><input type="password" id="pin-doctor" value="${PINS.doctor}" maxlength="4"/></div>
+    </div>
+    <div style="font-size:12px;font-weight:600;color:var(--text2);margin-top:4px">أرقام الأطباء</div>
+    ${DOCTORS.map(d=>`<div class="row2" style="align-items:center">
+      <div style="font-size:13px;font-weight:500">${d.name}</div>
+      <div class="field"><input type="password" id="pin-doc-${d.name.replace(/\s/g,'_')}" value="${DOCTOR_PINS[d.name]||''}" maxlength="4" placeholder="----"/></div>
+    </div>`).join('')}
+    <button class="btn btn-green btn-full" onclick="window.saveAllPins()">💾 حفظ الأرقام</button>
+  </div>`;
+}
+
+window.saveAllPins = async function() {
+  const r = document.getElementById('pin-reception').value.trim();
+  const d = document.getElementById('pin-doctor').value.trim();
+  if (r.length===4) PINS.reception=r;
+  if (d.length===4) PINS.doctor=d;
+  DOCTORS.forEach(dr => {
+    const inp = document.getElementById('pin-doc-'+dr.name.replace(/\s/g,'_'));
+    if (inp && inp.value.trim().length===4) DOCTOR_PINS[dr.name]=inp.value.trim();
+  });
+  await saveConfigToFirestore();
+  alert('تم حفظ الأرقام السرية ✓');
+}
+
+async function saveConfigToFirestore() {
+  const pinsDoc = {reception:PINS.reception, doctor:PINS.doctor, ...DOCTOR_PINS};
+  await Promise.all([
+    setDoc(doc(db,'config','doctors'), {list:DOCTORS}),
+    setDoc(doc(db,'config','services'), {list:SERVICES}),
+    setDoc(doc(db,'config','pins'), pinsDoc),
+  ]);
+}
+
+// ═══ AUDIT LOG ═══
+async function logAudit(coll, docId, action, before, after) {
+  try {
+    await addDoc(collection(db,'auditLog'), {
+      collection:coll, docId, action, before, after,
+      role: role||'unknown', doctorName: currentDocName||null,
+      timestamp: serverTimestamp()
+    });
+  } catch(e) {}
+}
+
+async function renderAuditLog() {
+  const el = document.getElementById('at-audit');
+  el.innerHTML = '<div class="loading">جاري التحميل...</div>';
+  try {
+    const snap = await getDocs(query(collection(db,'auditLog'), orderBy('timestamp','desc')));
+    const logs = snap.docs.slice(0,50).map(d=>({id:d.id,...d.data()}));
+    if (!logs.length) { el.innerHTML='<div class="empty">لا سجلات بعد</div>'; return; }
+    el.innerHTML = `<div class="card"><div class="list">
+      ${logs.map(l=>`<div class="list-item" style="font-size:12px">
+        <div>
+          <div class="item-name" style="font-size:13px">${l.action} — ${l.collection}</div>
+          <div class="item-meta">${l.role}${l.doctorName?' ('+l.doctorName+')':''}</div>
+        </div>
+        <div style="font-size:11px;color:var(--text3)">${l.timestamp?.seconds?new Date(l.timestamp.seconds*1000).toLocaleDateString('ar-EG'):''}</div>
+      </div>`).join('')}
+    </div></div>`;
+  } catch(e) { el.innerHTML='<div class="empty">خطأ في التحميل</div>'; }
+}
+
+window.closeModal = closeModal;
+window.renderCheckinList = renderCheckinList;
+window.renderOtherDocPatient = renderOtherDocPatient;
+window.renderAdmin = renderAdmin;
 </script>
 </body>
 </html>
