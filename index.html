@@ -610,6 +610,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, getDoc, query, where, orderBy, updateDoc, deleteDoc, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+  
 const firebaseConfig = {
   apiKey: "AIzaSyCjwSXhdm89KbGDQiQi3SaRDzEWFmtDw1M",
   authDomain: "rouby-care-dental-centre.firebaseapp.com",
@@ -621,6 +623,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+const auth = getAuth(app);
+signInAnonymously(auth).catch(e=>alert('Auth error: '+e.message));
 
 // ═══ DEFAULT CONFIG ═══
 const DEFAULT_DOCTORS = [
