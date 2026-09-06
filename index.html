@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rouby Care Dental Center — Checkpoint 2 · Booking + Reception + Auth</title>
+<title>Rouby Care Dental Center | مركز روبي كير لطب الأسنان</title>
 <link rel="icon" type="image/png" href="rouby-logo.png">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -299,11 +299,36 @@ ul.q li::before{content:'?';color:var(--gold-dark)}
        (real booking + real staff login), added because both a human
        tester and Cowork independently got lost clicking through the
        review mockups looking for the real thing. -->
-  <div style="background:#fff3cd;border-bottom:2px solid #f4b23c;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center">
+  <div id="realLinksBar" style="background:#fff3cd;border-bottom:2px solid #f4b23c;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center">
     <b class="xs" style="color:#7a4b00">👇 دول الصفحات الحقيقية الشغّالة (مش المراجعة اللي فوق):</b>
     <button class="btn btn-primary btn-sm" data-go="booking">🔴 النموذج العام الحقيقي (الحجز)</button>
     <button class="btn btn-primary btn-sm" data-go="portal">🔴 بوابة الفريق الحقيقية (دخول الموظفين)</button>
   </div>
+</header>
+<!-- 2026-09-06: the </header> above was missing in the original file, which
+     meant <main> and every real view (booking/portal/etc.) were nested
+     INSIDE this review header rather than being siblings of it — invisible
+     as a bug until something tried to hide #review, at which point it would
+     have hidden the entire app along with it. Fixed here; zero visual
+     change when the review chrome is shown (?review=1). -->
+
+<script>
+/* 2026-09-06: production gate. The Checkpoint-1 design-review chrome above
+   (tabs + this yellow banner) is an internal QA tool, not part of the real
+   app, and must never be the first thing a patient, staff member, or Dr.
+   Rana sees. By default this hides that chrome and boots straight into the
+   real, Firebase-wired booking page (or the staff portal, via a #portal
+   link). Add ?review=1 to the URL to bring the internal review chrome back
+   for Cowork/Yassin's own use — nothing else about the real app changes. */
+(function(){
+  var REVIEW = /(^|[?&])review=1(&|$)/.test(location.search);
+  window.__PRODUCTION_MODE__ = !REVIEW;
+  if(!REVIEW){
+    document.getElementById('review').style.display='none';
+    document.getElementById('realLinksBar').style.display='none';
+  }
+})();
+</script>
 
 <main>
   <!-- ═════ PUBLIC PAGE OPTIONS ═════ -->
@@ -939,9 +964,19 @@ function renderTabs(){
   });
   setView(current);
 }
-let current = store.get('view','public');
+function initialView(){
+  if(window.__PRODUCTION_MODE__){
+    const fromHash = location.hash.replace('#','');
+    return fromHash==='portal' ? 'portal' : 'booking';
+  }
+  return store.get('view','public');
+}
+let current = initialView();
 function setView(id){
-  current=id; store.set('view',id);
+  if(window.__PRODUCTION_MODE__ && id!=='booking' && id!=='portal') id='booking';
+  current=id;
+  if(window.__PRODUCTION_MODE__){ history.replaceState(null,'','#'+id); }
+  else { store.set('view',id); }
   $$('section[data-view]').forEach(s=>s.hidden = s.dataset.view!==id);
   $$('.rv-tab').forEach(t=>t.classList.toggle('on',t.dataset.go===id));
   window.scrollTo({top:0,behavior:'smooth'});
