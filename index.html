@@ -2011,18 +2011,43 @@ async function totpVerify(secret,code){
   for(const w of [-1,0,1]) if(await hotp(secret,c+w)===code) return true;
   return false;
 }
-function totpStore(){ return store.get('totp',{}); }
-function totpSecretFor(user){
-  const t=totpStore();
-  if(!t[user]){
-    const rnd=crypto.getRandomValues(new Uint8Array(20));
-    t[user]={secret:b32encode(rnd), enrolled:false, createdAt:new Date().toISOString()};
-    store.set('totp',t);
-  }
-  return t[user];
+function totpStatusStore(){ return store.get('totpStatus',{}); }
+function setTotpStatus(user,enrolled){
+  const s=totpStatusStore();
+  s[user]={enrolled:!!enrolled, checkedAt:new Date().toISOString()};
+  store.set('totpStatus',s);
 }
-function totpMarkEnrolled(user){ const t=totpStore(); if(t[user]){t[user].enrolled=true; store.set('totp',t);} }
-function totpReset(user){ const t=totpStore(); delete t[user]; store.set('totp',t); }
+function totpNewRecord(user){
+  const rnd=crypto.getRandomValues(new Uint8Array(20));
+  return {user, role:USERS[user].role, secret:b32encode(rnd), enrolled:false, createdAt:new Date().toISOString()};
+}
+function totpDoc(user){
+  if(FB.mode!=='online' || !RC.ready || !RC.staffAuthed) throw new Error('totp-offline');
+  return RC.db.collection('staff_totp').doc(user);
+}
+async function totpSecretFor(user){
+  const ref=totpDoc(user);
+  const snap=await ref.get();
+  if(snap.exists && snap.data().secret){
+    const rec=snap.data();
+    setTotpStatus(user,!!rec.enrolled);
+    return rec;
+  }
+  const rec=totpNewRecord(user);
+  await ref.set({...rec, createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+                 updatedAt:firebase.firestore.FieldValue.serverTimestamp()}, {merge:false});
+  setTotpStatus(user,false);
+  return rec;
+}
+async function totpMarkEnrolled(user){
+  await totpDoc(user).set({user, role:USERS[user].role, enrolled:true,
+    updatedAt:firebase.firestore.FieldValue.serverTimestamp()}, {merge:true});
+  setTotpStatus(user,true);
+}
+async function totpReset(user){
+  await totpDoc(user).delete();
+  setTotpStatus(user,false);
+}
 
 /* ── 5. Login: username + password, then per-user TOTP ── */
 const USERS={
@@ -2096,18 +2121,26 @@ $('#lgPass').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#lgGo').clic
 $('#otpBack').onclick=()=>{ pending=null; $('#loginStep2').hidden=true; $('#loginStep1').hidden=false; };
 
 async function renderEnroll(user){
-  const box=$('#totpEnroll'), rec=totpSecretFor(user);
+  const box=$('#totpEnroll');
   box.hidden=false; box.innerHTML='';
+  let rec;
+  try{ rec=await totpSecretFor(user); }
+  catch(e){
+    box.innerHTML=`<b class="small" style="color:var(--red)">تعذّر تحميل المصادقة الثنائية</b>
+      <p class="xs muted" style="margin-top:6px">انشر قاعدة <code>staff_totp/</code> في Firestore أولاً، ثم سجّل الخروج والدخول مرة أخرى.</p>`;
+    toast(lang==='en'?'TOTP settings are not available yet':'إعدادات المصادقة الثنائية غير متاحة بعد','bad');
+    return;
+  }
   if(!rec.enrolled){
     box.innerHTML=`<b class="small">تفعيل تطبيق المُصادِق — يُعرض مرة واحدة</b>
-      <p class="xs muted" style="margin:6px 0 10px">امسح رمز QR بتطبيق Google أو Microsoft Authenticator. هذا السرّ خاص بحساب <b>${user}</b> ولا يُستخدم لأي مستخدم آخر.</p>
+      <p class="xs muted" style="margin:6px 0 10px">امسح رمز QR بتطبيق Google أو Microsoft Authenticator. هذا السرّ محفوظ للحساب نفسه في Firestore، لذلك يعمل من أي متصفح بعد التفعيل.</p>
       <div id="qrBox" style="display:flex;justify-content:center;margin:8px 0"></div>
       <p class="xs" style="direction:ltr;text-align:center;word-break:break-all"><code>${rec.secret}</code></p>
       <button class="btn btn-ghost btn-sm btn-block" style="margin-top:8px" id="enrollDone">تم المسح — إخفاء نهائياً</button>`;
     const uri=`otpauth://totp/${encodeURIComponent('Rouby Care:'+user)}?secret=${rec.secret}&issuer=${encodeURIComponent('Rouby Care')}&algorithm=SHA1&digits=6&period=30`;
     try{ new QRCode($('#qrBox'),{text:uri,width:150,height:150}); }
     catch(e){ $('#qrBox').innerHTML='<span class="xs muted">تعذّر رسم رمز QR — استخدم السرّ النصّي أدناه</span>'; }
-    $('#enrollDone').onclick=()=>{ totpMarkEnrolled(user); audit('totp.enrolled',{user}); renderEnroll(user); };
+    $('#enrollDone').onclick=async()=>{ await totpMarkEnrolled(user); await audit('totp.enrolled',{user,storage:'firestore'}); renderEnroll(user); };
   }else{
     /* Checkpoint 7 hardening: removed the "reveal current code without a
        phone" test button — a real go-live authenticator secret should never
@@ -2127,12 +2160,14 @@ $('#otpGo').onclick=async()=>{
   if(!pending) return;
   const code=otpInputs.map(i=>i.value).join('');
   if(code.length<6) return;
-  const rec=totpSecretFor(pending);
+  let rec;
+  try{ rec=await totpSecretFor(pending); }
+  catch(e){ toast(lang==='en'?'TOTP settings are not available yet':'إعدادات المصادقة الثنائية غير متاحة بعد','bad'); return; }
   const ok=await totpVerify(rec.secret,code);
   $('#otpErr').hidden=ok;
   if(!ok){ otpInputs.forEach(i=>i.value=''); otpInputs[0].focus();
     await audit('auth.totp_fail',{user:pending}); toast(lang==='en'?'Incorrect code':'الرمز غير صحيح','bad'); return; }
-  totpMarkEnrolled(pending);
+  await totpMarkEnrolled(pending);
   await audit('auth.login',{user:pending,tfa:true,realAuth:!!RC.staffAuthed});
   const u=pending; pending=null; startSession(u);
 };
@@ -3070,6 +3105,18 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Hotfix H1 (2026-09-06): shared TOTP enrollment state. The secret is no
+    // longer stored in localStorage per browser; it lives in Firestore under a
+    // stable username document so the same authenticator code works from any
+    // browser/device after enrollment. Each TOTP role can read/write only its
+    // own document; Dr. Rana/System Admin can reset another enrollment when a
+    // staff member changes device. Reception has no TOTP account.
+    match /staff_totp/{user} {
+      allow read, write: if signedIn()
+                         && user in ['rana','inventory','yassin']
+                         && (myRole() == user || admin());
+    }
+
     // Public booking: anonymous may create only, never read.
     match /booking_requests/{id} {
       allow create: if signedIn()
@@ -3264,7 +3311,7 @@ service cloud.firestore {
   }
 }`;
 function settingsHTML(){
-  const t=totpStore();
+  const t=totpStatusStore();
   return `<div class="card"><h3 style="margin-bottom:10px">إعادة تعيين كلمة مرور — من Firebase Console فقط</h3>
       <p class="small muted" style="margin-bottom:12px">لا توجد استعادة ذاتية عبر البريد، ولا يمكن لهذا التطبيق تغيير كلمة مرور حساب آخر من داخله — قيد تقني حقيقي على خطة Spark بلا Cloud Functions، وليس اختياراً. الخطوات: Firebase Console ← Authentication ← Users ← اختر الحساب ← Reset password، ثم أبلغ الموظف بالكلمة الجديدة مباشرة. سجّل الإجراء هنا بعد إتمامه في Console ليُحفظ في <code>auditLog/</code>.</p>
       <div class="field" style="max-width:320px"><label class="label">المستخدم</label>
@@ -3276,9 +3323,9 @@ function settingsHTML(){
 
     <div class="card"><h3 style="margin-bottom:10px">حالة المصادقة الثنائية</h3>
       ${Object.keys(USERS).filter(u=>USERS[u].tfa).map(u=>`<div class="queue-item"><div><b>${USERS[u].name}</b>
-        <div class="xs muted">${u} · سرّ مستقل خاص بهذا الحساب</div></div>
+        <div class="xs muted">${u} · السر محفوظ في Firestore وليس في المتصفح</div></div>
         <span class="badge ${t[u]&&t[u].enrolled?'b-green':'b-gold'}">${t[u]&&t[u].enrolled?'مُفعّل':'بانتظار التفعيل'}</span></div>`).join('')}
-      <p class="xs muted" style="margin-top:10px">لا يوجد رمز موحّد أو رمز تجاوز في النظام — أُزيل رمز العرض المشترك بقرار العميل.</p></div>
+      <p class="xs muted" style="margin-top:10px">لا يوجد رمز موحّد أو رمز تجاوز في النظام. بعد Hotfix H1 يعمل نفس كود Authenticator من أي متصفح بعد نشر قاعدة <code>staff_totp/</code>.</p></div>
 
     <div class="card"><h3 style="margin-bottom:10px">قواعد Firestore المطبَّقة (مراجعة بنداً بنداً)</h3>
       <pre class="xs" style="direction:ltr;text-align:left;overflow:auto;max-height:340px;background:#0f172a;color:#e2e8f0;padding:14px;border-radius:var(--radius)">${RULES.replace(/</g,'&lt;')}</pre>
@@ -3347,8 +3394,12 @@ function wireSettings(){
     if(!isAdmin){ toast(lang==='en'?'Only System Admin or Dr. Rana can do this':'مسموح لمدير النظام أو د. رنا فقط','bad'); return; }
     const u=$('#pwUser').value;
     if(!USERS[u].tfa){ toast(lang==='en'?'This account does not use two-factor authentication':'هذا الحساب لا يستخدم المصادقة الثنائية','warn'); return; }
-    totpReset(u); await audit('totp.reset',{target:u});
-    drawApp(); toast(lang==='en'?'A new secret will be created for '+u+' on next login':'سيُنشأ سرّ جديد خاص بـ '+u+' عند الدخول القادم','ok');
+    try{
+      await totpReset(u); await audit('totp.reset',{target:u,storage:'firestore'});
+      drawApp(); toast(lang==='en'?'A new secret will be created for '+u+' on next login':'سيُنشأ سرّ جديد خاص بـ '+u+' عند الدخول القادم','ok');
+    }catch(e){
+      toast(lang==='en'?'Could not reset authenticator: '+(e.code||e.message):'تعذّرت إعادة التفعيل: '+(e.code||e.message),'bad');
+    }
   };
   $('#copyRules').onclick=()=>{ navigator.clipboard.writeText(RULES).then(()=>toast(lang==='en'?'Rules copied':'تم نسخ القواعد','ok'),()=>toast(lang==='en'?'Copy failed':'تعذّر النسخ','bad')); };
   $('#expGo').onclick=async()=>{
