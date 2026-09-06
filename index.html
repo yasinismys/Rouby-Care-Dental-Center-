@@ -327,6 +327,18 @@ ul.q li::before{content:'?';color:var(--gold-dark)}
     document.getElementById('review').style.display='none';
     document.getElementById('realLinksBar').style.display='none';
   }
+  /* bookingSecHeadText / portalSecHeadText live further down in <main>, not
+     parsed yet at this point in the file, so this part waits for the DOM to
+     finish — same production/review split, just for the internal QA
+     headline+description sitting above each real view (the connection
+     status badge next to them, #fbStatusPub/#fbStatusStaff, stays untouched
+     since a real user benefits from knowing when the app is offline). */
+  document.addEventListener('DOMContentLoaded',function(){
+    if(!REVIEW){
+      var b=document.getElementById('bookingSecHeadText'); if(b) b.style.display='none';
+      var p=document.getElementById('portalSecHeadText'); if(p) p.style.display='none';
+    }
+  });
 })();
 </script>
 
@@ -523,7 +535,7 @@ ul.q li::before{content:'?';color:var(--gold-dark)}
   <!-- ═════ LIVE BOOKING (Checkpoint 2 · Option B) ═════ -->
   <section data-view="booking" hidden>
     <div class="sec-head">
-      <div><h1>الحجز العام المباشر <span class="badge b-green" style="vertical-align:middle">متصل بقاعدة البيانات</span></h1>
+      <div id="bookingSecHeadText"><h1>الحجز العام المباشر <span class="badge b-green" style="vertical-align:middle">متصل بقاعدة البيانات</span></h1>
         <p class="small">النموذج المعتمد (الخيار B). الإرسال يكتب فعلياً في مجموعة <code>booking_requests/</code> ويظهر فوراً في قائمة الاستقبال. لا يُنشئ ملف مريض.</p></div>
       <div id="fbStatusPub"></div>
     </div>
@@ -583,7 +595,7 @@ ul.q li::before{content:'?';color:var(--gold-dark)}
   <!-- ═════ STAFF PORTAL (Checkpoint 2) ═════ -->
   <section data-view="portal" hidden>
     <div class="sec-head">
-      <div><h1>بوابة الفريق <span class="badge b-gold" style="vertical-align:middle">دخول + TOTP + قائمة الاستقبال الحية</span></h1>
+      <div id="portalSecHeadText"><h1>بوابة الفريق <span class="badge b-gold" style="vertical-align:middle">دخول + TOTP + قائمة الاستقبال الحية</span></h1>
         <p class="small">شاشة دخول حقيقية باسم مستخدم وكلمة مرور، ثم رمز مُصادِق (TOTP) للأدوار الإدارية. الاستقبال يدخل مباشرة. قائمة المواعيد تقرأ من <code>booking_requests/</code> مباشرة.</p></div>
       <div id="fbStatusStaff"></div>
     </div>
@@ -595,7 +607,7 @@ ul.q li::before{content:'?';color:var(--gold-dark)}
         <h2 style="text-align:center">بوابة الفريق</h2>
         <p class="small muted" style="text-align:center">مركز روبي كير لطب الأسنان — دخول الموظفين فقط</p>
         <div id="loginStep1">
-          <div class="field"><label class="label">اسم المستخدم</label><input class="input" id="lgUser" autocomplete="username" placeholder="reception / rana / inventory / yassin"></div>
+          <div class="field"><label class="label">اسم المستخدم</label><input class="input" id="lgUser" autocomplete="username" placeholder="اسم المستخدم"></div>
           <div class="field" style="margin-top:10px"><label class="label">كلمة المرور</label><input class="input" type="password" id="lgPass" autocomplete="current-password" placeholder="••••••••"><span class="err-msg" id="lgErr" hidden>بيانات الدخول غير صحيحة</span></div>
           <button class="btn btn-primary btn-block" style="margin-top:14px" id="lgGo">دخول</button>
           <p class="hint" style="margin-top:8px;text-align:center">لا توجد استعادة ذاتية لكلمة المرور. عند تعذّر الدخول تواصل مع مدير النظام (ياسين) أو د. رنا لإعادة تعيينها.</p>
@@ -1268,8 +1280,8 @@ function availableTimes(date,doctorName){
 /* ── 1. Firebase connection + anonymous auth (public writes only) ── */
 const FB={ mode:'connecting' };
 function fbBadge(){
-  const map={connecting:['b-gray','جارٍ الاتصال بقاعدة البيانات…'],
-             online:['b-green','متصل — rouby-care-dental-centre'],
+  const map={connecting:['b-gray','جارٍ الاتصال…'],
+             online:['b-green','متصل'],
              local:['b-gold','وضع محلي — تعذّر الاتصال، البيانات تُحفظ في المتصفح']};
   const [c,t]=map[FB.mode]||map.local;
   ['#fbStatusPub','#fbStatusStaff'].forEach(s=>{ const n=$(s); if(n) n.innerHTML=`<span class="badge ${c}">${t}</span>`; });
@@ -2014,16 +2026,22 @@ function totpReset(user){ const t=totpStore(); delete t[user]; store.set('totp',
 
 /* ── 5. Login: username + password, then per-user TOTP ── */
 const USERS={
-  reception:{pass:'Rec2026!', role:'reception', name:'الاستقبال',        tfa:false, email:'reception@roubycare.local'},
-  rana:     {pass:'Rana2026!',role:'rana',      name:'د. رنا الروبي',    tfa:true,  email:'rana@roubycare.local'},
-  inventory:{pass:'Inv2026!', role:'inventory', name:'مسؤول الخامات',    tfa:true,  email:'inventory@roubycare.local'},
-  yassin:   {pass:'Sys2026!', role:'yassin',    name:'مدير النظام',      tfa:true,  email:'yassin@roubycare.local'}
+  reception:{role:'reception', name:'الاستقبال',        tfa:false, email:'reception@roubycare.local'},
+  rana:     {role:'rana',      name:'د. رنا الروبي',    tfa:true,  email:'rana@roubycare.local'},
+  inventory:{role:'inventory', name:'مسؤول الخامات',    tfa:true,  email:'inventory@roubycare.local'},
+  yassin:   {role:'yassin',    name:'مدير النظام',      tfa:true,  email:'yassin@roubycare.local'}
 };
 /* Checkpoint 7: passwords()/setPassword() (a local-browser-only shadow
    password store) removed — see the login handler and Settings' password
-   card below for why. USERS[x].pass below is now only the seed value used
-   the very first time each account was created in Firebase Console; it is
-   not consulted by login or by anything else in this file any more. */
+   card below for why. This table used to also carry each account's ORIGINAL
+   seed password (the value typed into Firebase Console the day the account
+   was created) purely as historical documentation — it was never read by
+   login or anything else in this file. 2026-09-06: removed those values
+   entirely. This file is served from a PUBLIC GitHub repo now — anyone can
+   View Source on the live site, so a real password (current or historical)
+   must never be written here again, in a comment or otherwise. The actual
+   passwords live only in Firebase Console → Authentication → Users; rotate
+   there, never here. */
 let session=null, pending=null;
 
 /* ── 2.8 fix: real per-staff Firebase Auth, replaces the shared anonymous
